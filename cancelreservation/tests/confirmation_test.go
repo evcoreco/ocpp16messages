@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	cr "github.com/aasanchez/ocpp16messages/cancelreservation"
-	types "github.com/aasanchez/ocpp16types"
+	cr "github.com/evcoreco/ocpp16messages/cancelreservation"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (

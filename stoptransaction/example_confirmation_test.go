@@ -3,7 +3,7 @@ package stoptransaction_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/stoptransaction"
+	"github.com/evcoreco/ocpp16messages/stoptransaction"
 )
 
 const (
@@ -12,12 +12,12 @@ const (
 	exampleErrorLabel     = "Error:"
 )
 
-// ExampleConf demonstrates creating a StopTransaction.conf with no IdTagInfo.
+// ExampleConf demonstrates creating a StopTransaction.conf with no IDTagInfo.
 func ExampleConf() {
 	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      nil,
 		ExpiryDate:  nil,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err != nil {
 		fmt.Println(exampleErrorLabel, err)
@@ -25,11 +25,11 @@ func ExampleConf() {
 		return
 	}
 
-	if conf.IdTagInfo == nil {
-		fmt.Println("IdTagInfo: nil (no authorization info)")
+	if conf.IDTagInfo == nil {
+		fmt.Println("IDTagInfo: nil (no authorization info)")
 	}
 	// Output:
-	// IdTagInfo: nil (no authorization info)
+	// IDTagInfo: nil (no authorization info)
 }
 
 // ExampleConf_accepted demonstrates creating an accepted response.
@@ -39,7 +39,7 @@ func ExampleConf_accepted() {
 	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err != nil {
 		fmt.Println(exampleErrorLabel, err)
@@ -47,7 +47,7 @@ func ExampleConf_accepted() {
 		return
 	}
 
-	fmt.Println(exampleStatusLabel, conf.IdTagInfo.Status().String())
+	fmt.Println(exampleStatusLabel, conf.IDTagInfo.Status().String())
 	// Output:
 	// Status: Accepted
 }
@@ -60,7 +60,7 @@ func ExampleConf_withExpiryDate() {
 	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  &expiryDate,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err != nil {
 		fmt.Println(exampleErrorLabel, err)
@@ -68,22 +68,22 @@ func ExampleConf_withExpiryDate() {
 		return
 	}
 
-	fmt.Println(exampleStatusLabel, conf.IdTagInfo.Status().String())
-	fmt.Println("Has expiry date:", conf.IdTagInfo.ExpiryDate() != nil)
+	fmt.Println(exampleStatusLabel, conf.IDTagInfo.Status().String())
+	fmt.Println("Has expiry date:", conf.IDTagInfo.ExpiryDate() != nil)
 	// Output:
 	// Status: Accepted
 	// Has expiry date: true
 }
 
-// ExampleConf_withParentIdTag demonstrates including a parent ID tag.
-func ExampleConf_withParentIdTag() {
+// ExampleConf_withParentIDTag demonstrates including a parent ID tag.
+func ExampleConf_withParentIDTag() {
 	status := exampleStatusAccepted
-	parentIdTag := "PARENT-123"
+	parentIDTag := "PARENT-123"
 
 	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
-		ParentIdTag: &parentIdTag,
+		ParentIDTag: &parentIDTag,
 	})
 	if err != nil {
 		fmt.Println(exampleErrorLabel, err)
@@ -91,11 +91,11 @@ func ExampleConf_withParentIdTag() {
 		return
 	}
 
-	fmt.Println(exampleStatusLabel, conf.IdTagInfo.Status().String())
-	fmt.Println("ParentIdTag:", conf.IdTagInfo.ParentIdTag().String())
+	fmt.Println(exampleStatusLabel, conf.IDTagInfo.Status().String())
+	fmt.Println("ParentIDTag:", conf.IDTagInfo.ParentIDTag().String())
 	// Output:
 	// Status: Accepted
-	// ParentIdTag: PARENT-123
+	// ParentIDTag: PARENT-123
 }
 
 // ExampleConf_invalidStatus demonstrates validation error for invalid status.
@@ -105,7 +105,7 @@ func ExampleConf_invalidStatus() {
 	_, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err != nil {
 		fmt.Println("Validation failed as expected")

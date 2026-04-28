@@ -3,7 +3,7 @@ package heartbeat_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/heartbeat"
+	"github.com/evcoreco/ocpp16messages/heartbeat"
 )
 
 // ExampleReq demonstrates creating a valid Heartbeat.req message.

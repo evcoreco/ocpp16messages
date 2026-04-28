@@ -3,7 +3,7 @@ package reset_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/reset"
+	"github.com/evcoreco/ocpp16messages/reset"
 )
 
 // ExampleConf demonstrates creating a valid Reset.conf message

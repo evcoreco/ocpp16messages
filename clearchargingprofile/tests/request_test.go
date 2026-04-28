@@ -4,13 +4,13 @@ import (
 	"strings"
 	"testing"
 
-	ccp "github.com/aasanchez/ocpp16messages/clearchargingprofile"
-	types "github.com/aasanchez/ocpp16types"
+	ccp "github.com/evcoreco/ocpp16messages/clearchargingprofile"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
 	errId                     = "id"
-	errConnectorId            = "connectorId"
+	errConnectorID            = "connectorId"
 	errChargingProfilePurpose = "chargingProfilePurpose"
 	errStackLevel             = "stackLevel"
 
@@ -39,7 +39,7 @@ func TestReq_Valid_NoFields(t *testing.T) {
 
 	req, err := ccp.Req(ccp.ReqInput{
 		Id:                     nil,
-		ConnectorId:            nil,
+		ConnectorID:            nil,
 		ChargingProfilePurpose: nil,
 		StackLevel:             nil,
 	})
@@ -51,8 +51,8 @@ func TestReq_Valid_NoFields(t *testing.T) {
 		t.Errorf("Id should be nil, got %v", req.Id)
 	}
 
-	if req.ConnectorId != nil {
-		t.Errorf("ConnectorId should be nil, got %v", req.ConnectorId)
+	if req.ConnectorID != nil {
+		t.Errorf("ConnectorID should be nil, got %v", req.ConnectorID)
 	}
 
 	if req.ChargingProfilePurpose != nil {
@@ -70,7 +70,7 @@ func TestReq_Valid_WithId(t *testing.T) {
 
 	req, err := ccp.Req(ccp.ReqInput{
 		Id:                     intPtr(valueId),
-		ConnectorId:            nil,
+		ConnectorID:            nil,
 		ChargingProfilePurpose: nil,
 		StackLevel:             nil,
 	})
@@ -92,7 +92,7 @@ func TestReq_Valid_WithIdZero(t *testing.T) {
 
 	req, err := ccp.Req(ccp.ReqInput{
 		Id:                     intPtr(valueZero),
-		ConnectorId:            nil,
+		ConnectorID:            nil,
 		ChargingProfilePurpose: nil,
 		StackLevel:             nil,
 	})
@@ -109,12 +109,12 @@ func TestReq_Valid_WithIdZero(t *testing.T) {
 	}
 }
 
-func TestReq_Valid_WithConnectorId(t *testing.T) {
+func TestReq_Valid_WithConnectorID(t *testing.T) {
 	t.Parallel()
 
 	req, err := ccp.Req(ccp.ReqInput{
 		Id:                     nil,
-		ConnectorId:            intPtr(valueOne),
+		ConnectorID:            intPtr(valueOne),
 		ChargingProfilePurpose: nil,
 		StackLevel:             nil,
 	})
@@ -122,21 +122,21 @@ func TestReq_Valid_WithConnectorId(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.ConnectorId == nil {
-		t.Fatal("ConnectorId should not be nil")
+	if req.ConnectorID == nil {
+		t.Fatal("ConnectorID should not be nil")
 	}
 
-	if req.ConnectorId.Value() != valueOne {
-		t.Errorf(types.ErrorMismatchValue, valueOne, req.ConnectorId.Value())
+	if req.ConnectorID.Value() != valueOne {
+		t.Errorf(types.ErrorMismatchValue, valueOne, req.ConnectorID.Value())
 	}
 }
 
-func TestReq_Valid_WithConnectorIdZero(t *testing.T) {
+func TestReq_Valid_WithConnectorIDZero(t *testing.T) {
 	t.Parallel()
 
 	req, err := ccp.Req(ccp.ReqInput{
 		Id:                     nil,
-		ConnectorId:            intPtr(valueZero),
+		ConnectorID:            intPtr(valueZero),
 		ChargingProfilePurpose: nil,
 		StackLevel:             nil,
 	})
@@ -144,12 +144,12 @@ func TestReq_Valid_WithConnectorIdZero(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.ConnectorId == nil {
-		t.Fatal("ConnectorId should not be nil")
+	if req.ConnectorID == nil {
+		t.Fatal("ConnectorID should not be nil")
 	}
 
-	if req.ConnectorId.Value() != valueZero {
-		t.Errorf(types.ErrorMismatchValue, valueZero, req.ConnectorId.Value())
+	if req.ConnectorID.Value() != valueZero {
+		t.Errorf(types.ErrorMismatchValue, valueZero, req.ConnectorID.Value())
 	}
 }
 
@@ -158,7 +158,7 @@ func TestReq_Valid_WithPurpose_ChargePointMaxProfile(t *testing.T) {
 
 	req, err := ccp.Req(ccp.ReqInput{
 		Id:                     nil,
-		ConnectorId:            nil,
+		ConnectorID:            nil,
 		ChargingProfilePurpose: strPtr("ChargePointMaxProfile"),
 		StackLevel:             nil,
 	})
@@ -181,7 +181,7 @@ func TestReq_Valid_WithPurpose_TxDefaultProfile(t *testing.T) {
 
 	req, err := ccp.Req(ccp.ReqInput{
 		Id:                     nil,
-		ConnectorId:            nil,
+		ConnectorID:            nil,
 		ChargingProfilePurpose: strPtr("TxDefaultProfile"),
 		StackLevel:             nil,
 	})
@@ -204,7 +204,7 @@ func TestReq_Valid_WithPurpose_TxProfile(t *testing.T) {
 
 	req, err := ccp.Req(ccp.ReqInput{
 		Id:                     nil,
-		ConnectorId:            nil,
+		ConnectorID:            nil,
 		ChargingProfilePurpose: strPtr("TxProfile"),
 		StackLevel:             nil,
 	})
@@ -227,7 +227,7 @@ func TestReq_Valid_WithStackLevel(t *testing.T) {
 
 	req, err := ccp.Req(ccp.ReqInput{
 		Id:                     nil,
-		ConnectorId:            nil,
+		ConnectorID:            nil,
 		ChargingProfilePurpose: nil,
 		StackLevel:             intPtr(valueFive),
 	})
@@ -249,7 +249,7 @@ func TestReq_Valid_AllFields_Id(t *testing.T) {
 
 	req, err := ccp.Req(ccp.ReqInput{
 		Id:                     intPtr(valueOne),
-		ConnectorId:            intPtr(valueTwo),
+		ConnectorID:            intPtr(valueTwo),
 		ChargingProfilePurpose: strPtr("TxProfile"),
 		StackLevel:             intPtr(valueThree),
 	})
@@ -262,12 +262,12 @@ func TestReq_Valid_AllFields_Id(t *testing.T) {
 	}
 }
 
-func TestReq_Valid_AllFields_ConnectorId(t *testing.T) {
+func TestReq_Valid_AllFields_ConnectorID(t *testing.T) {
 	t.Parallel()
 
 	req, err := ccp.Req(ccp.ReqInput{
 		Id:                     intPtr(valueOne),
-		ConnectorId:            intPtr(valueTwo),
+		ConnectorID:            intPtr(valueTwo),
 		ChargingProfilePurpose: strPtr("TxProfile"),
 		StackLevel:             intPtr(valueThree),
 	})
@@ -275,8 +275,8 @@ func TestReq_Valid_AllFields_ConnectorId(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.ConnectorId == nil || req.ConnectorId.Value() != valueTwo {
-		t.Error("ConnectorId mismatch")
+	if req.ConnectorID == nil || req.ConnectorID.Value() != valueTwo {
+		t.Error("ConnectorID mismatch")
 	}
 }
 
@@ -285,7 +285,7 @@ func TestReq_Valid_AllFields_Purpose(t *testing.T) {
 
 	req, err := ccp.Req(ccp.ReqInput{
 		Id:                     intPtr(valueOne),
-		ConnectorId:            intPtr(valueTwo),
+		ConnectorID:            intPtr(valueTwo),
 		ChargingProfilePurpose: strPtr("TxProfile"),
 		StackLevel:             intPtr(valueThree),
 	})
@@ -307,7 +307,7 @@ func TestReq_Valid_AllFields_StackLevel(t *testing.T) {
 
 	req, err := ccp.Req(ccp.ReqInput{
 		Id:                     intPtr(valueOne),
-		ConnectorId:            intPtr(valueTwo),
+		ConnectorID:            intPtr(valueTwo),
 		ChargingProfilePurpose: strPtr("TxProfile"),
 		StackLevel:             intPtr(valueThree),
 	})
@@ -325,7 +325,7 @@ func TestReq_Invalid_NegativeId(t *testing.T) {
 
 	_, err := ccp.Req(ccp.ReqInput{
 		Id:                     intPtr(valueNegative),
-		ConnectorId:            nil,
+		ConnectorID:            nil,
 		ChargingProfilePurpose: nil,
 		StackLevel:             nil,
 	})
@@ -343,7 +343,7 @@ func TestReq_Invalid_IdExceedsMax(t *testing.T) {
 
 	_, err := ccp.Req(ccp.ReqInput{
 		Id:                     intPtr(valueExceedsMax),
-		ConnectorId:            nil,
+		ConnectorID:            nil,
 		ChargingProfilePurpose: nil,
 		StackLevel:             nil,
 	})
@@ -356,39 +356,39 @@ func TestReq_Invalid_IdExceedsMax(t *testing.T) {
 	}
 }
 
-func TestReq_Invalid_NegativeConnectorId(t *testing.T) {
+func TestReq_Invalid_NegativeConnectorID(t *testing.T) {
 	t.Parallel()
 
 	_, err := ccp.Req(ccp.ReqInput{
 		Id:                     nil,
-		ConnectorId:            intPtr(valueNegative),
+		ConnectorID:            intPtr(valueNegative),
 		ChargingProfilePurpose: nil,
 		StackLevel:             nil,
 	})
 	if err == nil {
-		t.Errorf(types.ErrorWantNil, "negative ConnectorId")
+		t.Errorf(types.ErrorWantNil, "negative ConnectorID")
 	}
 
-	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(types.ErrorWantContains, err, errConnectorId)
+	if !strings.Contains(err.Error(), errConnectorID) {
+		t.Errorf(types.ErrorWantContains, err, errConnectorID)
 	}
 }
 
-func TestReq_Invalid_ConnectorIdExceedsMax(t *testing.T) {
+func TestReq_Invalid_ConnectorIDExceedsMax(t *testing.T) {
 	t.Parallel()
 
 	_, err := ccp.Req(ccp.ReqInput{
 		Id:                     nil,
-		ConnectorId:            intPtr(valueExceedsMax),
+		ConnectorID:            intPtr(valueExceedsMax),
 		ChargingProfilePurpose: nil,
 		StackLevel:             nil,
 	})
 	if err == nil {
-		t.Errorf(types.ErrorWantNil, "ConnectorId exceeds max")
+		t.Errorf(types.ErrorWantNil, "ConnectorID exceeds max")
 	}
 
-	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(types.ErrorWantContains, err, errConnectorId)
+	if !strings.Contains(err.Error(), errConnectorID) {
+		t.Errorf(types.ErrorWantContains, err, errConnectorID)
 	}
 }
 
@@ -397,7 +397,7 @@ func TestReq_Invalid_Purpose(t *testing.T) {
 
 	_, err := ccp.Req(ccp.ReqInput{
 		Id:                     nil,
-		ConnectorId:            nil,
+		ConnectorID:            nil,
 		ChargingProfilePurpose: strPtr("Invalid"),
 		StackLevel:             nil,
 	})
@@ -415,7 +415,7 @@ func TestReq_Invalid_PurposeEmpty(t *testing.T) {
 
 	_, err := ccp.Req(ccp.ReqInput{
 		Id:                     nil,
-		ConnectorId:            nil,
+		ConnectorID:            nil,
 		ChargingProfilePurpose: strPtr(""),
 		StackLevel:             nil,
 	})
@@ -433,7 +433,7 @@ func TestReq_Invalid_PurposeLowercase(t *testing.T) {
 
 	_, err := ccp.Req(ccp.ReqInput{
 		Id:                     nil,
-		ConnectorId:            nil,
+		ConnectorID:            nil,
 		ChargingProfilePurpose: strPtr("txprofile"),
 		StackLevel:             nil,
 	})
@@ -451,7 +451,7 @@ func TestReq_Invalid_NegativeStackLevel(t *testing.T) {
 
 	_, err := ccp.Req(ccp.ReqInput{
 		Id:                     nil,
-		ConnectorId:            nil,
+		ConnectorID:            nil,
 		ChargingProfilePurpose: nil,
 		StackLevel:             intPtr(valueNegative),
 	})
@@ -469,7 +469,7 @@ func TestReq_Invalid_StackLevelExceedsMax(t *testing.T) {
 
 	_, err := ccp.Req(ccp.ReqInput{
 		Id:                     nil,
-		ConnectorId:            nil,
+		ConnectorID:            nil,
 		ChargingProfilePurpose: nil,
 		StackLevel:             intPtr(valueExceedsMax),
 	})
@@ -487,7 +487,7 @@ func TestReq_Invalid_MultipleErrors(t *testing.T) {
 
 	_, err := ccp.Req(ccp.ReqInput{
 		Id:                     intPtr(valueNegative),
-		ConnectorId:            intPtr(valueNegative),
+		ConnectorID:            intPtr(valueNegative),
 		ChargingProfilePurpose: strPtr("Invalid"),
 		StackLevel:             intPtr(valueNegative),
 	})
@@ -499,8 +499,8 @@ func TestReq_Invalid_MultipleErrors(t *testing.T) {
 		t.Errorf(types.ErrorWantContains, err, errId)
 	}
 
-	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(types.ErrorWantContains, err, errConnectorId)
+	if !strings.Contains(err.Error(), errConnectorID) {
+		t.Errorf(types.ErrorWantContains, err, errConnectorID)
 	}
 
 	if !strings.Contains(err.Error(), errChargingProfilePurpose) {

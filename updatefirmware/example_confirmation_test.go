@@ -3,7 +3,7 @@ package updatefirmware_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/updatefirmware"
+	"github.com/evcoreco/ocpp16messages/updatefirmware"
 )
 
 // ExampleConf demonstrates creating an UpdateFirmware.conf message.

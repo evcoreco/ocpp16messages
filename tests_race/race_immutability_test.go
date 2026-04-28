@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"testing"
 
-	dt "github.com/aasanchez/ocpp16messages/datatransfer"
-	types "github.com/aasanchez/ocpp16types"
+	dt "github.com/evcoreco/ocpp16messages/datatransfer"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func TestRace_ChargingSchedulePeriodIsolatedFromMutation(t *testing.T) {
@@ -153,8 +153,8 @@ func TestRace_DataTransferReqDataIsolatedFromInputPointer(t *testing.T) {
 	data := "payload"
 
 	message, err := dt.Req(dt.ReqInput{
-		VendorId:  "Vendor-1",
-		MessageId: nil,
+		VendorID:  "Vendor-1",
+		MessageID: nil,
 		Data:      &data,
 	})
 	if err != nil {

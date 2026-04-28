@@ -3,7 +3,7 @@ package reservenow_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/reservenow"
+	"github.com/evcoreco/ocpp16messages/reservenow"
 )
 
 // ExampleConf demonstrates creating a valid ReserveNow.conf message with

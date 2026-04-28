@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
@@ -17,26 +17,26 @@ const (
 type ReqInput struct {
 	// Required: The connector to which the charging profile applies.
 	// connectorId 0 is associated with the entire Charge Point.
-	ConnectorId int
+	ConnectorID int
 	// Required: The charging profile to be set at the Charge Point.
 	CsChargingProfiles types.ChargingProfileInput
 }
 
 // ReqMessage represents an OCPP 1.6 SetChargingProfile.req message.
 type ReqMessage struct {
-	ConnectorId        types.Integer
+	ConnectorID        types.Integer
 	CsChargingProfiles types.ChargingProfile
 }
 
 // Req creates a SetChargingProfile.req message from the given input.
 // It validates all fields and accumulates all errors, returning them together.
 // Returns an error if:
-//   - ConnectorId is negative or exceeds uint16 max value (65535)
+//   - ConnectorID is negative or exceeds uint16 max value (65535)
 //   - CsChargingProfiles is invalid
 func Req(input ReqInput) (ReqMessage, error) {
 	var errs []error
 
-	connectorId, err := types.NewInteger(input.ConnectorId)
+	connectorId, err := types.NewInteger(input.ConnectorID)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("connectorId: %w", err))
 	}
@@ -53,7 +53,7 @@ func Req(input ReqInput) (ReqMessage, error) {
 	}
 
 	return ReqMessage{
-		ConnectorId:        connectorId,
+		ConnectorID:        connectorId,
 		CsChargingProfiles: csChargingProfiles,
 	}, nil
 }

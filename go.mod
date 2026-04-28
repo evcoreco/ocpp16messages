@@ -1,5 +1,5 @@
-module github.com/aasanchez/ocpp16messages
+module github.com/evcoreco/ocpp16messages
 
-go 1.23.12
+go 1.25
 
-require github.com/aasanchez/ocpp16types v0.1.0
+require github.com/evcoreco/ocpp16types v1.0.1

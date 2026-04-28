@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	rst "github.com/aasanchez/ocpp16messages/remotestarttransaction"
-	types "github.com/aasanchez/ocpp16types"
+	rst "github.com/evcoreco/ocpp16messages/remotestarttransaction"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzRemoteStartTransactionConf(f *testing.F) {

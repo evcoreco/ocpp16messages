@@ -3,17 +3,17 @@ package getcompositeschedule_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/getcompositeschedule"
+	"github.com/evcoreco/ocpp16messages/getcompositeschedule"
 )
 
 const (
-	exampleConnectorIdOne    = 1
-	exampleConnectorIdZero   = 0
+	exampleConnectorIDOne    = 1
+	exampleConnectorIDZero   = 0
 	exampleDurationThreeHund = 300
 	exampleDurationSixHund   = 600
 	exampleNegativeValue     = -1
 
-	outConnectorId = "ConnectorId:"
+	outConnectorID = "ConnectorID:"
 	outDuration    = "Duration:"
 )
 
@@ -21,7 +21,7 @@ const (
 // with required fields only.
 func ExampleReq() {
 	req, err := getcompositeschedule.Req(getcompositeschedule.ReqInput{
-		ConnectorId:      exampleConnectorIdOne,
+		ConnectorID:      exampleConnectorIDOne,
 		Duration:         exampleDurationThreeHund,
 		ChargingRateUnit: nil,
 	})
@@ -31,10 +31,10 @@ func ExampleReq() {
 		return
 	}
 
-	fmt.Println(outConnectorId, req.ConnectorId.Value())
+	fmt.Println(outConnectorID, req.ConnectorID.Value())
 	fmt.Println(outDuration, req.Duration.Value())
 	// Output:
-	// ConnectorId: 1
+	// ConnectorID: 1
 	// Duration: 300
 }
 
@@ -44,7 +44,7 @@ func ExampleReq_withChargingRateUnit() {
 	unit := "W"
 
 	req, err := getcompositeschedule.Req(getcompositeschedule.ReqInput{
-		ConnectorId:      exampleConnectorIdOne,
+		ConnectorID:      exampleConnectorIDOne,
 		Duration:         exampleDurationSixHund,
 		ChargingRateUnit: &unit,
 	})
@@ -54,20 +54,20 @@ func ExampleReq_withChargingRateUnit() {
 		return
 	}
 
-	fmt.Println(outConnectorId, req.ConnectorId.Value())
+	fmt.Println(outConnectorID, req.ConnectorID.Value())
 	fmt.Println(outDuration, req.Duration.Value())
 	fmt.Println("ChargingRateUnit:", req.ChargingRateUnit.String())
 	// Output:
-	// ConnectorId: 1
+	// ConnectorID: 1
 	// Duration: 600
 	// ChargingRateUnit: W
 }
 
 // ExampleReq_entireChargePoint demonstrates requesting a composite schedule
-// for the entire Charge Point by using ConnectorId 0.
+// for the entire Charge Point by using ConnectorID 0.
 func ExampleReq_entireChargePoint() {
 	req, err := getcompositeschedule.Req(getcompositeschedule.ReqInput{
-		ConnectorId:      exampleConnectorIdZero,
+		ConnectorID:      exampleConnectorIDZero,
 		Duration:         exampleDurationThreeHund,
 		ChargingRateUnit: nil,
 	})
@@ -77,18 +77,18 @@ func ExampleReq_entireChargePoint() {
 		return
 	}
 
-	fmt.Println(outConnectorId, req.ConnectorId.Value())
+	fmt.Println(outConnectorID, req.ConnectorID.Value())
 	fmt.Println(outDuration, req.Duration.Value())
 	// Output:
-	// ConnectorId: 0
+	// ConnectorID: 0
 	// Duration: 300
 }
 
-// ExampleReq_invalidConnectorId demonstrates the error returned when
-// a negative ConnectorId is provided.
-func ExampleReq_invalidConnectorId() {
+// ExampleReq_invalidConnectorID demonstrates the error returned when
+// a negative ConnectorID is provided.
+func ExampleReq_invalidConnectorID() {
 	_, err := getcompositeschedule.Req(getcompositeschedule.ReqInput{
-		ConnectorId:      exampleNegativeValue,
+		ConnectorID:      exampleNegativeValue,
 		Duration:         exampleDurationThreeHund,
 		ChargingRateUnit: nil,
 	})
@@ -105,7 +105,7 @@ func ExampleReq_invalidChargingRateUnit() {
 	unit := "X"
 
 	_, err := getcompositeschedule.Req(getcompositeschedule.ReqInput{
-		ConnectorId:      exampleConnectorIdOne,
+		ConnectorID:      exampleConnectorIDOne,
 		Duration:         exampleDurationThreeHund,
 		ChargingRateUnit: &unit,
 	})

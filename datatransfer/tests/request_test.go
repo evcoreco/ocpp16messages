@@ -5,39 +5,39 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/datatransfer"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/datatransfer"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
-	testValidVendorId   = "com.example.vendor"
-	testValidMessageId  = "CustomMessage"
+	testValidVendorID   = "com.example.vendor"
+	testValidMessageID  = "CustomMessage"
 	testValidData       = `{"key": "value"}`
-	errFieldVendorId    = "vendorId"
-	errFieldMessageId   = "messageId"
+	errFieldVendorID    = "vendorId"
+	errFieldMessageID   = "messageId"
 	errExceedsMaxLength = "exceeds maximum length"
 	vendorIdMaxPlusOne  = 256
 	messageIdMaxPlusOne = 51
 )
 
-func TestReq_Valid_VendorIdOnly(t *testing.T) {
+func TestReq_Valid_VendorIDOnly(t *testing.T) {
 	t.Parallel()
 
 	req, err := datatransfer.Req(datatransfer.ReqInput{
-		VendorId:  testValidVendorId,
-		MessageId: nil,
+		VendorID:  testValidVendorID,
+		MessageID: nil,
 		Data:      nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.VendorId.Value() != testValidVendorId {
-		t.Errorf(types.ErrorMismatch, testValidVendorId, req.VendorId.Value())
+	if req.VendorID.Value() != testValidVendorID {
+		t.Errorf(types.ErrorMismatch, testValidVendorID, req.VendorID.Value())
 	}
 
-	if req.MessageId != nil {
-		t.Error("Req() MessageId != nil, want nil")
+	if req.MessageID != nil {
+		t.Error("Req() MessageID != nil, want nil")
 	}
 
 	if req.Data != nil {
@@ -45,28 +45,28 @@ func TestReq_Valid_VendorIdOnly(t *testing.T) {
 	}
 }
 
-func TestReq_Valid_WithMessageId(t *testing.T) {
+func TestReq_Valid_WithMessageID(t *testing.T) {
 	t.Parallel()
 
-	messageId := testValidMessageId
+	messageId := testValidMessageID
 
 	req, err := datatransfer.Req(datatransfer.ReqInput{
-		VendorId:  testValidVendorId,
-		MessageId: &messageId,
+		VendorID:  testValidVendorID,
+		MessageID: &messageId,
 		Data:      nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.MessageId == nil {
-		t.Error("Req() MessageId = nil, want non-nil")
+	if req.MessageID == nil {
+		t.Error("Req() MessageID = nil, want non-nil")
 
 		return
 	}
 
-	if req.MessageId.Value() != testValidMessageId {
-		t.Errorf(types.ErrorMismatch, testValidMessageId, req.MessageId.Value())
+	if req.MessageID.Value() != testValidMessageID {
+		t.Errorf(types.ErrorMismatch, testValidMessageID, req.MessageID.Value())
 	}
 }
 
@@ -76,8 +76,8 @@ func TestReq_Valid_WithData(t *testing.T) {
 	data := testValidData
 
 	req, err := datatransfer.Req(datatransfer.ReqInput{
-		VendorId:  testValidVendorId,
-		MessageId: nil,
+		VendorID:  testValidVendorID,
+		MessageID: nil,
 		Data:      &data,
 	})
 	if err != nil {
@@ -98,30 +98,30 @@ func TestReq_Valid_WithData(t *testing.T) {
 func TestReq_Valid_Complete(t *testing.T) {
 	t.Parallel()
 
-	messageId := testValidMessageId
+	messageId := testValidMessageID
 	data := testValidData
 
 	req, err := datatransfer.Req(datatransfer.ReqInput{
-		VendorId:  testValidVendorId,
-		MessageId: &messageId,
+		VendorID:  testValidVendorID,
+		MessageID: &messageId,
 		Data:      &data,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.VendorId.Value() != testValidVendorId {
-		t.Errorf(types.ErrorMismatch, testValidVendorId, req.VendorId.Value())
+	if req.VendorID.Value() != testValidVendorID {
+		t.Errorf(types.ErrorMismatch, testValidVendorID, req.VendorID.Value())
 	}
 
-	if req.MessageId == nil {
-		t.Error("Req() MessageId = nil, want non-nil")
+	if req.MessageID == nil {
+		t.Error("Req() MessageID = nil, want non-nil")
 
 		return
 	}
 
-	if req.MessageId.Value() != testValidMessageId {
-		t.Errorf(types.ErrorMismatch, testValidMessageId, req.MessageId.Value())
+	if req.MessageID.Value() != testValidMessageID {
+		t.Errorf(types.ErrorMismatch, testValidMessageID, req.MessageID.Value())
 	}
 
 	if req.Data == nil {
@@ -135,12 +135,12 @@ func TestReq_Valid_Complete(t *testing.T) {
 	}
 }
 
-func TestReq_EmptyVendorId(t *testing.T) {
+func TestReq_EmptyVendorID(t *testing.T) {
 	t.Parallel()
 
 	_, err := datatransfer.Req(datatransfer.ReqInput{
-		VendorId:  "",
-		MessageId: nil,
+		VendorID:  "",
+		MessageID: nil,
 		Data:      nil,
 	})
 	if err == nil {
@@ -152,23 +152,23 @@ func TestReq_EmptyVendorId(t *testing.T) {
 	}
 }
 
-func TestReq_VendorIdTooLong(t *testing.T) {
+func TestReq_VendorIDTooLong(t *testing.T) {
 	t.Parallel()
 
 	// Create a string longer than 255 characters
-	longVendorId := strings.Repeat("a", vendorIdMaxPlusOne)
+	longVendorID := strings.Repeat("a", vendorIdMaxPlusOne)
 
 	_, err := datatransfer.Req(datatransfer.ReqInput{
-		VendorId:  longVendorId,
-		MessageId: nil,
+		VendorID:  longVendorID,
+		MessageID: nil,
 		Data:      nil,
 	})
 	if err == nil {
 		t.Error("Req() error = nil, want error for vendorId too long")
 	}
 
-	if !strings.Contains(err.Error(), errFieldVendorId) {
-		t.Errorf(types.ErrorWantContains, err, errFieldVendorId)
+	if !strings.Contains(err.Error(), errFieldVendorID) {
+		t.Errorf(types.ErrorWantContains, err, errFieldVendorID)
 	}
 
 	if !strings.Contains(err.Error(), errExceedsMaxLength) {
@@ -176,59 +176,59 @@ func TestReq_VendorIdTooLong(t *testing.T) {
 	}
 }
 
-func TestReq_VendorIdInvalidChars(t *testing.T) {
+func TestReq_VendorIDInvalidChars(t *testing.T) {
 	t.Parallel()
 
 	_, err := datatransfer.Req(datatransfer.ReqInput{
-		VendorId:  "vendor\x00id",
-		MessageId: nil,
+		VendorID:  "vendor\x00id",
+		MessageID: nil,
 		Data:      nil,
 	})
 	if err == nil {
 		t.Error("Req() error = nil, want error for invalid chars in vendorId")
 	}
 
-	if !strings.Contains(err.Error(), errFieldVendorId) {
-		t.Errorf(types.ErrorWantContains, err, errFieldVendorId)
+	if !strings.Contains(err.Error(), errFieldVendorID) {
+		t.Errorf(types.ErrorWantContains, err, errFieldVendorID)
 	}
 }
 
-func TestReq_EmptyMessageId(t *testing.T) {
+func TestReq_EmptyMessageID(t *testing.T) {
 	t.Parallel()
 
-	emptyMessageId := ""
+	emptyMessageID := ""
 
 	_, err := datatransfer.Req(datatransfer.ReqInput{
-		VendorId:  testValidVendorId,
-		MessageId: &emptyMessageId,
+		VendorID:  testValidVendorID,
+		MessageID: &emptyMessageID,
 		Data:      nil,
 	})
 	if err == nil {
 		t.Error("Req() error = nil, want error for empty messageId")
 	}
 
-	if !strings.Contains(err.Error(), errFieldMessageId) {
-		t.Errorf(types.ErrorWantContains, err, errFieldMessageId)
+	if !strings.Contains(err.Error(), errFieldMessageID) {
+		t.Errorf(types.ErrorWantContains, err, errFieldMessageID)
 	}
 }
 
-func TestReq_MessageIdTooLong(t *testing.T) {
+func TestReq_MessageIDTooLong(t *testing.T) {
 	t.Parallel()
 
 	// Create a string longer than 50 characters
-	longMessageId := strings.Repeat("m", messageIdMaxPlusOne)
+	longMessageID := strings.Repeat("m", messageIdMaxPlusOne)
 
 	_, err := datatransfer.Req(datatransfer.ReqInput{
-		VendorId:  testValidVendorId,
-		MessageId: &longMessageId,
+		VendorID:  testValidVendorID,
+		MessageID: &longMessageID,
 		Data:      nil,
 	})
 	if err == nil {
 		t.Error("Req() error = nil, want error for messageId too long")
 	}
 
-	if !strings.Contains(err.Error(), errFieldMessageId) {
-		t.Errorf(types.ErrorWantContains, err, errFieldMessageId)
+	if !strings.Contains(err.Error(), errFieldMessageID) {
+		t.Errorf(types.ErrorWantContains, err, errFieldMessageID)
 	}
 
 	if !strings.Contains(err.Error(), errExceedsMaxLength) {
@@ -236,33 +236,33 @@ func TestReq_MessageIdTooLong(t *testing.T) {
 	}
 }
 
-func TestReq_MessageIdInvalidChars(t *testing.T) {
+func TestReq_MessageIDInvalidChars(t *testing.T) {
 	t.Parallel()
 
-	invalidMessageId := "msg\x00id"
+	invalidMessageID := "msg\x00id"
 
 	_, err := datatransfer.Req(datatransfer.ReqInput{
-		VendorId:  testValidVendorId,
-		MessageId: &invalidMessageId,
+		VendorID:  testValidVendorID,
+		MessageID: &invalidMessageID,
 		Data:      nil,
 	})
 	if err == nil {
 		t.Error("Req() error = nil, want error for invalid chars in messageId")
 	}
 
-	if !strings.Contains(err.Error(), errFieldMessageId) {
-		t.Errorf(types.ErrorWantContains, err, errFieldMessageId)
+	if !strings.Contains(err.Error(), errFieldMessageID) {
+		t.Errorf(types.ErrorWantContains, err, errFieldMessageID)
 	}
 }
 
 func TestReq_MultipleErrors(t *testing.T) {
 	t.Parallel()
 
-	invalidMessageId := ""
+	invalidMessageID := ""
 
 	_, err := datatransfer.Req(datatransfer.ReqInput{
-		VendorId:  "",
-		MessageId: &invalidMessageId,
+		VendorID:  "",
+		MessageID: &invalidMessageID,
 		Data:      nil,
 	})
 	if err == nil {
@@ -270,11 +270,11 @@ func TestReq_MultipleErrors(t *testing.T) {
 	}
 
 	errStr := err.Error()
-	if !strings.Contains(errStr, errFieldVendorId) {
-		t.Errorf(types.ErrorWantContains, err, errFieldVendorId)
+	if !strings.Contains(errStr, errFieldVendorID) {
+		t.Errorf(types.ErrorWantContains, err, errFieldVendorID)
 	}
 
-	if !strings.Contains(errStr, errFieldMessageId) {
-		t.Errorf(types.ErrorWantContains, err, errFieldMessageId)
+	if !strings.Contains(errStr, errFieldMessageID) {
+		t.Errorf(types.ErrorWantContains, err, errFieldMessageID)
 	}
 }

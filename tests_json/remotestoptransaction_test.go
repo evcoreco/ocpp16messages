@@ -3,13 +3,13 @@ package testsjson_test
 import (
 	"testing"
 
-	rst "github.com/aasanchez/ocpp16messages/remotestoptransaction"
+	rst "github.com/evcoreco/ocpp16messages/remotestoptransaction"
 )
 
 func TestRemoteStopTransactionReq_JSONRoundTrip(t *testing.T) {
 	t.Parallel()
 
-	req, err := rst.Req(rst.ReqInput{TransactionId: 12345})
+	req, err := rst.Req(rst.ReqInput{TransactionID: 12345})
 	if err != nil {
 		t.Fatalf("remotestoptransaction.Req: %v", err)
 	}

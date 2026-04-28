@@ -8,7 +8,7 @@
 // which message the Central System wishes to receive and optionally the
 // connectorId to which the request applies.
 //
-// # ConnectorId Rules
+// # ConnectorID Rules
 //
 //   - If the connectorId is irrelevant for the requested message, it SHALL
 //     be ignored.

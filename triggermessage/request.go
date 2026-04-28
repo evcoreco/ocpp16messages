@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
@@ -19,13 +19,13 @@ type ReqInput struct {
 	RequestedMessage string
 	// Optional: The id of the connector for which the message applies.
 	// If absent, applies to the Charge Point as a whole.
-	ConnectorId *int
+	ConnectorID *int
 }
 
 // ReqMessage represents an OCPP 1.6 TriggerMessage.req message.
 type ReqMessage struct {
 	RequestedMessage types.MessageTrigger
-	ConnectorId      *types.Integer
+	ConnectorID      *types.Integer
 }
 
 // reqValidation holds validated fields during Req construction.
@@ -38,7 +38,7 @@ type reqValidation struct {
 // It validates all fields and accumulates all errors, returning them together.
 // Returns an error if:
 //   - RequestedMessage is not a valid MessageTrigger value
-//   - ConnectorId (if provided) is negative or exceeds uint16 max value (65535)
+//   - ConnectorID (if provided) is negative or exceeds uint16 max value (65535)
 func Req(input ReqInput) (ReqMessage, error) {
 	validated, errs := validateReqInput(input)
 
@@ -63,9 +63,9 @@ func validateReqInput(input ReqInput) (reqValidation, []error) {
 	)
 
 	// Validate optional field
-	if input.ConnectorId != nil {
-		validated.connectorId, errs = validateConnectorId(
-			*input.ConnectorId,
+	if input.ConnectorID != nil {
+		validated.connectorId, errs = validateConnectorID(
+			*input.ConnectorID,
 			errs,
 		)
 	}
@@ -90,8 +90,8 @@ func validateRequestedMessage(
 	return messageTrigger, errs
 }
 
-// validateConnectorId validates the connectorId field.
-func validateConnectorId(
+// validateConnectorID validates the connectorId field.
+func validateConnectorID(
 	connectorId int, errs []error,
 ) (types.Integer, []error) {
 	val, err := types.NewInteger(connectorId)
@@ -106,11 +106,11 @@ func validateConnectorId(
 func buildReqMessage(input ReqInput, validated reqValidation) ReqMessage {
 	msg := ReqMessage{
 		RequestedMessage: validated.requestedMessage,
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 	}
 
-	if input.ConnectorId != nil {
-		msg.ConnectorId = &validated.connectorId
+	if input.ConnectorID != nil {
+		msg.ConnectorID = &validated.connectorId
 	}
 
 	return msg

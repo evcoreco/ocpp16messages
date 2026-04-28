@@ -5,7 +5,7 @@ package fuzz
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/getlocallistversion"
+	"github.com/evcoreco/ocpp16messages/getlocallistversion"
 )
 
 func FuzzGetLocalListVersionReq(f *testing.F) {

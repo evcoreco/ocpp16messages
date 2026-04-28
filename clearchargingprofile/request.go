@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 // ReqInput represents the raw input data for creating a
@@ -15,7 +15,7 @@ type ReqInput struct {
 	Id *int
 	// Optional: Specifies the ID of the connector for which to clear profiles
 	// (0 = all connectors)
-	ConnectorId *int
+	ConnectorID *int
 	// Optional: Specifies to clear profiles with this purpose
 	// ("ChargePointMaxProfile", "TxDefaultProfile", "TxProfile")
 	ChargingProfilePurpose *string
@@ -26,7 +26,7 @@ type ReqInput struct {
 // ReqMessage represents an OCPP 1.6 ClearChargingProfile.req message.
 type ReqMessage struct {
 	Id                     *types.Integer
-	ConnectorId            *types.Integer
+	ConnectorID            *types.Integer
 	ChargingProfilePurpose *types.ChargingProfilePurposeType
 	StackLevel             *types.Integer
 }
@@ -43,7 +43,7 @@ type reqValidation struct {
 // It validates all fields and accumulates all errors, returning them together.
 // Returns an error if:
 //   - Id (if provided) is negative or exceeds uint16 max value (65535)
-//   - ConnectorId (if provided) is negative or exceeds uint16 max (65535)
+//   - ConnectorID (if provided) is negative or exceeds uint16 max (65535)
 //   - ChargingProfilePurpose (if provided) is not a valid value
 //   - StackLevel (if provided) is negative or exceeds uint16 max (65535)
 func Req(input ReqInput) (ReqMessage, error) {
@@ -52,7 +52,7 @@ func Req(input ReqInput) (ReqMessage, error) {
 	if errs != nil {
 		return ReqMessage{
 			Id:                     nil,
-			ConnectorId:            nil,
+			ConnectorID:            nil,
 			ChargingProfilePurpose: nil,
 			StackLevel:             nil,
 		}, errors.Join(errs...)
@@ -60,7 +60,7 @@ func Req(input ReqInput) (ReqMessage, error) {
 
 	return ReqMessage{
 		Id:                     validated.id,
-		ConnectorId:            validated.connectorId,
+		ConnectorID:            validated.connectorId,
 		ChargingProfilePurpose: validated.chargingProfilePurpose,
 		StackLevel:             validated.stackLevel,
 	}, nil
@@ -77,9 +77,9 @@ func validateReqInput(input ReqInput) (reqValidation, []error) {
 		validated.id, errs = validateId(*input.Id, errs)
 	}
 
-	if input.ConnectorId != nil {
-		validated.connectorId, errs = validateConnectorId(
-			*input.ConnectorId,
+	if input.ConnectorID != nil {
+		validated.connectorId, errs = validateConnectorID(
+			*input.ConnectorID,
 			errs,
 		)
 	}
@@ -108,8 +108,8 @@ func validateId(id int, errs []error) (*types.Integer, []error) {
 	return &val, errs
 }
 
-// validateConnectorId validates the connectorId field.
-func validateConnectorId(
+// validateConnectorID validates the connectorId field.
+func validateConnectorID(
 	connectorId int,
 	errs []error,
 ) (*types.Integer, []error) {

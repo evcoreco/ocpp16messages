@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzChargingProfileGetterConsistency(f *testing.F) {
@@ -76,8 +76,8 @@ func FuzzChargingProfileGetterConsistency(f *testing.F) {
 
 		profile, err := types.NewChargingProfile(
 			types.ChargingProfileInput{
-				ChargingProfileId:      profileId,
-				TransactionId:          txIdPtr,
+				ChargingProfileID:      profileId,
+				TransactionID:          txIdPtr,
 				StackLevel:             stackLevel,
 				ChargingProfilePurpose: purpose,
 				ChargingProfileKind:    kind,
@@ -109,11 +109,11 @@ func FuzzChargingProfileGetterConsistency(f *testing.F) {
 		}
 
 		// Getter consistency: every getter must reflect input
-		if int(profile.ChargingProfileId().Value()) !=
+		if int(profile.ChargingProfileID().Value()) !=
 			profileId {
 			t.Fatalf(
-				"ChargingProfileId() = %d, want %d",
-				profile.ChargingProfileId().Value(),
+				"ChargingProfileID() = %d, want %d",
+				profile.ChargingProfileID().Value(),
 				profileId,
 			)
 		}
@@ -150,20 +150,20 @@ func FuzzChargingProfileGetterConsistency(f *testing.F) {
 			t.Fatal("ChargingProfileKind() not valid")
 		}
 
-		// TransactionId
+		// TransactionID
 		if hasTxId {
-			if profile.TransactionId() == nil {
-				t.Fatal("TransactionId() = nil, want non-nil")
+			if profile.TransactionID() == nil {
+				t.Fatal("TransactionID() = nil, want non-nil")
 			}
 
-			if int(profile.TransactionId().Value()) != txId {
+			if int(profile.TransactionID().Value()) != txId {
 				t.Fatalf(
-					"TransactionId() = %d, want %d",
-					profile.TransactionId().Value(), txId,
+					"TransactionID() = %d, want %d",
+					profile.TransactionID().Value(), txId,
 				)
 			}
-		} else if profile.TransactionId() != nil {
-			t.Fatal("TransactionId() != nil, want nil")
+		} else if profile.TransactionID() != nil {
+			t.Fatal("TransactionID() != nil, want nil")
 		}
 
 		// ValidFrom
@@ -234,8 +234,8 @@ func FuzzChargingProfilePointerIsolation(f *testing.F) {
 
 		profile, err := types.NewChargingProfile(
 			types.ChargingProfileInput{
-				ChargingProfileId:      profileId,
-				TransactionId:          txIdPtr,
+				ChargingProfileID:      profileId,
+				TransactionID:          txIdPtr,
 				StackLevel:             stackLevel,
 				ChargingProfilePurpose: purpose,
 				ChargingProfileKind:    kind,
@@ -253,14 +253,14 @@ func FuzzChargingProfilePointerIsolation(f *testing.F) {
 			return
 		}
 
-		// TransactionId pointer isolation
-		if ptr := profile.TransactionId(); ptr != nil {
+		// TransactionID pointer isolation
+		if ptr := profile.TransactionID(); ptr != nil {
 			original := ptr.Value()
-			ptr2 := profile.TransactionId()
+			ptr2 := profile.TransactionID()
 
 			if ptr2.Value() != original {
 				t.Fatal(
-					"TransactionId changed between calls",
+					"TransactionID changed between calls",
 				)
 			}
 		}

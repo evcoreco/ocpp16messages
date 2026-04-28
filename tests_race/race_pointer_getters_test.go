@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"testing"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func TestRace_ChargingScheduleDurationGetterReturnsCopy(t *testing.T) {
@@ -168,7 +168,7 @@ func TestRace_GetConfigurationKeyValueValueGetterReturnsCopy(t *testing.T) {
 	})
 }
 
-func TestRace_SetChargingProfileTransactionIdGetterReturnsCopy(t *testing.T) {
+func TestRace_SetChargingProfileTransactionIDGetterReturnsCopy(t *testing.T) {
 	t.Parallel()
 
 	transactionId := 1
@@ -184,8 +184,8 @@ func TestRace_SetChargingProfileTransactionIdGetterReturnsCopy(t *testing.T) {
 	}
 
 	profile, err := types.NewChargingProfile(types.ChargingProfileInput{
-		ChargingProfileId:      1,
-		TransactionId:          &transactionId,
+		ChargingProfileID:      1,
+		TransactionID:          &transactionId,
 		StackLevel:             0,
 		ChargingProfilePurpose: types.TxProfile.String(),
 		ChargingProfileKind:    types.ChargingProfileKindAbsolute.String(),
@@ -199,9 +199,9 @@ func TestRace_SetChargingProfileTransactionIdGetterReturnsCopy(t *testing.T) {
 	}
 
 	runConcurrent(t, raceWorkers, raceIterations, func(worker int, iteration int) error {
-		current := profile.TransactionId()
+		current := profile.TransactionID()
 		if current == nil {
-			return fmt.Errorf("TransactionId: expected non-nil")
+			return fmt.Errorf("TransactionID: expected non-nil")
 		}
 
 		if worker == 0 {
@@ -215,7 +215,7 @@ func TestRace_SetChargingProfileTransactionIdGetterReturnsCopy(t *testing.T) {
 		}
 
 		if current.Value() != 1 {
-			return fmt.Errorf("TransactionId.Value() = %d, want %d", current.Value(), 1)
+			return fmt.Errorf("TransactionID.Value() = %d, want %d", current.Value(), 1)
 		}
 
 		return nil

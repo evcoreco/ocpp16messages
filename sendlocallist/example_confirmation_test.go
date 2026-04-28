@@ -3,7 +3,7 @@ package sendlocallist_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/sendlocallist"
+	"github.com/evcoreco/ocpp16messages/sendlocallist"
 )
 
 const fmtStatusStr = "Status: %s\n"

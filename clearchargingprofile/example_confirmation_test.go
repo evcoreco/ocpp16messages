@@ -3,7 +3,7 @@ package clearchargingprofile_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/clearchargingprofile"
+	"github.com/evcoreco/ocpp16messages/clearchargingprofile"
 )
 
 // ExampleConf demonstrates creating a valid ClearChargingProfile.conf message

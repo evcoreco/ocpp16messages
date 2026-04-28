@@ -3,8 +3,8 @@ package updatefirmware_test
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/updatefirmware"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/updatefirmware"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func TestConf_Success(t *testing.T) {

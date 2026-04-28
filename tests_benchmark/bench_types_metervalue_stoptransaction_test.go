@@ -5,9 +5,9 @@ package benchmark
 import (
 	"testing"
 
-	mv "github.com/aasanchez/ocpp16messages/metervalues"
-	stp "github.com/aasanchez/ocpp16messages/stoptransaction"
-	types "github.com/aasanchez/ocpp16types"
+	mv "github.com/evcoreco/ocpp16messages/metervalues"
+	stp "github.com/evcoreco/ocpp16messages/stoptransaction"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
@@ -102,7 +102,7 @@ func BenchmarkMeterValuesReq_SingleValue(b *testing.B) {
 	b.ReportAllocs()
 
 	reqInput := mv.ReqInput{
-		ConnectorId: 1,
+		ConnectorID: 1,
 		MeterValue: []types.MeterValueInput{
 			{
 				Timestamp: sampleTimestamp,
@@ -131,7 +131,7 @@ func BenchmarkMeterValuesReq_ManySampledValues(b *testing.B) {
 	}
 
 	reqInput := mv.ReqInput{
-		ConnectorId: 1,
+		ConnectorID: 1,
 		MeterValue: []types.MeterValueInput{
 			{
 				Timestamp:    sampleTimestamp,
@@ -180,22 +180,22 @@ func BenchmarkNewCiString255Type(b *testing.B) {
 	}
 }
 
-func BenchmarkNewIdToken(b *testing.B) {
+func BenchmarkNewIDToken(b *testing.B) {
 	b.ReportAllocs()
 
 	ci, _ := types.NewCiString20Type(ciStringSample)
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		_ = types.NewIdToken(ci)
+		_ = types.NewIDToken(ci)
 	}
 }
 
-func BenchmarkNewIdTagInfo(b *testing.B) {
+func BenchmarkNewIDTagInfo(b *testing.B) {
 	b.ReportAllocs()
 
 	for i := 0; i < b.N; i++ {
-		if _, err := types.NewIdTagInfo(types.AuthorizationStatusAccepted); err != nil {
+		if _, err := types.NewIDTagInfo(types.AuthorizationStatusAccepted); err != nil {
 			b.Fatal(err)
 		}
 	}
@@ -205,7 +205,7 @@ func BenchmarkStopTransactionReq_Minimal(b *testing.B) {
 	b.ReportAllocs()
 
 	reqInput := stp.ReqInput{
-		TransactionId: 1,
+		TransactionID: 1,
 		MeterStop:     100,
 		Timestamp:     sampleTimestamp,
 	}
@@ -221,7 +221,7 @@ func BenchmarkStopTransactionReq_WithTransactionData(b *testing.B) {
 	b.ReportAllocs()
 
 	reqInput := stp.ReqInput{
-		TransactionId: 1,
+		TransactionID: 1,
 		MeterStop:     100,
 		Timestamp:     sampleTimestamp,
 		TransactionData: []types.MeterValueInput{

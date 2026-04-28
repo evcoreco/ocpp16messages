@@ -5,8 +5,8 @@ package benchmark
 import (
 	"testing"
 
-	sll "github.com/aasanchez/ocpp16messages/sendlocallist"
-	types "github.com/aasanchez/ocpp16types"
+	sll "github.com/evcoreco/ocpp16messages/sendlocallist"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 var (

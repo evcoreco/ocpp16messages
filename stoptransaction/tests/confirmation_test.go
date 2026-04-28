@@ -5,8 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/stoptransaction"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/stoptransaction"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
@@ -17,26 +17,26 @@ const (
 	statusConcurrentTx   = "ConcurrentTx"
 	errConfStatus        = "status"
 	errConfExpiryDate    = "expiryDate"
-	errConfParentId      = "parentIdTag"
-	errConfIdTagInfoNil  = "Conf() IdTagInfo = nil, want non-nil"
+	errConfParentId      = "parentIDTag"
+	errConfIDTagInfoNil  = "Conf() IDTagInfo = nil, want non-nil"
 	errConfExpiryDateNil = "Conf() ExpiryDate = nil, want non-nil"
-	errConfParentIdNil   = "Conf() ParentIdTag = nil, want non-nil"
+	errConfParentIdNil   = "Conf() ParentIDTag = nil, want non-nil"
 )
 
-func TestConf_NoIdTagInfo(t *testing.T) {
+func TestConf_NoIDTagInfo(t *testing.T) {
 	t.Parallel()
 
 	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      nil,
 		ExpiryDate:  nil,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo != nil {
-		t.Error("Conf() IdTagInfo != nil, want nil for empty input")
+	if conf.IDTagInfo != nil {
+		t.Error("Conf() IDTagInfo != nil, want nil for empty input")
 	}
 }
 
@@ -48,23 +48,23 @@ func TestConf_ValidAccepted(t *testing.T) {
 	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo == nil {
-		t.Error(errConfIdTagInfoNil)
+	if conf.IDTagInfo == nil {
+		t.Error(errConfIDTagInfoNil)
 
 		return
 	}
 
-	if conf.IdTagInfo.Status().String() != statusAccepted {
+	if conf.IDTagInfo.Status().String() != statusAccepted {
 		t.Errorf(
 			types.ErrorMismatch,
 			statusAccepted,
-			conf.IdTagInfo.Status().String(),
+			conf.IDTagInfo.Status().String(),
 		)
 	}
 }
@@ -77,23 +77,23 @@ func TestConf_ValidBlocked(t *testing.T) {
 	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo == nil {
-		t.Error(errConfIdTagInfoNil)
+	if conf.IDTagInfo == nil {
+		t.Error(errConfIDTagInfoNil)
 
 		return
 	}
 
-	if conf.IdTagInfo.Status().String() != statusBlocked {
+	if conf.IDTagInfo.Status().String() != statusBlocked {
 		t.Errorf(
 			types.ErrorMismatch,
 			statusBlocked,
-			conf.IdTagInfo.Status().String(),
+			conf.IDTagInfo.Status().String(),
 		)
 	}
 }
@@ -106,23 +106,23 @@ func TestConf_ValidExpired(t *testing.T) {
 	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo == nil {
-		t.Error(errConfIdTagInfoNil)
+	if conf.IDTagInfo == nil {
+		t.Error(errConfIDTagInfoNil)
 
 		return
 	}
 
-	if conf.IdTagInfo.Status().String() != statusExpired {
+	if conf.IDTagInfo.Status().String() != statusExpired {
 		t.Errorf(
 			types.ErrorMismatch,
 			statusExpired,
-			conf.IdTagInfo.Status().String(),
+			conf.IDTagInfo.Status().String(),
 		)
 	}
 }
@@ -135,23 +135,23 @@ func TestConf_ValidInvalid(t *testing.T) {
 	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo == nil {
-		t.Error(errConfIdTagInfoNil)
+	if conf.IDTagInfo == nil {
+		t.Error(errConfIDTagInfoNil)
 
 		return
 	}
 
-	if conf.IdTagInfo.Status().String() != statusInvalid {
+	if conf.IDTagInfo.Status().String() != statusInvalid {
 		t.Errorf(
 			types.ErrorMismatch,
 			statusInvalid,
-			conf.IdTagInfo.Status().String(),
+			conf.IDTagInfo.Status().String(),
 		)
 	}
 }
@@ -164,23 +164,23 @@ func TestConf_ValidConcurrentTx(t *testing.T) {
 	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo == nil {
-		t.Error(errConfIdTagInfoNil)
+	if conf.IDTagInfo == nil {
+		t.Error(errConfIDTagInfoNil)
 
 		return
 	}
 
-	if conf.IdTagInfo.Status().String() != statusConcurrentTx {
+	if conf.IDTagInfo.Status().String() != statusConcurrentTx {
 		t.Errorf(
 			types.ErrorMismatch,
 			statusConcurrentTx,
-			conf.IdTagInfo.Status().String(),
+			conf.IDTagInfo.Status().String(),
 		)
 	}
 }
@@ -193,7 +193,7 @@ func TestConf_InvalidStatus(t *testing.T) {
 	_, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err == nil {
 		t.Error("Conf() error = nil, want error for invalid status")
@@ -212,7 +212,7 @@ func TestConf_EmptyStatus(t *testing.T) {
 	_, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err == nil {
 		t.Error("Conf() error = nil, want error for empty status")
@@ -232,19 +232,19 @@ func TestConf_WithExpiryDate(t *testing.T) {
 	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  &expiryDate,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo == nil {
-		t.Error(errConfIdTagInfoNil)
+	if conf.IDTagInfo == nil {
+		t.Error(errConfIDTagInfoNil)
 
 		return
 	}
 
-	if conf.IdTagInfo.ExpiryDate() == nil {
+	if conf.IDTagInfo.ExpiryDate() == nil {
 		t.Error(errConfExpiryDateNil)
 	}
 }
@@ -258,7 +258,7 @@ func TestConf_WithInvalidExpiryDate(t *testing.T) {
 	_, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  &invalidDate,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err == nil {
 		t.Error("Conf() error = nil, want error for invalid expiry date")
@@ -269,7 +269,7 @@ func TestConf_WithInvalidExpiryDate(t *testing.T) {
 	}
 }
 
-func TestConf_WithParentIdTag(t *testing.T) {
+func TestConf_WithParentIDTag(t *testing.T) {
 	t.Parallel()
 
 	status := statusAccepted
@@ -278,32 +278,32 @@ func TestConf_WithParentIdTag(t *testing.T) {
 	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
-		ParentIdTag: &parentTag,
+		ParentIDTag: &parentTag,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo == nil {
-		t.Error(errConfIdTagInfoNil)
+	if conf.IDTagInfo == nil {
+		t.Error(errConfIDTagInfoNil)
 
 		return
 	}
 
-	if conf.IdTagInfo.ParentIdTag() == nil {
+	if conf.IDTagInfo.ParentIDTag() == nil {
 		t.Error(errConfParentIdNil)
 	}
 
-	if conf.IdTagInfo.ParentIdTag().String() != parentTag {
+	if conf.IDTagInfo.ParentIDTag().String() != parentTag {
 		t.Errorf(
 			types.ErrorMismatch,
 			parentTag,
-			conf.IdTagInfo.ParentIdTag().String(),
+			conf.IDTagInfo.ParentIDTag().String(),
 		)
 	}
 }
 
-func TestConf_WithParentIdTagTooLong(t *testing.T) {
+func TestConf_WithParentIDTagTooLong(t *testing.T) {
 	t.Parallel()
 
 	status := statusAccepted
@@ -312,10 +312,10 @@ func TestConf_WithParentIdTagTooLong(t *testing.T) {
 	_, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
-		ParentIdTag: &longTag,
+		ParentIDTag: &longTag,
 	})
 	if err == nil {
-		t.Error("Conf() error = nil, want error for parentIdTag too long")
+		t.Error("Conf() error = nil, want error for parentIDTag too long")
 	}
 
 	if !strings.Contains(err.Error(), errConfParentId) {
@@ -323,7 +323,7 @@ func TestConf_WithParentIdTagTooLong(t *testing.T) {
 	}
 }
 
-func TestConf_WithEmptyParentIdTag(t *testing.T) {
+func TestConf_WithEmptyParentIDTag(t *testing.T) {
 	t.Parallel()
 
 	status := statusAccepted
@@ -332,10 +332,10 @@ func TestConf_WithEmptyParentIdTag(t *testing.T) {
 	_, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
-		ParentIdTag: &emptyTag,
+		ParentIDTag: &emptyTag,
 	})
 	if err == nil {
-		t.Error("Conf() error = nil, want error for empty parentIdTag")
+		t.Error("Conf() error = nil, want error for empty parentIDTag")
 	}
 
 	if !strings.Contains(err.Error(), errConfParentId) {
@@ -353,39 +353,39 @@ func TestConf_Complete(t *testing.T) {
 	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  &expiryDate,
-		ParentIdTag: &parentTag,
+		ParentIDTag: &parentTag,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo == nil {
-		t.Error(errConfIdTagInfoNil)
+	if conf.IDTagInfo == nil {
+		t.Error(errConfIDTagInfoNil)
 
 		return
 	}
 
-	if conf.IdTagInfo.Status().String() != statusAccepted {
+	if conf.IDTagInfo.Status().String() != statusAccepted {
 		t.Errorf(
 			types.ErrorMismatch,
 			statusAccepted,
-			conf.IdTagInfo.Status().String(),
+			conf.IDTagInfo.Status().String(),
 		)
 	}
 
-	if conf.IdTagInfo.ExpiryDate() == nil {
+	if conf.IDTagInfo.ExpiryDate() == nil {
 		t.Error(errConfExpiryDateNil)
 	}
 
-	if conf.IdTagInfo.ParentIdTag() == nil {
+	if conf.IDTagInfo.ParentIDTag() == nil {
 		t.Error(errConfParentIdNil)
 	}
 
-	if conf.IdTagInfo.ParentIdTag().String() != parentTag {
+	if conf.IDTagInfo.ParentIDTag().String() != parentTag {
 		t.Errorf(
 			types.ErrorMismatch,
 			parentTag,
-			conf.IdTagInfo.ParentIdTag().String(),
+			conf.IDTagInfo.ParentIDTag().String(),
 		)
 	}
 }
@@ -400,7 +400,7 @@ func TestConf_MultipleErrors(t *testing.T) {
 	_, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &invalidStatus,
 		ExpiryDate:  &invalidDate,
-		ParentIdTag: &longTag,
+		ParentIDTag: &longTag,
 	})
 	if err == nil {
 		t.Error("Conf() error = nil, want error for multiple invalid fields")
@@ -430,7 +430,7 @@ func TestConf_MultipleErrors_StatusAndExpiryDate(t *testing.T) {
 	_, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &invalidStatus,
 		ExpiryDate:  &invalidDate,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err == nil {
 		t.Error("Conf() error = nil, want error for invalid status and expiry")

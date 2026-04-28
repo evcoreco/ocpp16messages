@@ -5,16 +5,16 @@ package benchmark
 import (
 	"testing"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 var (
 	sinkDateTimeCustom    types.DateTime
 	sinkDateTimePrimitive string
 
-	sinkParentIdTagInfoCustom types.IdTagInfo
-	sinkParentIdTagInfoPrim   primitiveIdTagInfo
-	sinkParentIdTagValue      string
+	sinkParentIDTagInfoCustom types.IDTagInfo
+	sinkParentIDTagInfoPrim   primitiveIDTagInfo
+	sinkParentIDTagValue      string
 )
 
 func BenchmarkDateTime_CustomType(b *testing.B) {
@@ -50,47 +50,47 @@ func BenchmarkDateTime_PrimitiveValidated(b *testing.B) {
 	}
 }
 
-func BenchmarkParentIdTag_CustomChain(b *testing.B) {
+func BenchmarkParentIDTag_CustomChain(b *testing.B) {
 	b.ReportAllocs()
 
 	for i := 0; i < b.N; i++ {
-		idTagInfo, err := buildCustomParentIdTagInfo("PARENT-TAG-001")
+		idTagInfo, err := buildCustomParentIDTagInfo("PARENT-TAG-001")
 		if err != nil {
 			b.Fatal(err)
 		}
 
-		sinkParentIdTagInfoCustom = idTagInfo
+		sinkParentIDTagInfoCustom = idTagInfo
 	}
 }
 
-func BenchmarkParentIdTag_PrimitiveDirect(b *testing.B) {
+func BenchmarkParentIDTag_PrimitiveDirect(b *testing.B) {
 	b.ReportAllocs()
 
 	for i := 0; i < b.N; i++ {
-		parentIdTag := "PARENT-TAG-001"
-		idTagInfo := primitiveIdTagInfo{ParentIdTag: &parentIdTag}
-		sinkParentIdTagInfoPrim = idTagInfo
+		parentIDTag := "PARENT-TAG-001"
+		idTagInfo := primitiveIDTagInfo{ParentIDTag: &parentIDTag}
+		sinkParentIDTagInfoPrim = idTagInfo
 	}
 }
 
-func BenchmarkParentIdTag_PrimitiveValidated(b *testing.B) {
+func BenchmarkParentIDTag_PrimitiveValidated(b *testing.B) {
 	b.ReportAllocs()
 
 	for i := 0; i < b.N; i++ {
-		parentIdTag := "PARENT-TAG-001"
-		if err := validatePrimitiveCiString20(parentIdTag); err != nil {
+		parentIDTag := "PARENT-TAG-001"
+		if err := validatePrimitiveCiString20(parentIDTag); err != nil {
 			b.Fatal(err)
 		}
 
-		idTagInfo := primitiveIdTagInfo{ParentIdTag: &parentIdTag}
-		sinkParentIdTagInfoPrim = idTagInfo
+		idTagInfo := primitiveIDTagInfo{ParentIDTag: &parentIDTag}
+		sinkParentIDTagInfoPrim = idTagInfo
 	}
 }
 
-func BenchmarkParentIdTag_CustomReadPrimitive(b *testing.B) {
+func BenchmarkParentIDTag_CustomReadPrimitive(b *testing.B) {
 	b.ReportAllocs()
 
-	idTagInfo, err := buildCustomParentIdTagInfo("PARENT-TAG-001")
+	idTagInfo, err := buildCustomParentIDTagInfo("PARENT-TAG-001")
 	if err != nil {
 		b.Fatal(err)
 	}
@@ -98,35 +98,35 @@ func BenchmarkParentIdTag_CustomReadPrimitive(b *testing.B) {
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		sinkParentIdTagValue = idTagInfo.ParentIdTag().Value().Value()
+		sinkParentIDTagValue = idTagInfo.ParentIDTag().Value().Value()
 	}
 }
 
-func BenchmarkParentIdTag_PrimitiveRead(b *testing.B) {
+func BenchmarkParentIDTag_PrimitiveRead(b *testing.B) {
 	b.ReportAllocs()
 
-	parentIdTag := "PARENT-TAG-001"
-	idTagInfo := primitiveIdTagInfo{ParentIdTag: &parentIdTag}
+	parentIDTag := "PARENT-TAG-001"
+	idTagInfo := primitiveIDTagInfo{ParentIDTag: &parentIDTag}
 
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		sinkParentIdTagValue = *idTagInfo.ParentIdTag
+		sinkParentIDTagValue = *idTagInfo.ParentIDTag
 	}
 }
 
-func buildCustomParentIdTagInfo(parentIdTag string) (types.IdTagInfo, error) {
-	ciString, err := types.NewCiString20Type(parentIdTag)
+func buildCustomParentIDTagInfo(parentIDTag string) (types.IDTagInfo, error) {
+	ciString, err := types.NewCiString20Type(parentIDTag)
 	if err != nil {
-		return types.IdTagInfo{}, err
+		return types.IDTagInfo{}, err
 	}
 
-	idToken := types.NewIdToken(ciString)
+	idToken := types.NewIDToken(ciString)
 
-	idTagInfo, err := types.NewIdTagInfo(types.AuthorizationStatusAccepted)
+	idTagInfo, err := types.NewIDTagInfo(types.AuthorizationStatusAccepted)
 	if err != nil {
-		return types.IdTagInfo{}, err
+		return types.IDTagInfo{}, err
 	}
 
-	return idTagInfo.WithParentIdTag(idToken), nil
+	return idTagInfo.WithParentIDTag(idToken), nil
 }

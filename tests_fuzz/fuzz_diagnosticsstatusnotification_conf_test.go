@@ -5,7 +5,7 @@ package fuzz
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/diagnosticsstatusnotification"
+	"github.com/evcoreco/ocpp16messages/diagnosticsstatusnotification"
 )
 
 func FuzzDiagnosticsStatusNotificationConf(f *testing.F) {

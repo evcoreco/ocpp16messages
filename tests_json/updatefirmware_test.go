@@ -3,7 +3,7 @@ package testsjson_test
 import (
 	"testing"
 
-	uf "github.com/aasanchez/ocpp16messages/updatefirmware"
+	uf "github.com/evcoreco/ocpp16messages/updatefirmware"
 )
 
 func TestUpdateFirmwareReq_JSONRoundTrip(t *testing.T) {

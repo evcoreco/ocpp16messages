@@ -3,7 +3,7 @@ package remotestarttransaction_test
 import (
 	"fmt"
 
-	rst "github.com/aasanchez/ocpp16messages/remotestarttransaction"
+	rst "github.com/evcoreco/ocpp16messages/remotestarttransaction"
 )
 
 // ExampleConf demonstrates creating a valid RemoteStartTransaction.conf message

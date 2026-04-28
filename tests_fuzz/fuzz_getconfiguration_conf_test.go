@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	gc "github.com/aasanchez/ocpp16messages/getconfiguration"
-	types "github.com/aasanchez/ocpp16types"
+	gc "github.com/evcoreco/ocpp16messages/getconfiguration"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzGetConfigurationConf(f *testing.F) {

@@ -3,7 +3,7 @@ package reset_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/reset"
+	"github.com/evcoreco/ocpp16messages/reset"
 )
 
 // ExampleReq demonstrates creating a valid Reset.req message

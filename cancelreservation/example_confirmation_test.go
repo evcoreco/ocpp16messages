@@ -3,7 +3,7 @@ package cancelreservation_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/cancelreservation"
+	"github.com/evcoreco/ocpp16messages/cancelreservation"
 )
 
 // ExampleConf demonstrates creating a valid CancelReservation.conf message

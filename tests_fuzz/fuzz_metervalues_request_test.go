@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	mv "github.com/aasanchez/ocpp16messages/metervalues"
-	types "github.com/aasanchez/ocpp16types"
+	mv "github.com/evcoreco/ocpp16messages/metervalues"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzMeterValuesReq(f *testing.F) {
@@ -23,7 +23,7 @@ func FuzzMeterValuesReq(f *testing.F) {
 	f.Fuzz(func(
 		t *testing.T,
 		connectorId int,
-		hasTransactionId bool,
+		hasTransactionID bool,
 		transactionId int,
 		hasMeterValue bool,
 		timestamp string,
@@ -34,7 +34,7 @@ func FuzzMeterValuesReq(f *testing.F) {
 		}
 
 		var transactionIdPtr *int
-		if hasTransactionId {
+		if hasTransactionID {
 			transactionIdPtr = &transactionId
 		}
 
@@ -51,8 +51,8 @@ func FuzzMeterValuesReq(f *testing.F) {
 		}
 
 		req, err := mv.Req(mv.ReqInput{
-			ConnectorId:   connectorId,
-			TransactionId: transactionIdPtr,
+			ConnectorID:   connectorId,
+			TransactionID: transactionIdPtr,
 			MeterValue:    metervalues,
 		})
 		if err != nil {
@@ -70,24 +70,24 @@ func FuzzMeterValuesReq(f *testing.F) {
 			t.Fatalf("Req succeeded with connectorId=%d", connectorId)
 		}
 
-		if got := req.ConnectorId.Value(); got != uint16(connectorId) {
-			t.Fatalf("ConnectorId = %d, want %d", got, connectorId)
+		if got := req.ConnectorID.Value(); got != uint16(connectorId) {
+			t.Fatalf("ConnectorID = %d, want %d", got, connectorId)
 		}
 
-		if hasTransactionId {
-			if req.TransactionId == nil {
-				t.Fatal("TransactionId = nil, want non-nil")
+		if hasTransactionID {
+			if req.TransactionID == nil {
+				t.Fatal("TransactionID = nil, want non-nil")
 			}
 
 			if transactionId < 0 || transactionId > math.MaxUint16 {
 				t.Fatalf("Req succeeded with transactionId=%d", transactionId)
 			}
 
-			if got := req.TransactionId.Value(); got != uint16(transactionId) {
-				t.Fatalf("TransactionId = %d, want %d", got, transactionId)
+			if got := req.TransactionID.Value(); got != uint16(transactionId) {
+				t.Fatalf("TransactionID = %d, want %d", got, transactionId)
 			}
-		} else if req.TransactionId != nil {
-			t.Fatal("TransactionId != nil, want nil")
+		} else if req.TransactionID != nil {
+			t.Fatal("TransactionID != nil, want nil")
 		}
 
 		if len(req.MeterValue) == 0 {

@@ -5,7 +5,7 @@ package fuzz
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/clearcache"
+	"github.com/evcoreco/ocpp16messages/clearcache"
 )
 
 func FuzzClearCacheReq(f *testing.F) {

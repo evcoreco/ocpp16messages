@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	stp "github.com/aasanchez/ocpp16messages/stoptransaction"
-	types "github.com/aasanchez/ocpp16types"
+	stp "github.com/evcoreco/ocpp16messages/stoptransaction"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzStopTransactionReq(f *testing.F) {
@@ -33,7 +33,7 @@ func FuzzStopTransactionReq(f *testing.F) {
 		transactionId int,
 		meterStop int,
 		timestamp string,
-		hasIdTag bool,
+		hasIDTag bool,
 		idTag string,
 		hasReason bool,
 		reason string,
@@ -46,7 +46,7 @@ func FuzzStopTransactionReq(f *testing.F) {
 		}
 
 		var idTagPtr *string
-		if hasIdTag {
+		if hasIDTag {
 			idTagPtr = &idTag
 		}
 
@@ -74,8 +74,8 @@ func FuzzStopTransactionReq(f *testing.F) {
 		}
 
 		req, err := stp.Req(stp.ReqInput{
-			TransactionId:   transactionId,
-			IdTag:           idTagPtr,
+			TransactionID:   transactionId,
+			IDTag:           idTagPtr,
 			MeterStop:       meterStop,
 			Timestamp:       timestamp,
 			Reason:          reasonPtr,
@@ -96,8 +96,8 @@ func FuzzStopTransactionReq(f *testing.F) {
 			t.Fatalf("Req succeeded with transactionId=%d", transactionId)
 		}
 
-		if got := req.TransactionId.Value(); got != uint16(transactionId) {
-			t.Fatalf("TransactionId = %d, want %d", got, transactionId)
+		if got := req.TransactionID.Value(); got != uint16(transactionId) {
+			t.Fatalf("TransactionID = %d, want %d", got, transactionId)
 		}
 
 		if meterStop < 0 || meterStop > math.MaxUint16 {
@@ -115,18 +115,18 @@ func FuzzStopTransactionReq(f *testing.F) {
 			)
 		}
 
-		if hasIdTag {
-			if req.IdTag == nil {
-				t.Fatal("IdTag = nil, want non-nil")
+		if hasIDTag {
+			if req.IDTag == nil {
+				t.Fatal("IDTag = nil, want non-nil")
 			}
 			if idTag == "" {
-				t.Fatal("Req succeeded with empty IdTag")
+				t.Fatal("Req succeeded with empty IDTag")
 			}
-			if req.IdTag.String() != idTag {
-				t.Fatalf("IdTag = %q, want %q", req.IdTag.String(), idTag)
+			if req.IDTag.String() != idTag {
+				t.Fatalf("IDTag = %q, want %q", req.IDTag.String(), idTag)
 			}
-		} else if req.IdTag != nil {
-			t.Fatal("IdTag != nil, want nil")
+		} else if req.IDTag != nil {
+			t.Fatal("IDTag != nil, want nil")
 		}
 
 		if hasReason {

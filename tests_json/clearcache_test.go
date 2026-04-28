@@ -3,7 +3,7 @@ package testsjson_test
 import (
 	"testing"
 
-	cc "github.com/aasanchez/ocpp16messages/clearcache"
+	cc "github.com/evcoreco/ocpp16messages/clearcache"
 )
 
 func TestClearCacheReq_JSONRoundTrip(t *testing.T) {

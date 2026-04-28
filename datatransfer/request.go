@@ -4,21 +4,21 @@ import (
 	"errors"
 	"fmt"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 // ReqInput represents the raw input data for creating a DataTransfer.req
 // message. The constructor Req validates all fields automatically.
 type ReqInput struct {
-	VendorId  string  // Required: Vendor identifier (max 255 chars)
-	MessageId *string // Optional: Message identifier (max 50 chars)
+	VendorID  string  // Required: Vendor identifier (max 255 chars)
+	MessageID *string // Optional: Message identifier (max 50 chars)
 	Data      *string // Optional: Data payload (unbounded per OCPP spec)
 }
 
 // ReqMessage represents an OCPP 1.6 DataTransfer.req message.
 type ReqMessage struct {
-	VendorId  types.CiString255Type
-	MessageId *types.CiString50Type
+	VendorID  types.CiString255Type
+	MessageID *types.CiString50Type
 	Data      *string
 }
 
@@ -32,9 +32,9 @@ type reqValidation struct {
 // It validates all fields and accumulates all errors, returning them together.
 // This allows callers to see all validation issues at once rather than one at
 // a time. Returns an error if:
-//   - VendorId is empty
-//   - VendorId exceeds 255 characters or contains invalid chars
-//   - MessageId (if provided) exceeds 50 characters or contains invalid chars
+//   - VendorID is empty
+//   - VendorID exceeds 255 characters or contains invalid chars
+//   - MessageID (if provided) exceeds 50 characters or contains invalid chars
 func Req(input ReqInput) (ReqMessage, error) {
 	validated, errs := validateReqInput(input)
 
@@ -53,7 +53,7 @@ func validateReqInput(input ReqInput) (reqValidation, []error) {
 	var validated reqValidation
 
 	// Validate vendorId (required)
-	vendorId, err := types.NewCiString255Type(input.VendorId)
+	vendorId, err := types.NewCiString255Type(input.VendorID)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("vendorId: %w", err))
 	} else {
@@ -61,8 +61,8 @@ func validateReqInput(input ReqInput) (reqValidation, []error) {
 	}
 
 	// Validate messageId (optional)
-	if input.MessageId != nil {
-		messageId, err := types.NewCiString50Type(*input.MessageId)
+	if input.MessageID != nil {
+		messageId, err := types.NewCiString50Type(*input.MessageID)
 		if err != nil {
 			errs = append(errs, fmt.Errorf("messageId: %w", err))
 		} else {
@@ -76,13 +76,13 @@ func validateReqInput(input ReqInput) (reqValidation, []error) {
 // buildReqMessage constructs the final ReqMessage with validated fields.
 func buildReqMessage(input ReqInput, validated reqValidation) ReqMessage {
 	msg := ReqMessage{
-		VendorId:  validated.vendorId,
-		MessageId: nil,
+		VendorID:  validated.vendorId,
+		MessageID: nil,
 		Data:      nil,
 	}
 
-	if input.MessageId != nil {
-		msg.MessageId = &validated.messageId
+	if input.MessageID != nil {
+		msg.MessageID = &validated.messageId
 	}
 
 	if input.Data != nil {

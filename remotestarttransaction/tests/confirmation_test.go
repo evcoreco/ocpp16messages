@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	rst "github.com/aasanchez/ocpp16messages/remotestarttransaction"
-	types "github.com/aasanchez/ocpp16types"
+	rst "github.com/evcoreco/ocpp16messages/remotestarttransaction"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (

@@ -3,17 +3,17 @@ package datatransfer_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/datatransfer"
+	"github.com/evcoreco/ocpp16messages/datatransfer"
 )
 
-const labelVendorId = "VendorId:"
+const labelVendorID = "VendorID:"
 
 // ExampleReq demonstrates creating a valid DataTransfer.req message
 // with only the required vendorId field.
 func ExampleReq() {
 	req, err := datatransfer.Req(datatransfer.ReqInput{
-		VendorId:  "com.example.vendor",
-		MessageId: nil,
+		VendorID:  "com.example.vendor",
+		MessageID: nil,
 		Data:      nil,
 	})
 	if err != nil {
@@ -22,19 +22,19 @@ func ExampleReq() {
 		return
 	}
 
-	fmt.Println(labelVendorId, req.VendorId.Value())
+	fmt.Println(labelVendorID, req.VendorID.Value())
 	// Output:
-	// VendorId: com.example.vendor
+	// VendorID: com.example.vendor
 }
 
-// ExampleReq_withMessageId demonstrates creating a DataTransfer.req message
+// ExampleReq_withMessageID demonstrates creating a DataTransfer.req message
 // with an optional messageId.
-func ExampleReq_withMessageId() {
+func ExampleReq_withMessageID() {
 	messageId := "CustomMessage"
 
 	req, err := datatransfer.Req(datatransfer.ReqInput{
-		VendorId:  "com.example.vendor",
-		MessageId: &messageId,
+		VendorID:  "com.example.vendor",
+		MessageID: &messageId,
 		Data:      nil,
 	})
 	if err != nil {
@@ -43,11 +43,11 @@ func ExampleReq_withMessageId() {
 		return
 	}
 
-	fmt.Println(labelVendorId, req.VendorId.Value())
-	fmt.Println("MessageId:", req.MessageId.Value())
+	fmt.Println(labelVendorID, req.VendorID.Value())
+	fmt.Println("MessageID:", req.MessageID.Value())
 	// Output:
-	// VendorId: com.example.vendor
-	// MessageId: CustomMessage
+	// VendorID: com.example.vendor
+	// MessageID: CustomMessage
 }
 
 // ExampleReq_withData demonstrates creating a DataTransfer.req message
@@ -56,8 +56,8 @@ func ExampleReq_withData() {
 	data := `{"temperature": 25.5, "humidity": 60}`
 
 	req, err := datatransfer.Req(datatransfer.ReqInput{
-		VendorId:  "com.example.vendor",
-		MessageId: nil,
+		VendorID:  "com.example.vendor",
+		MessageID: nil,
 		Data:      &data,
 	})
 	if err != nil {
@@ -66,10 +66,10 @@ func ExampleReq_withData() {
 		return
 	}
 
-	fmt.Println(labelVendorId, req.VendorId.Value())
+	fmt.Println(labelVendorID, req.VendorID.Value())
 	fmt.Println("HasData:", req.Data != nil)
 	// Output:
-	// VendorId: com.example.vendor
+	// VendorID: com.example.vendor
 	// HasData: true
 }
 
@@ -80,8 +80,8 @@ func ExampleReq_complete() {
 	data := `{"sensorId": "temp-001"}`
 
 	req, err := datatransfer.Req(datatransfer.ReqInput{
-		VendorId:  "com.example.vendor",
-		MessageId: &messageId,
+		VendorID:  "com.example.vendor",
+		MessageID: &messageId,
 		Data:      &data,
 	})
 	if err != nil {
@@ -90,21 +90,21 @@ func ExampleReq_complete() {
 		return
 	}
 
-	fmt.Println(labelVendorId, req.VendorId.Value())
-	fmt.Println("MessageId:", req.MessageId.Value())
+	fmt.Println(labelVendorID, req.VendorID.Value())
+	fmt.Println("MessageID:", req.MessageID.Value())
 	fmt.Println("Data:", *req.Data)
 	// Output:
-	// VendorId: com.example.vendor
-	// MessageId: GetTemperature
+	// VendorID: com.example.vendor
+	// MessageID: GetTemperature
 	// Data: {"sensorId": "temp-001"}
 }
 
-// ExampleReq_emptyVendorId demonstrates the error returned when
+// ExampleReq_emptyVendorID demonstrates the error returned when
 // an empty vendorId is provided.
-func ExampleReq_emptyVendorId() {
+func ExampleReq_emptyVendorID() {
 	_, err := datatransfer.Req(datatransfer.ReqInput{
-		VendorId:  "",
-		MessageId: nil,
+		VendorID:  "",
+		MessageID: nil,
 		Data:      nil,
 	})
 	if err != nil {
@@ -114,12 +114,12 @@ func ExampleReq_emptyVendorId() {
 	// vendorId: value cannot be empty
 }
 
-// ExampleReq_invalidVendorIdChars demonstrates the error returned when
+// ExampleReq_invalidVendorIDChars demonstrates the error returned when
 // the vendorId contains non-printable ASCII characters.
-func ExampleReq_invalidVendorIdChars() {
+func ExampleReq_invalidVendorIDChars() {
 	_, err := datatransfer.Req(datatransfer.ReqInput{
-		VendorId:  "vendor\x00id",
-		MessageId: nil,
+		VendorID:  "vendor\x00id",
+		MessageID: nil,
 		Data:      nil,
 	})
 	if err != nil {

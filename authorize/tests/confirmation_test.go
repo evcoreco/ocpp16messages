@@ -5,13 +5,13 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/authorize"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/authorize"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
 	StatusAccepted = "Accepted"
-	ErrParentIdTag = "parentIdTag"
+	ErrParentIDTag = "parentIDTag"
 	ErrExpiryDate  = "expiryDate"
 )
 
@@ -21,17 +21,17 @@ func TestConf_ValidAccepted(t *testing.T) {
 	conf, err := authorize.Conf(authorize.ConfInput{
 		Status:      StatusAccepted,
 		ExpiryDate:  nil,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo.Status().String() != StatusAccepted {
+	if conf.IDTagInfo.Status().String() != StatusAccepted {
 		t.Errorf(
 			types.ErrorMismatch,
 			StatusAccepted,
-			conf.IdTagInfo.Status().String(),
+			conf.IDTagInfo.Status().String(),
 		)
 	}
 }
@@ -42,13 +42,13 @@ func TestConf_ValidBlocked(t *testing.T) {
 	conf, err := authorize.Conf(authorize.ConfInput{
 		Status:      "Blocked",
 		ExpiryDate:  nil,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	status := conf.IdTagInfo.Status().String()
+	status := conf.IDTagInfo.Status().String()
 	if status != "Blocked" {
 		t.Errorf(types.ErrorMismatch, "Blocked", status)
 	}
@@ -60,13 +60,13 @@ func TestConf_ValidExpired(t *testing.T) {
 	conf, err := authorize.Conf(authorize.ConfInput{
 		Status:      "Expired",
 		ExpiryDate:  nil,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	status := conf.IdTagInfo.Status().String()
+	status := conf.IDTagInfo.Status().String()
 	if status != "Expired" {
 		t.Errorf(types.ErrorMismatch, "Expired", status)
 	}
@@ -78,13 +78,13 @@ func TestConf_ValidInvalid(t *testing.T) {
 	conf, err := authorize.Conf(authorize.ConfInput{
 		Status:      "Invalid",
 		ExpiryDate:  nil,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	status := conf.IdTagInfo.Status().String()
+	status := conf.IDTagInfo.Status().String()
 	if status != "Invalid" {
 		t.Errorf(types.ErrorMismatch, "Invalid", status)
 	}
@@ -96,17 +96,17 @@ func TestConf_ValidConcurrentTx(t *testing.T) {
 	conf, err := authorize.Conf(authorize.ConfInput{
 		Status:      "ConcurrentTx",
 		ExpiryDate:  nil,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo.Status().String() != "ConcurrentTx" {
+	if conf.IDTagInfo.Status().String() != "ConcurrentTx" {
 		t.Errorf(
 			types.ErrorMismatch,
 			"ConcurrentTx",
-			conf.IdTagInfo.Status().String(),
+			conf.IDTagInfo.Status().String(),
 		)
 	}
 }
@@ -117,7 +117,7 @@ func TestConf_InvalidStatus(t *testing.T) {
 	_, err := authorize.Conf(authorize.ConfInput{
 		Status:      "Unknown",
 		ExpiryDate:  nil,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err == nil {
 		t.Error("Conf() error = nil, want error for invalid status")
@@ -134,7 +134,7 @@ func TestConf_EmptyStatus(t *testing.T) {
 	_, err := authorize.Conf(authorize.ConfInput{
 		Status:      "",
 		ExpiryDate:  nil,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err == nil {
 		t.Error("Conf() error = nil, want error for empty status")
@@ -153,13 +153,13 @@ func TestConf_WithExpiryDate(t *testing.T) {
 	conf, err := authorize.Conf(authorize.ConfInput{
 		Status:      "Accepted",
 		ExpiryDate:  &expiryDate,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo.ExpiryDate() == nil {
+	if conf.IDTagInfo.ExpiryDate() == nil {
 		t.Error("Conf() ExpiryDate = nil, want non-nil")
 	}
 }
@@ -172,7 +172,7 @@ func TestConf_WithInvalidExpiryDate(t *testing.T) {
 	_, err := authorize.Conf(authorize.ConfInput{
 		Status:      "Accepted",
 		ExpiryDate:  &invalidDate,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err == nil {
 		t.Error("Conf() error = nil, want error for invalid expiry date")
@@ -183,7 +183,7 @@ func TestConf_WithInvalidExpiryDate(t *testing.T) {
 	}
 }
 
-func TestConf_WithParentIdTag(t *testing.T) {
+func TestConf_WithParentIDTag(t *testing.T) {
 	t.Parallel()
 
 	parentTag := "PARENT-TAG-123"
@@ -191,26 +191,26 @@ func TestConf_WithParentIdTag(t *testing.T) {
 	conf, err := authorize.Conf(authorize.ConfInput{
 		Status:      "Accepted",
 		ExpiryDate:  nil,
-		ParentIdTag: &parentTag,
+		ParentIDTag: &parentTag,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo.ParentIdTag() == nil {
-		t.Error("Conf() ParentIdTag = nil, want non-nil")
+	if conf.IDTagInfo.ParentIDTag() == nil {
+		t.Error("Conf() ParentIDTag = nil, want non-nil")
 	}
 
-	if conf.IdTagInfo.ParentIdTag().String() != parentTag {
+	if conf.IDTagInfo.ParentIDTag().String() != parentTag {
 		t.Errorf(
 			types.ErrorMismatch,
 			parentTag,
-			conf.IdTagInfo.ParentIdTag().String(),
+			conf.IDTagInfo.ParentIDTag().String(),
 		)
 	}
 }
 
-func TestConf_WithParentIdTagTooLong(t *testing.T) {
+func TestConf_WithParentIDTagTooLong(t *testing.T) {
 	t.Parallel()
 
 	longTag := "PARENT-TAG-123456789012345" // 26 chars, max is 20
@@ -218,18 +218,18 @@ func TestConf_WithParentIdTagTooLong(t *testing.T) {
 	_, err := authorize.Conf(authorize.ConfInput{
 		Status:      "Accepted",
 		ExpiryDate:  nil,
-		ParentIdTag: &longTag,
+		ParentIDTag: &longTag,
 	})
 	if err == nil {
-		t.Error("Conf() error = nil, want error for parentIdTag too long")
+		t.Error("Conf() error = nil, want error for parentIDTag too long")
 	}
 
-	if !strings.Contains(err.Error(), ErrParentIdTag) {
-		t.Errorf(types.ErrorWantContains, err, ErrParentIdTag)
+	if !strings.Contains(err.Error(), ErrParentIDTag) {
+		t.Errorf(types.ErrorWantContains, err, ErrParentIDTag)
 	}
 }
 
-func TestConf_WithEmptyParentIdTag(t *testing.T) {
+func TestConf_WithEmptyParentIDTag(t *testing.T) {
 	t.Parallel()
 
 	emptyTag := ""
@@ -237,14 +237,14 @@ func TestConf_WithEmptyParentIdTag(t *testing.T) {
 	_, err := authorize.Conf(authorize.ConfInput{
 		Status:      "Accepted",
 		ExpiryDate:  nil,
-		ParentIdTag: &emptyTag,
+		ParentIDTag: &emptyTag,
 	})
 	if err == nil {
-		t.Error("Conf() error = nil, want error for empty parentIdTag")
+		t.Error("Conf() error = nil, want error for empty parentIDTag")
 	}
 
-	if !strings.Contains(err.Error(), ErrParentIdTag) {
-		t.Errorf(types.ErrorWantContains, err, ErrParentIdTag)
+	if !strings.Contains(err.Error(), ErrParentIDTag) {
+		t.Errorf(types.ErrorWantContains, err, ErrParentIDTag)
 	}
 }
 
@@ -257,31 +257,31 @@ func TestConf_Complete(t *testing.T) {
 	conf, err := authorize.Conf(authorize.ConfInput{
 		Status:      "Accepted",
 		ExpiryDate:  &expiryDate,
-		ParentIdTag: &parentTag,
+		ParentIDTag: &parentTag,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo.Status().String() != "Accepted" {
+	if conf.IDTagInfo.Status().String() != "Accepted" {
 		t.Errorf(
-			types.ErrorMismatch, "Accepted", conf.IdTagInfo.Status().String(),
+			types.ErrorMismatch, "Accepted", conf.IDTagInfo.Status().String(),
 		)
 	}
 
-	if conf.IdTagInfo.ExpiryDate() == nil {
+	if conf.IDTagInfo.ExpiryDate() == nil {
 		t.Error("Conf() ExpiryDate = nil, want non-nil")
 	}
 
-	if conf.IdTagInfo.ParentIdTag() == nil {
-		t.Error("Conf() ParentIdTag = nil, want non-nil")
+	if conf.IDTagInfo.ParentIDTag() == nil {
+		t.Error("Conf() ParentIDTag = nil, want non-nil")
 	}
 
-	if conf.IdTagInfo.ParentIdTag().String() != parentTag {
+	if conf.IDTagInfo.ParentIDTag().String() != parentTag {
 		t.Errorf(
 			types.ErrorMismatch,
 			parentTag,
-			conf.IdTagInfo.ParentIdTag().String(),
+			conf.IDTagInfo.ParentIDTag().String(),
 		)
 	}
 }
@@ -295,7 +295,7 @@ func TestConf_MultipleErrors(t *testing.T) {
 	_, err := authorize.Conf(authorize.ConfInput{
 		Status:      "Invalid-Status",
 		ExpiryDate:  &invalidDate,
-		ParentIdTag: &longTag,
+		ParentIDTag: &longTag,
 	})
 	if err == nil {
 		t.Error("Conf() error = nil, want error for multiple invalid fields")
@@ -311,8 +311,8 @@ func TestConf_MultipleErrors(t *testing.T) {
 		t.Errorf(types.ErrorWantContains, err, ErrExpiryDate)
 	}
 
-	if !strings.Contains(errStr, ErrParentIdTag) {
-		t.Errorf(types.ErrorWantContains, err, ErrParentIdTag)
+	if !strings.Contains(errStr, ErrParentIDTag) {
+		t.Errorf(types.ErrorWantContains, err, ErrParentIDTag)
 	}
 }
 
@@ -324,7 +324,7 @@ func TestConf_MultipleErrors_StatusAndExpiryDate(t *testing.T) {
 	_, err := authorize.Conf(authorize.ConfInput{
 		Status:      "BadStatus",
 		ExpiryDate:  &invalidDate,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err == nil {
 		t.Error("Conf() error = nil, want error for invalid status and expiry")

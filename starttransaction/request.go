@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
@@ -18,47 +18,47 @@ type ReqInput struct {
 	// Required: The connector on which the transaction started.
 	// A value of 0 indicates that the transaction started on an unspecified
 	// connector.
-	ConnectorId int
+	ConnectorID int
 	// Required: The identifier that was used to authorize this transaction.
-	IdTag string
+	IDTag string
 	// Required: Energy meter reading at the start of the transaction in Wh.
 	MeterStart int
 	// Required: Timestamp of the start of the transaction.
 	Timestamp string
 	// Optional: If the transaction is started because of a reservation, this
 	// contains the reservation ID.
-	ReservationId *int
+	ReservationID *int
 }
 
 // ReqMessage represents an OCPP 1.6 StartTransaction.req message.
 type ReqMessage struct {
-	ConnectorId   types.Integer
-	IdTag         types.IdToken
+	ConnectorID   types.Integer
+	IDTag         types.IDToken
 	MeterStart    types.Integer
 	Timestamp     types.DateTime
-	ReservationId *types.Integer
+	ReservationID *types.Integer
 }
 
 // Req creates a StartTransaction.req message from the given input.
 // It validates all fields and accumulates all errors, returning them together.
 // Returns an error if:
-//   - ConnectorId is negative or exceeds uint16 max value (65535)
-//   - IdTag is empty, exceeds 20 characters, or contains non-printable ASCII
+//   - ConnectorID is negative or exceeds uint16 max value (65535)
+//   - IDTag is empty, exceeds 20 characters, or contains non-printable ASCII
 //   - MeterStart is negative or exceeds uint16 max value (65535)
 //   - Timestamp is not a valid RFC3339 formatted date
-//   - ReservationId (if provided) is negative or exceeds uint16 max (65535)
+//   - ReservationID (if provided) is negative or exceeds uint16 max (65535)
 func Req(input ReqInput) (ReqMessage, error) {
 	var errs []error
 
-	connectorId, errs := validateConnectorId(input.ConnectorId, errs)
-	idTag, errs := validateIdTag(input.IdTag, errs)
+	connectorId, errs := validateConnectorID(input.ConnectorID, errs)
+	idTag, errs := validateIDTag(input.IDTag, errs)
 	meterStart, errs := validateMeterStart(input.MeterStart, errs)
 	timestamp, errs := validateTimestamp(input.Timestamp, errs)
 
 	var reservationId *types.Integer
 
-	if input.ReservationId != nil {
-		reservationId, errs = validateReservationId(*input.ReservationId, errs)
+	if input.ReservationID != nil {
+		reservationId, errs = validateReservationID(*input.ReservationID, errs)
 	}
 
 	if len(errs) > errCountZero {
@@ -66,16 +66,16 @@ func Req(input ReqInput) (ReqMessage, error) {
 	}
 
 	return ReqMessage{
-		ConnectorId:   connectorId,
-		IdTag:         idTag,
+		ConnectorID:   connectorId,
+		IDTag:         idTag,
 		MeterStart:    meterStart,
 		Timestamp:     timestamp,
-		ReservationId: reservationId,
+		ReservationID: reservationId,
 	}, nil
 }
 
-// validateConnectorId validates the connectorId field.
-func validateConnectorId(
+// validateConnectorID validates the connectorId field.
+func validateConnectorID(
 	connectorId int,
 	errs []error,
 ) (types.Integer, []error) {
@@ -87,14 +87,14 @@ func validateConnectorId(
 	return val, errs
 }
 
-// validateIdTag validates the idTag field.
-func validateIdTag(idTag string, errs []error) (types.IdToken, []error) {
+// validateIDTag validates the idTag field.
+func validateIDTag(idTag string, errs []error) (types.IDToken, []error) {
 	ciStr, err := types.NewCiString20Type(idTag)
 	if err != nil {
-		return types.IdToken{}, append(errs, fmt.Errorf("idTag: %w", err))
+		return types.IDToken{}, append(errs, fmt.Errorf("idTag: %w", err))
 	}
 
-	return types.NewIdToken(ciStr), errs
+	return types.NewIDToken(ciStr), errs
 }
 
 // validateMeterStart validates the meterStart field.
@@ -120,8 +120,8 @@ func validateTimestamp(
 	return val, errs
 }
 
-// validateReservationId validates the reservationId field.
-func validateReservationId(
+// validateReservationID validates the reservationId field.
+func validateReservationID(
 	reservationId int,
 	errs []error,
 ) (*types.Integer, []error) {

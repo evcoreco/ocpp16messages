@@ -7,8 +7,8 @@ import (
 	"math"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/unlockconnector"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/unlockconnector"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzUnlockConnectorReq(f *testing.F) {
@@ -19,7 +19,7 @@ func FuzzUnlockConnectorReq(f *testing.F) {
 
 	f.Fuzz(func(t *testing.T, connectorId int) {
 		req, err := unlockconnector.Req(unlockconnector.ReqInput{
-			ConnectorId: connectorId,
+			ConnectorID: connectorId,
 		})
 		if err != nil {
 			if !errors.Is(err, types.ErrInvalidValue) {
@@ -33,8 +33,8 @@ func FuzzUnlockConnectorReq(f *testing.F) {
 			t.Fatalf("Req succeeded with connectorId=%d", connectorId)
 		}
 
-		if got := req.ConnectorId.Value(); got != uint16(connectorId) {
-			t.Fatalf("ConnectorId = %d, want %d", got, connectorId)
+		if got := req.ConnectorID.Value(); got != uint16(connectorId) {
+			t.Fatalf("ConnectorID = %d, want %d", got, connectorId)
 		}
 	})
 }

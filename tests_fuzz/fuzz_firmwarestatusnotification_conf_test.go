@@ -5,7 +5,7 @@ package fuzz
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/firmwarestatusnotification"
+	"github.com/evcoreco/ocpp16messages/firmwarestatusnotification"
 )
 
 func FuzzFirmwareStatusNotificationConf(f *testing.F) {

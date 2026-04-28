@@ -3,8 +3,8 @@ package metervalues_test
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/metervalues"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/metervalues"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func TestConf_Success(t *testing.T) {

@@ -22,7 +22,7 @@
 // # Charge Point Responsibilities
 //
 //   - If Authorization Cache is implemented, the Charge Point SHALL update the
-//     cache entry with the IdTagInfo from StartTransaction.conf, if the idTag
+//     cache entry with the IDTagInfo from StartTransaction.conf, if the idTag
 //     is not in the Local Authorization List.
 //
 // # Notes

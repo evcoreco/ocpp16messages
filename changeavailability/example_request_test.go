@@ -3,11 +3,11 @@ package changeavailability_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/changeavailability"
+	"github.com/evcoreco/ocpp16messages/changeavailability"
 )
 
 const (
-	connectorIdLabel = "ConnectorId:"
+	connectorIdLabel = "ConnectorID:"
 	typeLabel        = "Type:"
 )
 
@@ -15,7 +15,7 @@ const (
 // to set a connector to Inoperative.
 func ExampleReq() {
 	req, err := changeavailability.Req(changeavailability.ReqInput{
-		ConnectorId: 1,
+		ConnectorID: 1,
 		Type:        "Inoperative",
 	})
 	if err != nil {
@@ -24,10 +24,10 @@ func ExampleReq() {
 		return
 	}
 
-	fmt.Println(connectorIdLabel, req.ConnectorId.Value())
+	fmt.Println(connectorIdLabel, req.ConnectorID.Value())
 	fmt.Println(typeLabel, req.Type.String())
 	// Output:
-	// ConnectorId: 1
+	// ConnectorID: 1
 	// Type: Inoperative
 }
 
@@ -35,7 +35,7 @@ func ExampleReq() {
 // to set a connector to Operative.
 func ExampleReq_operative() {
 	req, err := changeavailability.Req(changeavailability.ReqInput{
-		ConnectorId: 2,
+		ConnectorID: 2,
 		Type:        "Operative",
 	})
 	if err != nil {
@@ -44,10 +44,10 @@ func ExampleReq_operative() {
 		return
 	}
 
-	fmt.Println(connectorIdLabel, req.ConnectorId.Value())
+	fmt.Println(connectorIdLabel, req.ConnectorID.Value())
 	fmt.Println(typeLabel, req.Type.String())
 	// Output:
-	// ConnectorId: 2
+	// ConnectorID: 2
 	// Type: Operative
 }
 
@@ -55,7 +55,7 @@ func ExampleReq_operative() {
 // message for the entire Charge Point (connectorId = 0).
 func ExampleReq_entireChargePoint() {
 	req, err := changeavailability.Req(changeavailability.ReqInput{
-		ConnectorId: 0,
+		ConnectorID: 0,
 		Type:        "Inoperative",
 	})
 	if err != nil {
@@ -64,10 +64,10 @@ func ExampleReq_entireChargePoint() {
 		return
 	}
 
-	fmt.Println(connectorIdLabel, req.ConnectorId.Value())
+	fmt.Println(connectorIdLabel, req.ConnectorID.Value())
 	fmt.Println(typeLabel, req.Type.String())
 	// Output:
-	// ConnectorId: 0
+	// ConnectorID: 0
 	// Type: Inoperative
 }
 
@@ -75,7 +75,7 @@ func ExampleReq_entireChargePoint() {
 // an invalid availability type is provided.
 func ExampleReq_invalidType() {
 	_, err := changeavailability.Req(changeavailability.ReqInput{
-		ConnectorId: 1,
+		ConnectorID: 1,
 		Type:        "Unknown",
 	})
 	if err != nil {
@@ -85,11 +85,11 @@ func ExampleReq_invalidType() {
 	// Error: invalid type
 }
 
-// ExampleReq_negativeConnectorId demonstrates the error returned when
+// ExampleReq_negativeConnectorID demonstrates the error returned when
 // a negative connector ID is provided.
-func ExampleReq_negativeConnectorId() {
+func ExampleReq_negativeConnectorID() {
 	_, err := changeavailability.Req(changeavailability.ReqInput{
-		ConnectorId: -1,
+		ConnectorID: -1,
 		Type:        "Operative",
 	})
 	if err != nil {

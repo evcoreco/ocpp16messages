@@ -3,7 +3,7 @@ package heartbeat_test
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/heartbeat"
+	"github.com/evcoreco/ocpp16messages/heartbeat"
 )
 
 func TestReq_Valid(t *testing.T) {

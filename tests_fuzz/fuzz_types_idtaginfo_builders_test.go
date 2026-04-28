@@ -6,10 +6,10 @@ import (
 	"errors"
 	"testing"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
-func FuzzIdTagInfoWithExpiryDate(f *testing.F) {
+func FuzzIDTagInfoWithExpiryDate(f *testing.F) {
 	f.Add("Accepted", "2025-01-15T10:30:00Z")
 	f.Add("Blocked", "2025-12-31T23:59:59Z")
 	f.Add("Expired", "invalid-time")
@@ -20,7 +20,7 @@ func FuzzIdTagInfoWithExpiryDate(f *testing.F) {
 			t.Skip()
 		}
 
-		info, err := types.NewIdTagInfo(
+		info, err := types.NewIDTagInfo(
 			types.AuthorizationStatus(status),
 		)
 		if err != nil {
@@ -52,9 +52,9 @@ func FuzzIdTagInfoWithExpiryDate(f *testing.F) {
 			)
 		}
 
-		if result.ParentIdTag() != nil {
+		if result.ParentIDTag() != nil {
 			t.Fatal(
-				"ParentIdTag != nil after WithExpiryDate only",
+				"ParentIDTag != nil after WithExpiryDate only",
 			)
 		}
 
@@ -70,7 +70,7 @@ func FuzzIdTagInfoWithExpiryDate(f *testing.F) {
 	})
 }
 
-func FuzzIdTagInfoWithParentIdTag(f *testing.F) {
+func FuzzIDTagInfoWithParentIDTag(f *testing.F) {
 	f.Add("Accepted", "RFID-ABC123")
 	f.Add("Invalid", "tag")
 	f.Add("Blocked", "")
@@ -81,7 +81,7 @@ func FuzzIdTagInfoWithParentIdTag(f *testing.F) {
 			t.Skip()
 		}
 
-		info, err := types.NewIdTagInfo(
+		info, err := types.NewIDTagInfo(
 			types.AuthorizationStatus(status),
 		)
 		if err != nil {
@@ -93,8 +93,8 @@ func FuzzIdTagInfoWithParentIdTag(f *testing.F) {
 			return
 		}
 
-		token := types.NewIdToken(ciStr)
-		result := info.WithParentIdTag(token)
+		token := types.NewIDToken(ciStr)
+		result := info.WithParentIDTag(token)
 
 		if result.Status() != info.Status() {
 			t.Fatalf(
@@ -103,26 +103,26 @@ func FuzzIdTagInfoWithParentIdTag(f *testing.F) {
 			)
 		}
 
-		if result.ParentIdTag() == nil {
-			t.Fatal("ParentIdTag = nil after WithParentIdTag")
+		if result.ParentIDTag() == nil {
+			t.Fatal("ParentIDTag = nil after WithParentIDTag")
 		}
 
-		if result.ParentIdTag().String() != idTag {
+		if result.ParentIDTag().String() != idTag {
 			t.Fatalf(
-				"ParentIdTag = %q, want %q",
-				result.ParentIdTag().String(), idTag,
+				"ParentIDTag = %q, want %q",
+				result.ParentIDTag().String(), idTag,
 			)
 		}
 
 		if result.ExpiryDate() != nil {
 			t.Fatal(
-				"ExpiryDate != nil after WithParentIdTag only",
+				"ExpiryDate != nil after WithParentIDTag only",
 			)
 		}
 	})
 }
 
-func FuzzIdTagInfoWithBothBuilders(f *testing.F) {
+func FuzzIDTagInfoWithBothBuilders(f *testing.F) {
 	f.Add("Accepted", "2025-01-15T10:30:00Z", "TAG1")
 	f.Add("Blocked", "2025-06-01T00:00:00Z", "RFID-XYZ")
 
@@ -136,7 +136,7 @@ func FuzzIdTagInfoWithBothBuilders(f *testing.F) {
 			t.Skip()
 		}
 
-		info, err := types.NewIdTagInfo(
+		info, err := types.NewIDTagInfo(
 			types.AuthorizationStatus(status),
 		)
 		if err != nil {
@@ -153,10 +153,10 @@ func FuzzIdTagInfoWithBothBuilders(f *testing.F) {
 			return
 		}
 
-		token := types.NewIdToken(ciStr)
+		token := types.NewIDToken(ciStr)
 
-		orderA := info.WithExpiryDate(dt).WithParentIdTag(token)
-		orderB := info.WithParentIdTag(token).WithExpiryDate(dt)
+		orderA := info.WithExpiryDate(dt).WithParentIDTag(token)
+		orderB := info.WithParentIDTag(token).WithExpiryDate(dt)
 
 		if orderA.Status() != orderB.Status() {
 			t.Fatal("Status differs between builder orders")
@@ -171,14 +171,14 @@ func FuzzIdTagInfoWithBothBuilders(f *testing.F) {
 			t.Fatal("ExpiryDate differs between orders")
 		}
 
-		if orderA.ParentIdTag() == nil ||
-			orderB.ParentIdTag() == nil {
-			t.Fatal("ParentIdTag = nil in one order")
+		if orderA.ParentIDTag() == nil ||
+			orderB.ParentIDTag() == nil {
+			t.Fatal("ParentIDTag = nil in one order")
 		}
 
-		if orderA.ParentIdTag().String() !=
-			orderB.ParentIdTag().String() {
-			t.Fatal("ParentIdTag differs between orders")
+		if orderA.ParentIDTag().String() !=
+			orderB.ParentIDTag().String() {
+			t.Fatal("ParentIDTag differs between orders")
 		}
 
 		if orderA.String() != orderB.String() {
@@ -190,7 +190,7 @@ func FuzzIdTagInfoWithBothBuilders(f *testing.F) {
 	})
 }
 
-func FuzzIdTagInfoStringDeterminism(f *testing.F) {
+func FuzzIDTagInfoStringDeterminism(f *testing.F) {
 	f.Add("Accepted", false, "", false, "")
 	f.Add("Blocked", true, "2025-01-15T10:30:00Z", true, "TAG1")
 	f.Add("Expired", true, "2025-06-01T00:00:00Z", false, "")
@@ -207,7 +207,7 @@ func FuzzIdTagInfoStringDeterminism(f *testing.F) {
 			t.Skip()
 		}
 
-		info, err := types.NewIdTagInfo(
+		info, err := types.NewIDTagInfo(
 			types.AuthorizationStatus(status),
 		)
 		if err != nil {
@@ -240,7 +240,7 @@ func FuzzIdTagInfoStringDeterminism(f *testing.F) {
 				return
 			}
 
-			info = info.WithParentIdTag(types.NewIdToken(ciStr))
+			info = info.WithParentIDTag(types.NewIDToken(ciStr))
 		}
 
 		first := info.String()

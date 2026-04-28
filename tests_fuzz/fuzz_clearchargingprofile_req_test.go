@@ -7,8 +7,8 @@ import (
 	"math"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/clearchargingprofile"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/clearchargingprofile"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzClearChargingProfileReq(f *testing.F) {
@@ -21,7 +21,7 @@ func FuzzClearChargingProfileReq(f *testing.F) {
 		t *testing.T,
 		hasId bool,
 		id int,
-		hasConnectorId bool,
+		hasConnectorID bool,
 		connectorId int,
 		hasPurpose bool,
 		purpose string,
@@ -38,7 +38,7 @@ func FuzzClearChargingProfileReq(f *testing.F) {
 		}
 
 		var connectorIdPtr *int
-		if hasConnectorId {
+		if hasConnectorID {
 			connectorIdPtr = &connectorId
 		}
 
@@ -54,7 +54,7 @@ func FuzzClearChargingProfileReq(f *testing.F) {
 
 		req, err := clearchargingprofile.Req(clearchargingprofile.ReqInput{
 			Id:                     idPtr,
-			ConnectorId:            connectorIdPtr,
+			ConnectorID:            connectorIdPtr,
 			ChargingProfilePurpose: purposePtr,
 			StackLevel:             stackLevelPtr,
 		})
@@ -83,18 +83,18 @@ func FuzzClearChargingProfileReq(f *testing.F) {
 			t.Fatal("Id != nil, want nil")
 		}
 
-		if hasConnectorId {
-			if req.ConnectorId == nil {
-				t.Fatal("ConnectorId = nil, want non-nil")
+		if hasConnectorID {
+			if req.ConnectorID == nil {
+				t.Fatal("ConnectorID = nil, want non-nil")
 			}
 			if connectorId < 0 || connectorId > math.MaxUint16 {
 				t.Fatalf("Req succeeded with connectorId=%d", connectorId)
 			}
-			if got := req.ConnectorId.Value(); got != uint16(connectorId) {
-				t.Fatalf("ConnectorId = %d, want %d", got, connectorId)
+			if got := req.ConnectorID.Value(); got != uint16(connectorId) {
+				t.Fatalf("ConnectorID = %d, want %d", got, connectorId)
 			}
-		} else if req.ConnectorId != nil {
-			t.Fatal("ConnectorId != nil, want nil")
+		} else if req.ConnectorID != nil {
+			t.Fatal("ConnectorID != nil, want nil")
 		}
 
 		if hasStackLevel {

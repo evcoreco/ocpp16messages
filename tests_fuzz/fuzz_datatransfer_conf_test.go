@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	dt "github.com/aasanchez/ocpp16messages/datatransfer"
-	types "github.com/aasanchez/ocpp16types"
+	dt "github.com/evcoreco/ocpp16messages/datatransfer"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzDataTransferConf(f *testing.F) {

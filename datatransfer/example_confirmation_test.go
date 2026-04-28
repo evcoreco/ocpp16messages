@@ -3,7 +3,7 @@ package datatransfer_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/datatransfer"
+	"github.com/evcoreco/ocpp16messages/datatransfer"
 )
 
 const labelStatus = "Status:"
@@ -62,9 +62,9 @@ func ExampleConf_unknownVendor() {
 	// Status: UnknownVendor
 }
 
-// ExampleConf_unknownMessageId demonstrates creating a DataTransfer.conf
-// message with an UnknownMessageId status.
-func ExampleConf_unknownMessageId() {
+// ExampleConf_unknownMessageID demonstrates creating a DataTransfer.conf
+// message with an UnknownMessageID status.
+func ExampleConf_unknownMessageID() {
 	conf, err := datatransfer.Conf(datatransfer.ConfInput{
 		Status: "UnknownMessageId",
 		Data:   nil,

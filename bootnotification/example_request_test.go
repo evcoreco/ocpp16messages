@@ -3,7 +3,7 @@ package bootnotification_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/bootnotification"
+	"github.com/evcoreco/ocpp16messages/bootnotification"
 )
 
 // ExampleReq demonstrates creating a valid BootNotification.req message

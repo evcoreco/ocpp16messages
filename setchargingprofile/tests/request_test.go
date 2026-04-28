@@ -4,12 +4,12 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/setchargingprofile"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/setchargingprofile"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
-	errConnectorId        = "connectorId"
+	errConnectorID        = "connectorId"
 	errCsChargingProfiles = "csChargingProfiles"
 
 	valueZero        = 0
@@ -22,8 +22,8 @@ const (
 
 func validChargingProfileInput() types.ChargingProfileInput {
 	return types.ChargingProfileInput{
-		ChargingProfileId:      valueOne,
-		TransactionId:          nil,
+		ChargingProfileID:      valueOne,
+		TransactionID:          nil,
 		StackLevel:             valueZero,
 		ChargingProfilePurpose: "TxDefaultProfile",
 		ChargingProfileKind:    "Absolute",
@@ -50,50 +50,50 @@ func TestReq_Valid_MinimalInput(t *testing.T) {
 	t.Parallel()
 
 	req, err := setchargingprofile.Req(setchargingprofile.ReqInput{
-		ConnectorId:        valueZero,
+		ConnectorID:        valueZero,
 		CsChargingProfiles: validChargingProfileInput(),
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.ConnectorId.Value() != valueZero {
-		t.Errorf(types.ErrorMismatchValue, valueZero, req.ConnectorId.Value())
+	if req.ConnectorID.Value() != valueZero {
+		t.Errorf(types.ErrorMismatchValue, valueZero, req.ConnectorID.Value())
 	}
 }
 
-func TestReq_Valid_WithConnectorId(t *testing.T) {
+func TestReq_Valid_WithConnectorID(t *testing.T) {
 	t.Parallel()
 
 	req, err := setchargingprofile.Req(setchargingprofile.ReqInput{
-		ConnectorId:        valueTwo,
+		ConnectorID:        valueTwo,
 		CsChargingProfiles: validChargingProfileInput(),
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.ConnectorId.Value() != valueTwo {
-		t.Errorf(types.ErrorMismatchValue, valueTwo, req.ConnectorId.Value())
+	if req.ConnectorID.Value() != valueTwo {
+		t.Errorf(types.ErrorMismatchValue, valueTwo, req.ConnectorID.Value())
 	}
 }
 
-func TestReq_Valid_ChargingProfileId(t *testing.T) {
+func TestReq_Valid_ChargingProfileID(t *testing.T) {
 	t.Parallel()
 
 	req, err := setchargingprofile.Req(setchargingprofile.ReqInput{
-		ConnectorId:        valueZero,
+		ConnectorID:        valueZero,
 		CsChargingProfiles: validChargingProfileInput(),
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.CsChargingProfiles.ChargingProfileId().Value() != valueOne {
+	if req.CsChargingProfiles.ChargingProfileID().Value() != valueOne {
 		t.Errorf(
 			types.ErrorMismatchValue,
 			valueOne,
-			req.CsChargingProfiles.ChargingProfileId().Value(),
+			req.CsChargingProfiles.ChargingProfileID().Value(),
 		)
 	}
 }
@@ -102,7 +102,7 @@ func TestReq_Valid_StackLevel(t *testing.T) {
 	t.Parallel()
 
 	req, err := setchargingprofile.Req(setchargingprofile.ReqInput{
-		ConnectorId:        valueZero,
+		ConnectorID:        valueZero,
 		CsChargingProfiles: validChargingProfileInput(),
 	})
 	if err != nil {
@@ -122,7 +122,7 @@ func TestReq_Valid_ChargingProfilePurpose(t *testing.T) {
 	t.Parallel()
 
 	req, err := setchargingprofile.Req(setchargingprofile.ReqInput{
-		ConnectorId:        valueZero,
+		ConnectorID:        valueZero,
 		CsChargingProfiles: validChargingProfileInput(),
 	})
 	if err != nil {
@@ -143,7 +143,7 @@ func TestReq_Valid_ChargingProfileKind(t *testing.T) {
 	t.Parallel()
 
 	req, err := setchargingprofile.Req(setchargingprofile.ReqInput{
-		ConnectorId:        valueZero,
+		ConnectorID:        valueZero,
 		CsChargingProfiles: validChargingProfileInput(),
 	})
 	if err != nil {
@@ -160,35 +160,35 @@ func TestReq_Valid_ChargingProfileKind(t *testing.T) {
 	}
 }
 
-func TestReq_Invalid_NegativeConnectorId(t *testing.T) {
+func TestReq_Invalid_NegativeConnectorID(t *testing.T) {
 	t.Parallel()
 
 	_, err := setchargingprofile.Req(setchargingprofile.ReqInput{
-		ConnectorId:        valueNegative,
+		ConnectorID:        valueNegative,
 		CsChargingProfiles: validChargingProfileInput(),
 	})
 	if err == nil {
-		t.Errorf(types.ErrorWantNil, "negative ConnectorId")
+		t.Errorf(types.ErrorWantNil, "negative ConnectorID")
 	}
 
-	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(types.ErrorWantContains, err, errConnectorId)
+	if !strings.Contains(err.Error(), errConnectorID) {
+		t.Errorf(types.ErrorWantContains, err, errConnectorID)
 	}
 }
 
-func TestReq_Invalid_ConnectorIdExceedsMax(t *testing.T) {
+func TestReq_Invalid_ConnectorIDExceedsMax(t *testing.T) {
 	t.Parallel()
 
 	_, err := setchargingprofile.Req(setchargingprofile.ReqInput{
-		ConnectorId:        valueExceedsMax,
+		ConnectorID:        valueExceedsMax,
 		CsChargingProfiles: validChargingProfileInput(),
 	})
 	if err == nil {
-		t.Errorf(types.ErrorWantNil, "ConnectorId exceeds max")
+		t.Errorf(types.ErrorWantNil, "ConnectorID exceeds max")
 	}
 
-	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(types.ErrorWantContains, err, errConnectorId)
+	if !strings.Contains(err.Error(), errConnectorID) {
+		t.Errorf(types.ErrorWantContains, err, errConnectorID)
 	}
 }
 
@@ -199,7 +199,7 @@ func TestReq_Invalid_InvalidChargingProfilePurpose(t *testing.T) {
 	input.ChargingProfilePurpose = "Invalid"
 
 	_, err := setchargingprofile.Req(setchargingprofile.ReqInput{
-		ConnectorId:        valueZero,
+		ConnectorID:        valueZero,
 		CsChargingProfiles: input,
 	})
 	if err == nil {
@@ -218,7 +218,7 @@ func TestReq_Invalid_InvalidChargingProfileKind(t *testing.T) {
 	input.ChargingProfileKind = "Invalid"
 
 	_, err := setchargingprofile.Req(setchargingprofile.ReqInput{
-		ConnectorId:        valueZero,
+		ConnectorID:        valueZero,
 		CsChargingProfiles: input,
 	})
 	if err == nil {
@@ -237,7 +237,7 @@ func TestReq_Invalid_InvalidChargingRateUnit(t *testing.T) {
 	input.ChargingSchedule.ChargingRateUnit = "X"
 
 	_, err := setchargingprofile.Req(setchargingprofile.ReqInput{
-		ConnectorId:        valueZero,
+		ConnectorID:        valueZero,
 		CsChargingProfiles: input,
 	})
 	if err == nil {
@@ -256,7 +256,7 @@ func TestReq_Invalid_EmptyChargingSchedulePeriod(t *testing.T) {
 	input.ChargingSchedule.ChargingSchedulePeriod = nil
 
 	_, err := setchargingprofile.Req(setchargingprofile.ReqInput{
-		ConnectorId:        valueZero,
+		ConnectorID:        valueZero,
 		CsChargingProfiles: input,
 	})
 	if err == nil {

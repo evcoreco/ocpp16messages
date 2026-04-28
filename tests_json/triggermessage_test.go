@@ -3,7 +3,7 @@ package testsjson_test
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/triggermessage"
+	"github.com/evcoreco/ocpp16messages/triggermessage"
 )
 
 func TestTriggerMessageReq_JSONRoundTrip(t *testing.T) {
@@ -11,7 +11,7 @@ func TestTriggerMessageReq_JSONRoundTrip(t *testing.T) {
 
 	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "Heartbeat",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 	})
 	if err != nil {
 		t.Fatalf("triggermessage.Req: %v", err)

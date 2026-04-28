@@ -3,7 +3,7 @@ package remotestoptransaction_test
 import (
 	"fmt"
 
-	rst "github.com/aasanchez/ocpp16messages/remotestoptransaction"
+	rst "github.com/evcoreco/ocpp16messages/remotestoptransaction"
 )
 
 // ExampleConf demonstrates creating a valid RemoteStopTransaction.conf message

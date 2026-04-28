@@ -3,7 +3,7 @@ package authorize_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/authorize"
+	"github.com/evcoreco/ocpp16messages/authorize"
 )
 
 const labelStatus = "Status:"
@@ -14,7 +14,7 @@ func ExampleConf() {
 	conf, err := authorize.Conf(authorize.ConfInput{
 		Status:      "Accepted",
 		ExpiryDate:  nil,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -22,7 +22,7 @@ func ExampleConf() {
 		return
 	}
 
-	fmt.Println(labelStatus, conf.IdTagInfo.Status().String())
+	fmt.Println(labelStatus, conf.IDTagInfo.Status().String())
 	// Output:
 	// Status: Accepted
 }
@@ -33,7 +33,7 @@ func ExampleConf_blocked() {
 	conf, err := authorize.Conf(authorize.ConfInput{
 		Status:      "Blocked",
 		ExpiryDate:  nil,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -41,7 +41,7 @@ func ExampleConf_blocked() {
 		return
 	}
 
-	fmt.Println(labelStatus, conf.IdTagInfo.Status().String())
+	fmt.Println(labelStatus, conf.IDTagInfo.Status().String())
 	// Output:
 	// Status: Blocked
 }
@@ -54,7 +54,7 @@ func ExampleConf_withExpiryDate() {
 	conf, err := authorize.Conf(authorize.ConfInput{
 		Status:      "Accepted",
 		ExpiryDate:  &expiryDate,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -62,22 +62,22 @@ func ExampleConf_withExpiryDate() {
 		return
 	}
 
-	fmt.Println(labelStatus, conf.IdTagInfo.Status().String())
-	fmt.Println("HasExpiryDate:", conf.IdTagInfo.ExpiryDate() != nil)
+	fmt.Println(labelStatus, conf.IDTagInfo.Status().String())
+	fmt.Println("HasExpiryDate:", conf.IDTagInfo.ExpiryDate() != nil)
 	// Output:
 	// Status: Accepted
 	// HasExpiryDate: true
 }
 
-// ExampleConf_withParentIdTag demonstrates creating an Authorize.conf message
+// ExampleConf_withParentIDTag demonstrates creating an Authorize.conf message
 // with a parent ID tag.
-func ExampleConf_withParentIdTag() {
+func ExampleConf_withParentIDTag() {
 	parentTag := "PARENT-123"
 
 	conf, err := authorize.Conf(authorize.ConfInput{
 		Status:      "Accepted",
 		ExpiryDate:  nil,
-		ParentIdTag: &parentTag,
+		ParentIDTag: &parentTag,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -85,11 +85,11 @@ func ExampleConf_withParentIdTag() {
 		return
 	}
 
-	fmt.Println(labelStatus, conf.IdTagInfo.Status().String())
-	fmt.Println("ParentIdTag:", conf.IdTagInfo.ParentIdTag().String())
+	fmt.Println(labelStatus, conf.IDTagInfo.Status().String())
+	fmt.Println("ParentIDTag:", conf.IDTagInfo.ParentIDTag().String())
 	// Output:
 	// Status: Accepted
-	// ParentIdTag: PARENT-123
+	// ParentIDTag: PARENT-123
 }
 
 // ExampleConf_complete demonstrates creating a complete Authorize.conf message
@@ -101,7 +101,7 @@ func ExampleConf_complete() {
 	conf, err := authorize.Conf(authorize.ConfInput{
 		Status:      "Accepted",
 		ExpiryDate:  &expiryDate,
-		ParentIdTag: &parentTag,
+		ParentIDTag: &parentTag,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -109,13 +109,13 @@ func ExampleConf_complete() {
 		return
 	}
 
-	fmt.Println(labelStatus, conf.IdTagInfo.Status().String())
-	fmt.Println("HasExpiryDate:", conf.IdTagInfo.ExpiryDate() != nil)
-	fmt.Println("ParentIdTag:", conf.IdTagInfo.ParentIdTag().String())
+	fmt.Println(labelStatus, conf.IDTagInfo.Status().String())
+	fmt.Println("HasExpiryDate:", conf.IDTagInfo.ExpiryDate() != nil)
+	fmt.Println("ParentIDTag:", conf.IDTagInfo.ParentIDTag().String())
 	// Output:
 	// Status: Accepted
 	// HasExpiryDate: true
-	// ParentIdTag: PARENT-123
+	// ParentIDTag: PARENT-123
 }
 
 // ExampleConf_invalidStatus demonstrates the error returned when
@@ -124,13 +124,13 @@ func ExampleConf_invalidStatus() {
 	_, err := authorize.Conf(authorize.ConfInput{
 		Status:      "Unknown",
 		ExpiryDate:  nil,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err != nil {
 		fmt.Println(err)
 	}
 	// Output:
-	// status: NewIdTagInfo: AuthorizationStatus: invalid value
+	// status: NewIDTagInfo: AuthorizationStatus: invalid value
 }
 
 // ExampleConf_multipleErrors demonstrates that all validation errors
@@ -142,7 +142,7 @@ func ExampleConf_multipleErrors() {
 	_, err := authorize.Conf(authorize.ConfInput{
 		Status:      "Invalid-Status",
 		ExpiryDate:  &invalidDate,
-		ParentIdTag: &longTag,
+		ParentIDTag: &longTag,
 	})
 	if err != nil {
 		fmt.Println("Multiple errors")

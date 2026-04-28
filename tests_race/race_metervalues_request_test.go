@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"testing"
 
-	mv "github.com/aasanchez/ocpp16messages/metervalues"
-	types "github.com/aasanchez/ocpp16types"
+	mv "github.com/evcoreco/ocpp16messages/metervalues"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
@@ -28,9 +28,9 @@ func TestRace_MeterValuesSingleReq(t *testing.T) {
 
 	runConcurrent(t, mvWorkers, mvIterations, func(_, _ int) error {
 		_, err := mv.Req(mv.ReqInput{
-			ConnectorId:   1,
+			ConnectorID:   1,
 			MeterValue:    metervalues,
-			TransactionId: nil,
+			TransactionID: nil,
 		})
 		if err != nil {
 			return fmt.Errorf("MeterValues.Req: %w", err)

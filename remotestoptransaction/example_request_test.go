@@ -3,32 +3,32 @@ package remotestoptransaction_test
 import (
 	"fmt"
 
-	rst "github.com/aasanchez/ocpp16messages/remotestoptransaction"
+	rst "github.com/evcoreco/ocpp16messages/remotestoptransaction"
 )
 
 const (
-	exampleTransactionId    = 12345
-	exampleTransactionIdNeg = -1
+	exampleTransactionID    = 12345
+	exampleTransactionIDNeg = -1
 )
 
 // ExampleReq demonstrates creating a valid RemoteStopTransaction.req message.
 func ExampleReq() {
-	req, err := rst.Req(rst.ReqInput{TransactionId: exampleTransactionId})
+	req, err := rst.Req(rst.ReqInput{TransactionID: exampleTransactionID})
 	if err != nil {
 		fmt.Println(err)
 
 		return
 	}
 
-	fmt.Println("TransactionId:", req.TransactionId.Value())
+	fmt.Println("TransactionID:", req.TransactionID.Value())
 	// Output:
-	// TransactionId: 12345
+	// TransactionID: 12345
 }
 
-// ExampleReq_negativeTransactionId demonstrates the error returned when
+// ExampleReq_negativeTransactionID demonstrates the error returned when
 // a negative transactionId is provided.
-func ExampleReq_negativeTransactionId() {
-	_, err := rst.Req(rst.ReqInput{TransactionId: exampleTransactionIdNeg})
+func ExampleReq_negativeTransactionID() {
+	_, err := rst.Req(rst.ReqInput{TransactionID: exampleTransactionIDNeg})
 	if err != nil {
 		fmt.Println("transactionId: invalid value")
 	}

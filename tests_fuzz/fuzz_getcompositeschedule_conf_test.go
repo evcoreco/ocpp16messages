@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	gc "github.com/aasanchez/ocpp16messages/getcompositeschedule"
-	types "github.com/aasanchez/ocpp16types"
+	gc "github.com/evcoreco/ocpp16messages/getcompositeschedule"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzGetCompositeScheduleConf(f *testing.F) {
@@ -52,7 +52,7 @@ func FuzzGetCompositeScheduleConf(f *testing.F) {
 	f.Fuzz(func(
 		t *testing.T,
 		status string,
-		hasConnectorId bool,
+		hasConnectorID bool,
 		connectorId int,
 		hasScheduleStart bool,
 		scheduleStart string,
@@ -66,7 +66,7 @@ func FuzzGetCompositeScheduleConf(f *testing.F) {
 		}
 
 		var connectorIdPtr *int
-		if hasConnectorId {
+		if hasConnectorID {
 			connectorIdPtr = &connectorId
 		}
 
@@ -92,7 +92,7 @@ func FuzzGetCompositeScheduleConf(f *testing.F) {
 
 		conf, err := gc.Conf(gc.ConfInput{
 			Status:           status,
-			ConnectorId:      connectorIdPtr,
+			ConnectorID:      connectorIdPtr,
 			ScheduleStart:    scheduleStartPtr,
 			ChargingSchedule: chargingSchedulePtr,
 		})
@@ -111,12 +111,12 @@ func FuzzGetCompositeScheduleConf(f *testing.F) {
 			t.Fatalf("Status = %q, want valid", conf.Status.String())
 		}
 
-		if hasConnectorId {
-			if conf.ConnectorId == nil {
-				t.Fatal("ConnectorId = nil, want non-nil")
+		if hasConnectorID {
+			if conf.ConnectorID == nil {
+				t.Fatal("ConnectorID = nil, want non-nil")
 			}
-		} else if conf.ConnectorId != nil {
-			t.Fatal("ConnectorId != nil, want nil")
+		} else if conf.ConnectorID != nil {
+			t.Fatal("ConnectorID != nil, want nil")
 		}
 
 		if hasScheduleStart {

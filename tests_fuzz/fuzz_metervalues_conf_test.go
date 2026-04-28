@@ -5,7 +5,7 @@ package fuzz
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/metervalues"
+	"github.com/evcoreco/ocpp16messages/metervalues"
 )
 
 func FuzzMeterValuesConf(f *testing.F) {

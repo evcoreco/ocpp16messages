@@ -3,8 +3,8 @@ package getconfiguration_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/getconfiguration"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/getconfiguration"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (

@@ -3,25 +3,25 @@ package metervalues_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/metervalues"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/metervalues"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
-	exampleConnectorId   = 1
-	exampleTransactionId = 42
+	exampleConnectorID   = 1
+	exampleTransactionID = 42
 	exampleTimestamp     = "2025-01-02T15:00:00Z"
 	exampleValue         = "12500"
 	outputError          = "Error:"
-	outputConnectorId    = "ConnectorId:"
+	outputConnectorID    = "ConnectorID:"
 )
 
 // ExampleReq demonstrates creating a valid MeterValues.req message with
 // a single meter value containing one sampled value.
 func ExampleReq() {
 	input := metervalues.ReqInput{
-		ConnectorId:   exampleConnectorId,
-		TransactionId: nil,
+		ConnectorID:   exampleConnectorID,
+		TransactionID: nil,
 		MeterValue: []types.MeterValueInput{
 			{
 				Timestamp: exampleTimestamp,
@@ -47,21 +47,21 @@ func ExampleReq() {
 		return
 	}
 
-	fmt.Println(outputConnectorId, req.ConnectorId.Value())
+	fmt.Println(outputConnectorID, req.ConnectorID.Value())
 	fmt.Println("MeterValue count:", len(req.MeterValue))
 	// Output:
-	// ConnectorId: 1
+	// ConnectorID: 1
 	// MeterValue count: 1
 }
 
-// ExampleReq_withTransactionId demonstrates creating a MeterValues.req
+// ExampleReq_withTransactionID demonstrates creating a MeterValues.req
 // message with an associated transaction ID.
-func ExampleReq_withTransactionId() {
-	transactionId := exampleTransactionId
+func ExampleReq_withTransactionID() {
+	transactionId := exampleTransactionID
 
 	input := metervalues.ReqInput{
-		ConnectorId:   exampleConnectorId,
-		TransactionId: &transactionId,
+		ConnectorID:   exampleConnectorID,
+		TransactionID: &transactionId,
 		MeterValue: []types.MeterValueInput{
 			{
 				Timestamp: exampleTimestamp,
@@ -87,11 +87,11 @@ func ExampleReq_withTransactionId() {
 		return
 	}
 
-	fmt.Println(outputConnectorId, req.ConnectorId.Value())
-	fmt.Println("TransactionId:", req.TransactionId.Value())
+	fmt.Println(outputConnectorID, req.ConnectorID.Value())
+	fmt.Println("TransactionID:", req.TransactionID.Value())
 	// Output:
-	// ConnectorId: 1
-	// TransactionId: 42
+	// ConnectorID: 1
+	// TransactionID: 42
 }
 
 // ExampleReq_withOptionalFields demonstrates creating a MeterValues.req
@@ -105,8 +105,8 @@ func ExampleReq_withOptionalFields() {
 	unit := "Wh"
 
 	input := metervalues.ReqInput{
-		ConnectorId:   exampleConnectorId,
-		TransactionId: nil,
+		ConnectorID:   exampleConnectorID,
+		TransactionID: nil,
 		MeterValue: []types.MeterValueInput{
 			{
 				Timestamp: exampleTimestamp,
@@ -132,18 +132,18 @@ func ExampleReq_withOptionalFields() {
 		return
 	}
 
-	fmt.Println(outputConnectorId, req.ConnectorId.Value())
+	fmt.Println(outputConnectorID, req.ConnectorID.Value())
 	fmt.Println("Value:", req.MeterValue[0].SampledValue()[0].Value().Value())
 	// Output:
-	// ConnectorId: 1
+	// ConnectorID: 1
 	// Value: 12500
 }
 
 // ExampleReq_emptyMeterValue demonstrates the error when MeterValue is empty.
 func ExampleReq_emptyMeterValue() {
 	input := metervalues.ReqInput{
-		ConnectorId:   exampleConnectorId,
-		TransactionId: nil,
+		ConnectorID:   exampleConnectorID,
+		TransactionID: nil,
 		MeterValue:    []types.MeterValueInput{},
 	}
 

@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"time"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
@@ -25,26 +25,26 @@ const (
 )
 
 var (
-	errPrimitiveEmpty        = errors.New("parentIdTag cannot be empty")
-	errPrimitiveTooLong      = errors.New("parentIdTag exceeds max length")
-	errPrimitiveBadASCII     = errors.New("parentIdTag contains invalid ASCII")
+	errPrimitiveEmpty        = errors.New("parentIDTag cannot be empty")
+	errPrimitiveTooLong      = errors.New("parentIDTag exceeds max length")
+	errPrimitiveBadASCII     = errors.New("parentIDTag contains invalid ASCII")
 	errPrimitiveInvalidRange = errors.New("value out of uint16 range")
 )
 
-type primitiveIdTagInfo struct {
-	ParentIdTag *string
+type primitiveIDTagInfo struct {
+	ParentIDTag *string
 }
 
 type primitiveStartTransactionReq struct {
-	ConnectorId   int
-	IdTag         string
+	ConnectorID   int
+	IDTag         string
 	MeterStart    int
 	Timestamp     string
-	ReservationId *int
+	ReservationID *int
 }
 
 type primitiveAuthorizationDataInput struct {
-	IdTag string
+	IDTag string
 }
 
 type primitiveSendLocalListReq struct {
@@ -62,7 +62,7 @@ func makeAuthorizationInputs(size int) []types.AuthorizationDataInput {
 
 	for index := 0; index < size; index++ {
 		entries = append(entries, types.AuthorizationDataInput{
-			IdTag: "TAG-" + strconv.Itoa(index),
+			IDTag: "TAG-" + strconv.Itoa(index),
 		})
 	}
 
@@ -74,7 +74,7 @@ func makePrimitiveAuthorizationInputs(size int) []primitiveAuthorizationDataInpu
 
 	for index := 0; index < size; index++ {
 		entries = append(entries, primitiveAuthorizationDataInput{
-			IdTag: "TAG-" + strconv.Itoa(index),
+			IDTag: "TAG-" + strconv.Itoa(index),
 		})
 	}
 
@@ -160,11 +160,11 @@ func validatePrimitiveTimestampUTC(value string) error {
 }
 
 func validatePrimitiveStartTransactionReq(input primitiveStartTransactionReq) error {
-	if err := validatePrimitiveIntegerRange(input.ConnectorId); err != nil {
+	if err := validatePrimitiveIntegerRange(input.ConnectorID); err != nil {
 		return fmt.Errorf("connectorId: %w", err)
 	}
 
-	if err := validatePrimitiveCiString20(input.IdTag); err != nil {
+	if err := validatePrimitiveCiString20(input.IDTag); err != nil {
 		return fmt.Errorf("idTag: %w", err)
 	}
 
@@ -176,8 +176,8 @@ func validatePrimitiveStartTransactionReq(input primitiveStartTransactionReq) er
 		return fmt.Errorf("timestamp: %w", err)
 	}
 
-	if input.ReservationId != nil {
-		if err := validatePrimitiveIntegerRange(*input.ReservationId); err != nil {
+	if input.ReservationID != nil {
+		if err := validatePrimitiveIntegerRange(*input.ReservationID); err != nil {
 			return fmt.Errorf("reservationId: %w", err)
 		}
 	}
@@ -200,7 +200,7 @@ func validatePrimitiveSendLocalListReq(input primitiveSendLocalListReq) error {
 	}
 
 	for index, entry := range input.LocalAuthorizationList {
-		if err := validatePrimitiveCiString20(entry.IdTag); err != nil {
+		if err := validatePrimitiveCiString20(entry.IDTag); err != nil {
 			return fmt.Errorf("localAuthorizationList[%d]: %w", index, err)
 		}
 	}

@@ -3,15 +3,15 @@ package clearchargingprofile_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/clearchargingprofile"
+	"github.com/evcoreco/ocpp16messages/clearchargingprofile"
 )
 
 const (
 	exampleIdValue         = 123
-	exampleConnectorId     = 1
+	exampleConnectorID     = 1
 	exampleStackLevelZero  = 0
 	exampleIdOne           = 1
-	exampleConnectorIdTwo  = 2
+	exampleConnectorIDTwo  = 2
 	exampleStackLevelThree = 3
 	exampleNegativeId      = -1
 )
@@ -21,7 +21,7 @@ const (
 func ExampleReq() {
 	_, err := clearchargingprofile.Req(clearchargingprofile.ReqInput{
 		Id:                     nil,
-		ConnectorId:            nil,
+		ConnectorID:            nil,
 		ChargingProfilePurpose: nil,
 		StackLevel:             nil,
 	})
@@ -43,7 +43,7 @@ func ExampleReq_withId() {
 
 	req, err := clearchargingprofile.Req(clearchargingprofile.ReqInput{
 		Id:                     &profileId,
-		ConnectorId:            nil,
+		ConnectorID:            nil,
 		ChargingProfilePurpose: nil,
 		StackLevel:             nil,
 	})
@@ -58,14 +58,14 @@ func ExampleReq_withId() {
 	// Id: 123
 }
 
-// ExampleReq_withConnectorId demonstrates creating a ClearChargingProfile.req
+// ExampleReq_withConnectorID demonstrates creating a ClearChargingProfile.req
 // message with a connector ID.
-func ExampleReq_withConnectorId() {
-	connectorId := exampleConnectorId
+func ExampleReq_withConnectorID() {
+	connectorId := exampleConnectorID
 
 	req, err := clearchargingprofile.Req(clearchargingprofile.ReqInput{
 		Id:                     nil,
-		ConnectorId:            &connectorId,
+		ConnectorID:            &connectorId,
 		ChargingProfilePurpose: nil,
 		StackLevel:             nil,
 	})
@@ -75,9 +75,9 @@ func ExampleReq_withConnectorId() {
 		return
 	}
 
-	fmt.Println("ConnectorId:", req.ConnectorId.Value())
+	fmt.Println("ConnectorID:", req.ConnectorID.Value())
 	// Output:
-	// ConnectorId: 1
+	// ConnectorID: 1
 }
 
 // ExampleReq_withPurpose demonstrates creating a ClearChargingProfile.req
@@ -87,7 +87,7 @@ func ExampleReq_withPurpose() {
 
 	req, err := clearchargingprofile.Req(clearchargingprofile.ReqInput{
 		Id:                     nil,
-		ConnectorId:            nil,
+		ConnectorID:            nil,
 		ChargingProfilePurpose: &purpose,
 		StackLevel:             nil,
 	})
@@ -109,7 +109,7 @@ func ExampleReq_withStackLevel() {
 
 	req, err := clearchargingprofile.Req(clearchargingprofile.ReqInput{
 		Id:                     nil,
-		ConnectorId:            nil,
+		ConnectorID:            nil,
 		ChargingProfilePurpose: nil,
 		StackLevel:             &stackLevel,
 	})
@@ -128,13 +128,13 @@ func ExampleReq_withStackLevel() {
 // message with all optional fields.
 func ExampleReq_withAllFields() {
 	profileId := exampleIdOne
-	connectorId := exampleConnectorIdTwo
+	connectorId := exampleConnectorIDTwo
 	purpose := "TxDefaultProfile"
 	stackLevel := exampleStackLevelThree
 
 	req, err := clearchargingprofile.Req(clearchargingprofile.ReqInput{
 		Id:                     &profileId,
-		ConnectorId:            &connectorId,
+		ConnectorID:            &connectorId,
 		ChargingProfilePurpose: &purpose,
 		StackLevel:             &stackLevel,
 	})
@@ -145,12 +145,12 @@ func ExampleReq_withAllFields() {
 	}
 
 	fmt.Println("Id:", req.Id.Value())
-	fmt.Println("ConnectorId:", req.ConnectorId.Value())
+	fmt.Println("ConnectorID:", req.ConnectorID.Value())
 	fmt.Println("Purpose:", req.ChargingProfilePurpose.String())
 	fmt.Println("StackLevel:", req.StackLevel.Value())
 	// Output:
 	// Id: 1
-	// ConnectorId: 2
+	// ConnectorID: 2
 	// Purpose: TxDefaultProfile
 	// StackLevel: 3
 }
@@ -162,7 +162,7 @@ func ExampleReq_invalidPurpose() {
 
 	_, err := clearchargingprofile.Req(clearchargingprofile.ReqInput{
 		Id:                     nil,
-		ConnectorId:            nil,
+		ConnectorID:            nil,
 		ChargingProfilePurpose: &purpose,
 		StackLevel:             nil,
 	})
@@ -180,7 +180,7 @@ func ExampleReq_negativeId() {
 
 	_, err := clearchargingprofile.Req(clearchargingprofile.ReqInput{
 		Id:                     &profileId,
-		ConnectorId:            nil,
+		ConnectorID:            nil,
 		ChargingProfilePurpose: nil,
 		StackLevel:             nil,
 	})

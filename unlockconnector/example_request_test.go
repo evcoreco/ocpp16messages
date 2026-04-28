@@ -3,18 +3,18 @@ package unlockconnector_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/unlockconnector"
+	"github.com/evcoreco/ocpp16messages/unlockconnector"
 )
 
 const (
-	exampleConnectorId     = 1
-	exampleConnectorIdZero = 0
+	exampleConnectorID     = 1
+	exampleConnectorIDZero = 0
 )
 
 // ExampleReq demonstrates creating a valid UnlockConnector.req message.
 func ExampleReq() {
 	req, err := unlockconnector.Req(unlockconnector.ReqInput{
-		ConnectorId: exampleConnectorId,
+		ConnectorID: exampleConnectorID,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -22,16 +22,16 @@ func ExampleReq() {
 		return
 	}
 
-	fmt.Println("ConnectorId:", req.ConnectorId.Value())
+	fmt.Println("ConnectorID:", req.ConnectorID.Value())
 	// Output:
-	// ConnectorId: 1
+	// ConnectorID: 1
 }
 
-// ExampleReq_zeroConnectorId demonstrates the error returned when
+// ExampleReq_zeroConnectorID demonstrates the error returned when
 // connectorId is zero (connector 0 refers to the Charge Point itself).
-func ExampleReq_zeroConnectorId() {
+func ExampleReq_zeroConnectorID() {
 	_, err := unlockconnector.Req(unlockconnector.ReqInput{
-		ConnectorId: exampleConnectorIdZero,
+		ConnectorID: exampleConnectorIDZero,
 	})
 	if err != nil {
 		fmt.Println("connectorId: invalid value")

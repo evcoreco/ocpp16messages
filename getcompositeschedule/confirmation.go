@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 // ConfInput represents the raw input data for creating a
@@ -14,7 +14,7 @@ type ConfInput struct {
 	// Required: Status of the request (Accepted or Rejected)
 	Status string
 	// Optional: The connector ID for which the schedule is reported
-	ConnectorId *int
+	ConnectorID *int
 	// Optional: Time at which the schedule starts (RFC3339 format)
 	ScheduleStart *string
 	// Optional: The composite charging schedule
@@ -24,7 +24,7 @@ type ConfInput struct {
 // ConfMessage represents an OCPP 1.6 GetCompositeSchedule.conf message.
 type ConfMessage struct {
 	Status           types.GetCompositeScheduleStatus
-	ConnectorId      *types.Integer
+	ConnectorID      *types.Integer
 	ScheduleStart    *types.DateTime
 	ChargingSchedule *types.ChargingSchedule
 }
@@ -33,7 +33,7 @@ type ConfMessage struct {
 // It validates all fields and accumulates all errors, returning them together.
 // Returns an error if:
 //   - Status is not a valid GetCompositeScheduleStatus value
-//   - ConnectorId (if provided) is negative or exceeds uint16 max (65535)
+//   - ConnectorID (if provided) is negative or exceeds uint16 max (65535)
 //   - ScheduleStart (if provided) is not a valid RFC3339 timestamp
 //   - ChargingSchedule (if provided) is invalid
 func Conf(input ConfInput) (ConfMessage, error) {
@@ -44,7 +44,7 @@ func Conf(input ConfInput) (ConfMessage, error) {
 		errs = append(errs, err)
 	}
 
-	connectorId, err := confValidateConnectorId(input.ConnectorId)
+	connectorId, err := confValidateConnectorID(input.ConnectorID)
 	if err != nil {
 		errs = append(errs, err)
 	}
@@ -67,7 +67,7 @@ func Conf(input ConfInput) (ConfMessage, error) {
 
 	return ConfMessage{
 		Status:           status,
-		ConnectorId:      connectorId,
+		ConnectorID:      connectorId,
 		ScheduleStart:    scheduleStart,
 		ChargingSchedule: chargingSchedule,
 	}, nil
@@ -85,8 +85,8 @@ func confValidateStatus(
 	return status, nil
 }
 
-// confValidateConnectorId validates the optional connector ID field.
-func confValidateConnectorId(connectorId *int) (*types.Integer, error) {
+// confValidateConnectorID validates the optional connector ID field.
+func confValidateConnectorID(connectorId *int) (*types.Integer, error) {
 	if connectorId == nil {
 		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}

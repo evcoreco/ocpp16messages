@@ -7,8 +7,8 @@ import (
 	"math"
 	"testing"
 
-	sl "github.com/aasanchez/ocpp16messages/sendlocallist"
-	types "github.com/aasanchez/ocpp16types"
+	sl "github.com/evcoreco/ocpp16messages/sendlocallist"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzSendLocalListReq(f *testing.F) {
@@ -40,8 +40,8 @@ func FuzzSendLocalListReq(f *testing.F) {
 		default:
 			localAuthorizationList = []types.AuthorizationDataInput{
 				{
-					IdTag:     idTag,
-					IdTagInfo: nil,
+					IDTag:     idTag,
+					IDTagInfo: nil,
 				},
 			}
 		}

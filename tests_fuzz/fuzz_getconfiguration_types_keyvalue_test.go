@@ -6,7 +6,7 @@ import (
 	"errors"
 	"testing"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const maxFuzzInputLen = maxFuzzLen

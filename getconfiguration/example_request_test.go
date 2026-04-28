@@ -3,7 +3,7 @@ package getconfiguration_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/getconfiguration"
+	"github.com/evcoreco/ocpp16messages/getconfiguration"
 )
 
 // ExampleReq demonstrates creating a valid GetConfiguration.req message

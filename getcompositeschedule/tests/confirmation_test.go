@@ -4,13 +4,13 @@ import (
 	"strings"
 	"testing"
 
-	gcs "github.com/aasanchez/ocpp16messages/getcompositeschedule"
-	types "github.com/aasanchez/ocpp16types"
+	gcs "github.com/evcoreco/ocpp16messages/getcompositeschedule"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
 	errStatus           = "status"
-	errConnectorIdConf  = "connectorId"
+	errConnectorIDConf  = "connectorId"
 	errScheduleStart    = "scheduleStart"
 	errChargingSchedule = "chargingSchedule"
 
@@ -19,7 +19,7 @@ const (
 	durationConfValue = 3600
 	limitConfValue    = 32.0
 
-	connectorIdNotNil      = "ConnectorId should not be nil"
+	connectorIdNotNil      = "ConnectorID should not be nil"
 	scheduleStartNotNil    = "ScheduleStart should not be nil"
 	chargingScheduleNotNil = "ChargingSchedule should not be nil"
 )
@@ -33,7 +33,7 @@ func TestConf_Valid_AcceptedOnly(t *testing.T) {
 
 	conf, err := gcs.Conf(gcs.ConfInput{
 		Status:           "Accepted",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 		ScheduleStart:    nil,
 		ChargingSchedule: nil,
 	})
@@ -49,8 +49,8 @@ func TestConf_Valid_AcceptedOnly(t *testing.T) {
 		)
 	}
 
-	if conf.ConnectorId != nil {
-		t.Errorf("ConnectorId should be nil, got %v", conf.ConnectorId)
+	if conf.ConnectorID != nil {
+		t.Errorf("ConnectorID should be nil, got %v", conf.ConnectorID)
 	}
 
 	if conf.ScheduleStart != nil {
@@ -70,7 +70,7 @@ func TestConf_Valid_RejectedOnly(t *testing.T) {
 
 	conf, err := gcs.Conf(gcs.ConfInput{
 		Status:           "Rejected",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 		ScheduleStart:    nil,
 		ChargingSchedule: nil,
 	})
@@ -87,12 +87,12 @@ func TestConf_Valid_RejectedOnly(t *testing.T) {
 	}
 }
 
-func TestConf_Valid_WithConnectorId(t *testing.T) {
+func TestConf_Valid_WithConnectorID(t *testing.T) {
 	t.Parallel()
 
 	conf, err := gcs.Conf(gcs.ConfInput{
 		Status:           "Accepted",
-		ConnectorId:      intPtr(valueOne),
+		ConnectorID:      intPtr(valueOne),
 		ScheduleStart:    nil,
 		ChargingSchedule: nil,
 	})
@@ -100,21 +100,21 @@ func TestConf_Valid_WithConnectorId(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.ConnectorId == nil {
+	if conf.ConnectorID == nil {
 		t.Fatal(connectorIdNotNil)
 	}
 
-	if conf.ConnectorId.Value() != valueOne {
-		t.Errorf(types.ErrorMismatchValue, valueOne, conf.ConnectorId.Value())
+	if conf.ConnectorID.Value() != valueOne {
+		t.Errorf(types.ErrorMismatchValue, valueOne, conf.ConnectorID.Value())
 	}
 }
 
-func TestConf_Valid_WithConnectorIdZero(t *testing.T) {
+func TestConf_Valid_WithConnectorIDZero(t *testing.T) {
 	t.Parallel()
 
 	conf, err := gcs.Conf(gcs.ConfInput{
 		Status:           "Accepted",
-		ConnectorId:      intPtr(valueZero),
+		ConnectorID:      intPtr(valueZero),
 		ScheduleStart:    nil,
 		ChargingSchedule: nil,
 	})
@@ -122,12 +122,12 @@ func TestConf_Valid_WithConnectorIdZero(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.ConnectorId == nil {
+	if conf.ConnectorID == nil {
 		t.Fatal(connectorIdNotNil)
 	}
 
-	if conf.ConnectorId.Value() != valueZero {
-		t.Errorf(types.ErrorMismatchValue, valueZero, conf.ConnectorId.Value())
+	if conf.ConnectorID.Value() != valueZero {
+		t.Errorf(types.ErrorMismatchValue, valueZero, conf.ConnectorID.Value())
 	}
 }
 
@@ -138,7 +138,7 @@ func TestConf_Valid_WithScheduleStart(t *testing.T) {
 
 	conf, err := gcs.Conf(gcs.ConfInput{
 		Status:           "Accepted",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 		ScheduleStart:    &scheduleStart,
 		ChargingSchedule: nil,
 	})
@@ -156,7 +156,7 @@ func TestConf_Valid_WithChargingSchedule(t *testing.T) {
 
 	conf, err := gcs.Conf(gcs.ConfInput{
 		Status:        "Accepted",
-		ConnectorId:   nil,
+		ConnectorID:   nil,
 		ScheduleStart: nil,
 		ChargingSchedule: &types.ChargingScheduleInput{
 			Duration:         nil,
@@ -197,7 +197,7 @@ func TestConf_Valid_WithAllFields(t *testing.T) {
 
 	conf, err := gcs.Conf(gcs.ConfInput{
 		Status:        "Accepted",
-		ConnectorId:   intPtr(valueOne),
+		ConnectorID:   intPtr(valueOne),
 		ScheduleStart: &scheduleStart,
 		ChargingSchedule: &types.ChargingScheduleInput{
 			Duration:         &duration,
@@ -225,7 +225,7 @@ func TestConf_Valid_WithAllFields(t *testing.T) {
 		)
 	}
 
-	if conf.ConnectorId == nil {
+	if conf.ConnectorID == nil {
 		t.Fatal(connectorIdNotNil)
 	}
 
@@ -243,7 +243,7 @@ func TestConf_Invalid_EmptyStatus(t *testing.T) {
 
 	_, err := gcs.Conf(gcs.ConfInput{
 		Status:           "",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 		ScheduleStart:    nil,
 		ChargingSchedule: nil,
 	})
@@ -261,7 +261,7 @@ func TestConf_Invalid_InvalidStatus(t *testing.T) {
 
 	_, err := gcs.Conf(gcs.ConfInput{
 		Status:           "Invalid",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 		ScheduleStart:    nil,
 		ChargingSchedule: nil,
 	})
@@ -279,7 +279,7 @@ func TestConf_Invalid_LowercaseStatus(t *testing.T) {
 
 	_, err := gcs.Conf(gcs.ConfInput{
 		Status:           "accepted",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 		ScheduleStart:    nil,
 		ChargingSchedule: nil,
 	})
@@ -292,39 +292,39 @@ func TestConf_Invalid_LowercaseStatus(t *testing.T) {
 	}
 }
 
-func TestConf_Invalid_NegativeConnectorId(t *testing.T) {
+func TestConf_Invalid_NegativeConnectorID(t *testing.T) {
 	t.Parallel()
 
 	_, err := gcs.Conf(gcs.ConfInput{
 		Status:           "Accepted",
-		ConnectorId:      intPtr(valueNegative),
+		ConnectorID:      intPtr(valueNegative),
 		ScheduleStart:    nil,
 		ChargingSchedule: nil,
 	})
 	if err == nil {
-		t.Errorf(types.ErrorWantNil, "negative ConnectorId")
+		t.Errorf(types.ErrorWantNil, "negative ConnectorID")
 	}
 
-	if !strings.Contains(err.Error(), errConnectorIdConf) {
-		t.Errorf(types.ErrorWantContains, err, errConnectorIdConf)
+	if !strings.Contains(err.Error(), errConnectorIDConf) {
+		t.Errorf(types.ErrorWantContains, err, errConnectorIDConf)
 	}
 }
 
-func TestConf_Invalid_ConnectorIdExceedsMax(t *testing.T) {
+func TestConf_Invalid_ConnectorIDExceedsMax(t *testing.T) {
 	t.Parallel()
 
 	_, err := gcs.Conf(gcs.ConfInput{
 		Status:           "Accepted",
-		ConnectorId:      intPtr(valueExceedsMax),
+		ConnectorID:      intPtr(valueExceedsMax),
 		ScheduleStart:    nil,
 		ChargingSchedule: nil,
 	})
 	if err == nil {
-		t.Errorf(types.ErrorWantNil, "ConnectorId exceeds max")
+		t.Errorf(types.ErrorWantNil, "ConnectorID exceeds max")
 	}
 
-	if !strings.Contains(err.Error(), errConnectorIdConf) {
-		t.Errorf(types.ErrorWantContains, err, errConnectorIdConf)
+	if !strings.Contains(err.Error(), errConnectorIDConf) {
+		t.Errorf(types.ErrorWantContains, err, errConnectorIDConf)
 	}
 }
 
@@ -335,7 +335,7 @@ func TestConf_Invalid_InvalidScheduleStart(t *testing.T) {
 
 	_, err := gcs.Conf(gcs.ConfInput{
 		Status:           "Accepted",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 		ScheduleStart:    &scheduleStart,
 		ChargingSchedule: nil,
 	})
@@ -353,7 +353,7 @@ func TestConf_Invalid_InvalidChargingSchedule(t *testing.T) {
 
 	_, err := gcs.Conf(gcs.ConfInput{
 		Status:        "Accepted",
-		ConnectorId:   nil,
+		ConnectorID:   nil,
 		ScheduleStart: nil,
 		ChargingSchedule: &types.ChargingScheduleInput{
 			Duration:               nil,
@@ -379,7 +379,7 @@ func TestConf_Invalid_MultipleErrors(t *testing.T) {
 
 	_, err := gcs.Conf(gcs.ConfInput{
 		Status:        "Invalid",
-		ConnectorId:   intPtr(valueNegative),
+		ConnectorID:   intPtr(valueNegative),
 		ScheduleStart: &scheduleStart,
 		ChargingSchedule: &types.ChargingScheduleInput{
 			Duration:               nil,
@@ -397,8 +397,8 @@ func TestConf_Invalid_MultipleErrors(t *testing.T) {
 		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 
-	if !strings.Contains(err.Error(), errConnectorIdConf) {
-		t.Errorf(types.ErrorWantContains, err, errConnectorIdConf)
+	if !strings.Contains(err.Error(), errConnectorIDConf) {
+		t.Errorf(types.ErrorWantContains, err, errConnectorIDConf)
 	}
 
 	if !strings.Contains(err.Error(), errScheduleStart) {

@@ -3,7 +3,7 @@ package changeconfiguration_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/changeconfiguration"
+	"github.com/evcoreco/ocpp16messages/changeconfiguration"
 )
 
 const (

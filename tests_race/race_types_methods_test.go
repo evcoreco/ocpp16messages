@@ -6,15 +6,15 @@ import (
 	"fmt"
 	"testing"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
-func TestRace_IdTagInfoWithAndString(t *testing.T) {
+func TestRace_IDTagInfoWithAndString(t *testing.T) {
 	t.Parallel()
 
-	base, err := types.NewIdTagInfo(types.AuthorizationStatusAccepted)
+	base, err := types.NewIDTagInfo(types.AuthorizationStatusAccepted)
 	if err != nil {
-		t.Fatalf("NewIdTagInfo: %v", err)
+		t.Fatalf("NewIDTagInfo: %v", err)
 	}
 
 	expiry, err := types.NewDateTime("2025-01-02T15:00:00Z")
@@ -26,12 +26,12 @@ func TestRace_IdTagInfoWithAndString(t *testing.T) {
 	if err != nil {
 		t.Fatalf("NewCiString20Type: %v", err)
 	}
-	parent := types.NewIdToken(ciTag)
+	parent := types.NewIDToken(ciTag)
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_ = base.String()
 
-		info := base.WithExpiryDate(expiry).WithParentIdTag(parent)
+		info := base.WithExpiryDate(expiry).WithParentIDTag(parent)
 		_ = info.String()
 
 		return nil
@@ -109,8 +109,8 @@ func TestRace_SetChargingProfileChargingProfileGetters(t *testing.T) {
 	}
 
 	profile, err := types.NewChargingProfile(types.ChargingProfileInput{
-		ChargingProfileId:      1,
-		TransactionId:          nil,
+		ChargingProfileID:      1,
+		TransactionID:          nil,
 		StackLevel:             0,
 		ChargingProfilePurpose: types.TxProfile.String(),
 		ChargingProfileKind:    types.ChargingProfileKindAbsolute.String(),
@@ -124,10 +124,10 @@ func TestRace_SetChargingProfileChargingProfileGetters(t *testing.T) {
 	}
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
-		_ = profile.ChargingProfileId().String()
+		_ = profile.ChargingProfileID().String()
 
-		if profile.TransactionId() != nil {
-			_ = profile.TransactionId().String()
+		if profile.TransactionID() != nil {
+			_ = profile.TransactionID().String()
 		}
 
 		_ = profile.StackLevel().String()

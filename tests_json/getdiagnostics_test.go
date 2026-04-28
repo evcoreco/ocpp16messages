@@ -3,7 +3,7 @@ package testsjson_test
 import (
 	"testing"
 
-	gd "github.com/aasanchez/ocpp16messages/getdiagnostics"
+	gd "github.com/evcoreco/ocpp16messages/getdiagnostics"
 )
 
 func TestGetDiagnosticsReq_JSONRoundTrip(t *testing.T) {

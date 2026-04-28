@@ -3,18 +3,18 @@ package setchargingprofile_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/setchargingprofile"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/setchargingprofile"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
-	exampleConnectorId     = 1
+	exampleConnectorID     = 1
 	exampleProfileId       = 100
 	exampleStackLevel      = 0
 	exampleStartPeriod     = 0
 	exampleLimit           = 32.0
-	fmtConnectorId         = "ConnectorId: %d\n"
-	fmtChargingProfileId   = "ChargingProfileId: %d\n"
+	fmtConnectorID         = "ConnectorID: %d\n"
+	fmtChargingProfileID   = "ChargingProfileID: %d\n"
 	fmtChargingProfileKind = "ChargingProfileKind: %s\n"
 )
 
@@ -22,10 +22,10 @@ const (
 // with a basic charging profile.
 func ExampleReq() {
 	req, err := setchargingprofile.Req(setchargingprofile.ReqInput{
-		ConnectorId: exampleConnectorId,
+		ConnectorID: exampleConnectorID,
 		CsChargingProfiles: types.ChargingProfileInput{
-			ChargingProfileId:      exampleProfileId,
-			TransactionId:          nil,
+			ChargingProfileID:      exampleProfileId,
+			TransactionID:          nil,
 			StackLevel:             exampleStackLevel,
 			ChargingProfilePurpose: "TxDefaultProfile",
 			ChargingProfileKind:    "Absolute",
@@ -53,16 +53,16 @@ func ExampleReq() {
 		return
 	}
 
-	fmt.Printf(fmtConnectorId, req.ConnectorId.Value())
+	fmt.Printf(fmtConnectorID, req.ConnectorID.Value())
 
-	profileId := req.CsChargingProfiles.ChargingProfileId().Value()
-	fmt.Printf(fmtChargingProfileId, profileId)
+	profileId := req.CsChargingProfiles.ChargingProfileID().Value()
+	fmt.Printf(fmtChargingProfileID, profileId)
 
 	profileKind := req.CsChargingProfiles.ChargingProfileKind().String()
 	fmt.Printf(fmtChargingProfileKind, profileKind)
 	// Output:
-	// ConnectorId: 1
-	// ChargingProfileId: 100
+	// ConnectorID: 1
+	// ChargingProfileID: 100
 	// ChargingProfileKind: Absolute
 }
 
@@ -71,10 +71,10 @@ func ExampleReq() {
 // for limiting overall charge point power.
 func ExampleReq_chargePointMaxProfile() {
 	req, err := setchargingprofile.Req(setchargingprofile.ReqInput{
-		ConnectorId: 0,
+		ConnectorID: 0,
 		CsChargingProfiles: types.ChargingProfileInput{
-			ChargingProfileId:      exampleProfileId,
-			TransactionId:          nil,
+			ChargingProfileID:      exampleProfileId,
+			TransactionID:          nil,
 			StackLevel:             exampleStackLevel,
 			ChargingProfilePurpose: "ChargePointMaxProfile",
 			ChargingProfileKind:    "Absolute",
@@ -108,14 +108,14 @@ func ExampleReq_chargePointMaxProfile() {
 	// Purpose: ChargePointMaxProfile
 }
 
-// ExampleReq_invalidConnectorId demonstrates the error returned when
+// ExampleReq_invalidConnectorID demonstrates the error returned when
 // a negative connector ID is provided.
-func ExampleReq_invalidConnectorId() {
+func ExampleReq_invalidConnectorID() {
 	_, err := setchargingprofile.Req(setchargingprofile.ReqInput{
-		ConnectorId: -1,
+		ConnectorID: -1,
 		CsChargingProfiles: types.ChargingProfileInput{
-			ChargingProfileId:      exampleProfileId,
-			TransactionId:          nil,
+			ChargingProfileID:      exampleProfileId,
+			TransactionID:          nil,
 			StackLevel:             exampleStackLevel,
 			ChargingProfilePurpose: "TxDefaultProfile",
 			ChargingProfileKind:    "Absolute",

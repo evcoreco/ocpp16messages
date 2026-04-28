@@ -3,7 +3,7 @@ package getlocallistversion_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/getlocallistversion"
+	"github.com/evcoreco/ocpp16messages/getlocallistversion"
 )
 
 // ExampleConf demonstrates creating a valid GetLocalListVersion.conf message

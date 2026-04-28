@@ -3,7 +3,7 @@ package datatransfer
 import (
 	"fmt"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 // ConfInput represents the raw input data for creating a DataTransfer.conf

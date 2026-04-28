@@ -5,29 +5,29 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/authorize"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/authorize"
+	types "github.com/evcoreco/ocpp16types"
 )
 
-const testValidIdTag = "RFID-TAG-12345"
+const testValidIDTag = "RFID-TAG-12345"
 
 func TestReq_Valid(t *testing.T) {
 	t.Parallel()
 
-	req, err := authorize.Req(authorize.ReqInput{IdTag: testValidIdTag})
+	req, err := authorize.Req(authorize.ReqInput{IDTag: testValidIDTag})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.IdTag.String() != testValidIdTag {
-		t.Errorf(types.ErrorMismatch, testValidIdTag, req.IdTag.String())
+	if req.IDTag.String() != testValidIDTag {
+		t.Errorf(types.ErrorMismatch, testValidIDTag, req.IDTag.String())
 	}
 }
 
-func TestReq_EmptyIdTag(t *testing.T) {
+func TestReq_EmptyIDTag(t *testing.T) {
 	t.Parallel()
 
-	_, err := authorize.Req(authorize.ReqInput{IdTag: ""})
+	_, err := authorize.Req(authorize.ReqInput{IDTag: ""})
 	if err == nil {
 		t.Error("Req() error = nil, want error for empty idTag")
 	}
@@ -37,15 +37,15 @@ func TestReq_EmptyIdTag(t *testing.T) {
 	}
 }
 
-func TestReq_IdTagTooLong(t *testing.T) {
+func TestReq_IDTagTooLong(t *testing.T) {
 	t.Parallel()
 
 	// 23 chars, max is 20
 	_, err := authorize.Req(authorize.ReqInput{
-		IdTag: "RFID-ABC123456789012345",
+		IDTag: "RFID-ABC123456789012345",
 	})
 	if err == nil {
-		t.Error("Req() error = nil, want error for IdTag too long")
+		t.Error("Req() error = nil, want error for IDTag too long")
 	}
 
 	if !strings.Contains(err.Error(), "exceeds maximum length") {
@@ -60,7 +60,7 @@ func TestReq_InvalidCharacters(t *testing.T) {
 	t.Parallel()
 
 	// Contains null byte
-	_, err := authorize.Req(authorize.ReqInput{IdTag: "RFID\x00ABC"})
+	_, err := authorize.Req(authorize.ReqInput{IDTag: "RFID\x00ABC"})
 	if err == nil {
 		t.Error(
 			"Req() error = nil, want error for non-printable chars",

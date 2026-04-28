@@ -3,13 +3,13 @@ package testsjson_test
 import (
 	"testing"
 
-	cr "github.com/aasanchez/ocpp16messages/cancelreservation"
+	cr "github.com/evcoreco/ocpp16messages/cancelreservation"
 )
 
 func TestCancelReservationReq_JSONRoundTrip(t *testing.T) {
 	t.Parallel()
 
-	req, err := cr.Req(cr.ReqInput{ReservationId: 0})
+	req, err := cr.Req(cr.ReqInput{ReservationID: 0})
 	if err != nil {
 		t.Fatalf("cancelreservation.Req: %v", err)
 	}

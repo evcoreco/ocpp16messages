@@ -497,7 +497,7 @@ func buildScalingSeries(
 func writeCoreChart(imgDir string, metrics map[string]metric) error {
 	categories := []string{
 		"DateTime",
-		"ParentIdTag",
+		"ParentIDTag",
 		benchStartTransaction,
 	}
 	variants := benchmarkVariants()
@@ -531,7 +531,7 @@ func writeCoreChart(imgDir string, metrics map[string]metric) error {
 func writeRatioChart(imgDir string, metrics map[string]metric) error {
 	categories := []string{
 		"DateTime",
-		"ParentIdTag",
+		"ParentIDTag",
 		benchStartTransaction,
 		"SendLocalListReq_1000",
 		"GetConfigurationReq_1000",
@@ -1214,7 +1214,7 @@ func reportIntroSection() []string {
 		reportBlankLine,
 		"## Scope",
 		reportBlankLine,
-		"- Core constructors: `DateTime`, `ParentIdTag`, `StartTransactionReq`",
+		"- Core constructors: `DateTime`, `ParentIDTag`, `StartTransactionReq`",
 		"- Scaling path #1: `SendLocalListReq` (1 to 1000 entries)",
 		"- Scaling path #2: `GetConfigurationReq` (1 to 1000 keys)",
 		"- Metrics: `ns/op`, `B/op`, `allocs/op`",
@@ -1343,11 +1343,11 @@ func dateTimeBenchmarkName(variant string) string {
 func parentTagBenchmarkName(variant string) string {
 	switch variant {
 	case variantPrimitiveDirect:
-		return "BenchmarkParentIdTag_PrimitiveDirect"
+		return "BenchmarkParentIDTag_PrimitiveDirect"
 	case variantPrimitiveValidated:
-		return "BenchmarkParentIdTag_PrimitiveValidated"
+		return "BenchmarkParentIDTag_PrimitiveValidated"
 	default:
-		return "BenchmarkParentIdTag_CustomChain"
+		return "BenchmarkParentIDTag_CustomChain"
 	}
 }
 

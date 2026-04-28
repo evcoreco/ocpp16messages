@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/aasanchez/ocpp16messages/heartbeat"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/heartbeat"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (

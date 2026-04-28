@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
@@ -16,51 +16,51 @@ const (
 // The constructor Req validates all fields automatically.
 type ReqInput struct {
 	// Required: Unique identifier for this reservation.
-	ReservationId int
+	ReservationID int
 	// Required: The connector to reserve. 0 means reserve any available.
-	ConnectorId int
+	ConnectorID int
 	// Required: The identifier to use for the reservation.
-	IdTag string
+	IDTag string
 	// Required: The date and time when the reservation expires (RFC3339).
 	ExpiryDate string
 	// Optional: The parent identifier to use for authorization.
-	ParentIdTag *string
+	ParentIDTag *string
 }
 
 // ReqMessage represents an OCPP 1.6 ReserveNow.req message.
 type ReqMessage struct {
-	ReservationId types.Integer
-	ConnectorId   types.Integer
-	IdTag         types.CiString20Type
+	ReservationID types.Integer
+	ConnectorID   types.Integer
+	IDTag         types.CiString20Type
 	ExpiryDate    types.DateTime
-	ParentIdTag   *types.CiString20Type
+	ParentIDTag   *types.CiString20Type
 }
 
 // Req creates a ReserveNow.req message from the given input.
 // It validates all fields and accumulates all errors, returning them together.
 // Returns an error if:
-//   - ReservationId is negative or exceeds uint16 max value (65535)
-//   - ConnectorId is negative or exceeds uint16 max value (65535)
-//   - IdTag is empty
-//   - IdTag exceeds 20 characters
-//   - IdTag contains non-printable ASCII characters
+//   - ReservationID is negative or exceeds uint16 max value (65535)
+//   - ConnectorID is negative or exceeds uint16 max value (65535)
+//   - IDTag is empty
+//   - IDTag exceeds 20 characters
+//   - IDTag contains non-printable ASCII characters
 //   - ExpiryDate is not a valid RFC3339 timestamp
-//   - ParentIdTag (if provided) exceeds 20 characters
-//   - ParentIdTag (if provided) contains non-printable ASCII characters
+//   - ParentIDTag (if provided) exceeds 20 characters
+//   - ParentIDTag (if provided) contains non-printable ASCII characters
 func Req(input ReqInput) (ReqMessage, error) {
 	var errs []error
 
-	reservationId, err := types.NewInteger(input.ReservationId)
+	reservationId, err := types.NewInteger(input.ReservationID)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("reservationId: %w", err))
 	}
 
-	connectorId, err := types.NewInteger(input.ConnectorId)
+	connectorId, err := types.NewInteger(input.ConnectorID)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("connectorId: %w", err))
 	}
 
-	idTag, err := types.NewCiString20Type(input.IdTag)
+	idTag, err := types.NewCiString20Type(input.IDTag)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("idTag: %w", err))
 	}
@@ -70,10 +70,10 @@ func Req(input ReqInput) (ReqMessage, error) {
 		errs = append(errs, fmt.Errorf("expiryDate: %w", err))
 	}
 
-	var parentIdTag *types.CiString20Type
+	var parentIDTag *types.CiString20Type
 
-	if input.ParentIdTag != nil {
-		parentIdTag, errs = validateParentIdTag(*input.ParentIdTag, errs)
+	if input.ParentIDTag != nil {
+		parentIDTag, errs = validateParentIDTag(*input.ParentIDTag, errs)
 	}
 
 	if len(errs) > errCountZero {
@@ -81,22 +81,22 @@ func Req(input ReqInput) (ReqMessage, error) {
 	}
 
 	return ReqMessage{
-		ReservationId: reservationId,
-		ConnectorId:   connectorId,
-		IdTag:         idTag,
+		ReservationID: reservationId,
+		ConnectorID:   connectorId,
+		IDTag:         idTag,
 		ExpiryDate:    expiryDate,
-		ParentIdTag:   parentIdTag,
+		ParentIDTag:   parentIDTag,
 	}, nil
 }
 
-// validateParentIdTag validates the optional parentIdTag field.
-func validateParentIdTag(
-	parentIdTag string,
+// validateParentIDTag validates the optional parentIDTag field.
+func validateParentIDTag(
+	parentIDTag string,
 	errs []error,
 ) (*types.CiString20Type, []error) {
-	val, err := types.NewCiString20Type(parentIdTag)
+	val, err := types.NewCiString20Type(parentIDTag)
 	if err != nil {
-		return nil, append(errs, fmt.Errorf("parentIdTag: %w", err))
+		return nil, append(errs, fmt.Errorf("parentIDTag: %w", err))
 	}
 
 	return &val, errs

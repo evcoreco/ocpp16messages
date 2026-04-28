@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	stt "github.com/aasanchez/ocpp16messages/starttransaction"
-	types "github.com/aasanchez/ocpp16types"
+	stt "github.com/evcoreco/ocpp16messages/starttransaction"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzStartTransactionReq(f *testing.F) {
@@ -26,7 +26,7 @@ func FuzzStartTransactionReq(f *testing.F) {
 		idTag string,
 		meterStart int,
 		timestamp string,
-		hasReservationId bool,
+		hasReservationID bool,
 		reservationId int,
 	) {
 		if len(idTag) > maxFuzzStringLen || len(timestamp) > maxFuzzStringLen {
@@ -34,16 +34,16 @@ func FuzzStartTransactionReq(f *testing.F) {
 		}
 
 		var reservationIdPtr *int
-		if hasReservationId {
+		if hasReservationID {
 			reservationIdPtr = &reservationId
 		}
 
 		req, err := stt.Req(stt.ReqInput{
-			ConnectorId:   connectorId,
-			IdTag:         idTag,
+			ConnectorID:   connectorId,
+			IDTag:         idTag,
 			MeterStart:    meterStart,
 			Timestamp:     timestamp,
-			ReservationId: reservationIdPtr,
+			ReservationID: reservationIdPtr,
 		})
 		if err != nil {
 			if !errors.Is(err, types.ErrInvalidValue) && !errors.Is(err, types.ErrEmptyValue) {
@@ -60,16 +60,16 @@ func FuzzStartTransactionReq(f *testing.F) {
 			t.Fatalf("Req succeeded with connectorId=%d", connectorId)
 		}
 
-		if got := req.ConnectorId.Value(); got != uint16(connectorId) {
-			t.Fatalf("ConnectorId = %d, want %d", got, connectorId)
+		if got := req.ConnectorID.Value(); got != uint16(connectorId) {
+			t.Fatalf("ConnectorID = %d, want %d", got, connectorId)
 		}
 
 		if idTag == "" {
-			t.Fatal("Req succeeded with empty IdTag")
+			t.Fatal("Req succeeded with empty IDTag")
 		}
 
-		if req.IdTag.String() != idTag {
-			t.Fatalf("IdTag = %q, want %q", req.IdTag.String(), idTag)
+		if req.IDTag.String() != idTag {
+			t.Fatalf("IDTag = %q, want %q", req.IDTag.String(), idTag)
 		}
 
 		if meterStart < 0 || meterStart > math.MaxUint16 {
@@ -84,20 +84,20 @@ func FuzzStartTransactionReq(f *testing.F) {
 			t.Fatalf("Timestamp location = %v, want UTC", req.Timestamp.Value().Location())
 		}
 
-		if hasReservationId {
-			if req.ReservationId == nil {
-				t.Fatal("ReservationId = nil, want non-nil")
+		if hasReservationID {
+			if req.ReservationID == nil {
+				t.Fatal("ReservationID = nil, want non-nil")
 			}
 
 			if reservationId < 0 || reservationId > math.MaxUint16 {
 				t.Fatalf("Req succeeded with reservationId=%d", reservationId)
 			}
 
-			if got := req.ReservationId.Value(); got != uint16(reservationId) {
-				t.Fatalf("ReservationId = %d, want %d", got, reservationId)
+			if got := req.ReservationID.Value(); got != uint16(reservationId) {
+				t.Fatalf("ReservationID = %d, want %d", got, reservationId)
 			}
-		} else if req.ReservationId != nil {
-			t.Fatal("ReservationId != nil, want nil")
+		} else if req.ReservationID != nil {
+			t.Fatal("ReservationID != nil, want nil")
 		}
 	})
 }

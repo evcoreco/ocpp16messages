@@ -3,8 +3,8 @@ package stoptransaction_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/stoptransaction"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/stoptransaction"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
@@ -12,15 +12,15 @@ const (
 	exampleMeterStop      = 50000
 	exampleTimestamp      = "2025-01-15T10:30:00Z"
 	exampleReqErrorLabel  = "Error:"
-	exampleTxIdLabel      = "TransactionId:"
+	exampleTxIdLabel      = "TransactionID:"
 	exampleMeterStopLabel = "MeterStop:"
 )
 
 // ExampleReq demonstrates creating a basic StopTransaction.req message.
 func ExampleReq() {
 	req, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId:   exampleTxId,
-		IdTag:           nil,
+		TransactionID:   exampleTxId,
+		IDTag:           nil,
 		MeterStop:       exampleMeterStop,
 		Timestamp:       exampleTimestamp,
 		Reason:          nil,
@@ -32,20 +32,20 @@ func ExampleReq() {
 		return
 	}
 
-	fmt.Println(exampleTxIdLabel, req.TransactionId.Value())
+	fmt.Println(exampleTxIdLabel, req.TransactionID.Value())
 	fmt.Println(exampleMeterStopLabel, req.MeterStop.Value())
 	// Output:
-	// TransactionId: 12345
+	// TransactionID: 12345
 	// MeterStop: 50000
 }
 
-// ExampleReq_withIdTag demonstrates stopping a transaction with an ID tag.
-func ExampleReq_withIdTag() {
+// ExampleReq_withIDTag demonstrates stopping a transaction with an ID tag.
+func ExampleReq_withIDTag() {
 	idTag := "RFID-ABC123"
 
 	req, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId:   exampleTxId,
-		IdTag:           &idTag,
+		TransactionID:   exampleTxId,
+		IDTag:           &idTag,
 		MeterStop:       exampleMeterStop,
 		Timestamp:       exampleTimestamp,
 		Reason:          nil,
@@ -57,11 +57,11 @@ func ExampleReq_withIdTag() {
 		return
 	}
 
-	fmt.Println(exampleTxIdLabel, req.TransactionId.Value())
-	fmt.Println("IdTag:", req.IdTag.String())
+	fmt.Println(exampleTxIdLabel, req.TransactionID.Value())
+	fmt.Println("IDTag:", req.IDTag.String())
 	// Output:
-	// TransactionId: 12345
-	// IdTag: RFID-ABC123
+	// TransactionID: 12345
+	// IDTag: RFID-ABC123
 }
 
 // ExampleReq_withReason demonstrates stopping a transaction with a reason.
@@ -69,8 +69,8 @@ func ExampleReq_withReason() {
 	reason := "Remote"
 
 	req, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId:   exampleTxId,
-		IdTag:           nil,
+		TransactionID:   exampleTxId,
+		IDTag:           nil,
 		MeterStop:       exampleMeterStop,
 		Timestamp:       exampleTimestamp,
 		Reason:          &reason,
@@ -82,18 +82,18 @@ func ExampleReq_withReason() {
 		return
 	}
 
-	fmt.Println(exampleTxIdLabel, req.TransactionId.Value())
+	fmt.Println(exampleTxIdLabel, req.TransactionID.Value())
 	fmt.Println("Reason:", req.Reason.String())
 	// Output:
-	// TransactionId: 12345
+	// TransactionID: 12345
 	// Reason: Remote
 }
 
 // ExampleReq_withTransactionData shows including meter values in the request.
 func ExampleReq_withTransactionData() {
 	req, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId: exampleTxId,
-		IdTag:         nil,
+		TransactionID: exampleTxId,
+		IDTag:         nil,
 		MeterStop:     exampleMeterStop,
 		Timestamp:     exampleTimestamp,
 		Reason:        nil,
@@ -120,18 +120,18 @@ func ExampleReq_withTransactionData() {
 		return
 	}
 
-	fmt.Println(exampleTxIdLabel, req.TransactionId.Value())
+	fmt.Println(exampleTxIdLabel, req.TransactionID.Value())
 	fmt.Println("TransactionData count:", len(req.TransactionData))
 	// Output:
-	// TransactionId: 12345
+	// TransactionID: 12345
 	// TransactionData count: 1
 }
 
 // ExampleReq_invalidTimestamp demonstrates validation error for bad timestamp.
 func ExampleReq_invalidTimestamp() {
 	_, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId:   exampleTxId,
-		IdTag:           nil,
+		TransactionID:   exampleTxId,
+		IDTag:           nil,
 		MeterStop:       exampleMeterStop,
 		Timestamp:       "invalid-timestamp",
 		Reason:          nil,

@@ -5,7 +5,7 @@ package benchmark
 import (
 	"testing"
 
-	gconf "github.com/aasanchez/ocpp16messages/getconfiguration"
+	gconf "github.com/evcoreco/ocpp16messages/getconfiguration"
 )
 
 var (

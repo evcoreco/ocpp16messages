@@ -7,8 +7,8 @@ import (
 	"math"
 	"testing"
 
-	scp "github.com/aasanchez/ocpp16messages/setchargingprofile"
-	types "github.com/aasanchez/ocpp16types"
+	scp "github.com/evcoreco/ocpp16messages/setchargingprofile"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzSetChargingProfileReq(f *testing.F) {
@@ -32,10 +32,10 @@ func FuzzSetChargingProfileReq(f *testing.F) {
 		}
 
 		req, err := scp.Req(scp.ReqInput{
-			ConnectorId: connectorId,
+			ConnectorID: connectorId,
 			CsChargingProfiles: types.ChargingProfileInput{
-				ChargingProfileId:      chargingProfileId,
-				TransactionId:          nil,
+				ChargingProfileID:      chargingProfileId,
+				TransactionID:          nil,
 				StackLevel:             stackLevel,
 				ChargingProfilePurpose: purpose,
 				ChargingProfileKind:    kind,
@@ -69,8 +69,8 @@ func FuzzSetChargingProfileReq(f *testing.F) {
 			t.Fatalf("Req succeeded with connectorId=%d", connectorId)
 		}
 
-		if got := req.ConnectorId.Value(); got != uint16(connectorId) {
-			t.Fatalf("ConnectorId = %d, want %d", got, connectorId)
+		if got := req.ConnectorID.Value(); got != uint16(connectorId) {
+			t.Fatalf("ConnectorID = %d, want %d", got, connectorId)
 		}
 
 		if !req.CsChargingProfiles.ChargingProfilePurpose().IsValid() {

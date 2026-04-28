@@ -6,20 +6,20 @@ import (
 	"errors"
 	"testing"
 
-	dt "github.com/aasanchez/ocpp16messages/datatransfer"
-	types "github.com/aasanchez/ocpp16types"
+	dt "github.com/evcoreco/ocpp16messages/datatransfer"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzDataTransferReq(f *testing.F) {
-	f.Add("VendorId", false, "", false, "")
+	f.Add("VendorID", false, "", false, "")
 	f.Add("", false, "", false, "")
-	f.Add("VendorId", true, "MessageId", true, "payload")
-	f.Add("VendorId", true, "", false, "")
+	f.Add("VendorID", true, "MessageID", true, "payload")
+	f.Add("VendorID", true, "", false, "")
 
 	f.Fuzz(func(
 		t *testing.T,
 		vendorId string,
-		hasMessageId bool,
+		hasMessageID bool,
 		messageId string,
 		hasData bool,
 		data string,
@@ -31,7 +31,7 @@ func FuzzDataTransferReq(f *testing.F) {
 		}
 
 		var messageIdPtr *string
-		if hasMessageId {
+		if hasMessageID {
 			messageIdPtr = &messageId
 		}
 
@@ -41,8 +41,8 @@ func FuzzDataTransferReq(f *testing.F) {
 		}
 
 		req, err := dt.Req(dt.ReqInput{
-			VendorId:  vendorId,
-			MessageId: messageIdPtr,
+			VendorID:  vendorId,
+			MessageID: messageIdPtr,
 			Data:      dataPtr,
 		})
 		if err != nil {
@@ -57,29 +57,29 @@ func FuzzDataTransferReq(f *testing.F) {
 		}
 
 		if vendorId == "" {
-			t.Fatal("Req succeeded with empty VendorId")
+			t.Fatal("Req succeeded with empty VendorID")
 		}
 
-		if req.VendorId.String() != vendorId {
-			t.Fatalf("VendorId = %q, want %q", req.VendorId.String(), vendorId)
+		if req.VendorID.String() != vendorId {
+			t.Fatalf("VendorID = %q, want %q", req.VendorID.String(), vendorId)
 		}
 
-		if hasMessageId {
-			if req.MessageId == nil {
-				t.Fatal("MessageId = nil, want non-nil")
+		if hasMessageID {
+			if req.MessageID == nil {
+				t.Fatal("MessageID = nil, want non-nil")
 			}
 			if messageId == "" {
-				t.Fatal("Req succeeded with empty MessageId")
+				t.Fatal("Req succeeded with empty MessageID")
 			}
-			if req.MessageId.String() != messageId {
+			if req.MessageID.String() != messageId {
 				t.Fatalf(
-					"MessageId = %q, want %q",
-					req.MessageId.String(),
+					"MessageID = %q, want %q",
+					req.MessageID.String(),
 					messageId,
 				)
 			}
-		} else if req.MessageId != nil {
-			t.Fatal("MessageId != nil, want nil")
+		} else if req.MessageID != nil {
+			t.Fatal("MessageID != nil, want nil")
 		}
 
 		if hasData {

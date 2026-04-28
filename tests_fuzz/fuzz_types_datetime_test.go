@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzNewDateTime(f *testing.F) {

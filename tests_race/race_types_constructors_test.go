@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"testing"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
@@ -153,7 +153,7 @@ func TestRace_NewChargingSchedule(t *testing.T) {
 	})
 }
 
-func TestRace_NewIdTagInfo(t *testing.T) {
+func TestRace_NewIDTagInfo(t *testing.T) {
 	t.Parallel()
 
 	runConcurrent(t, typeWorkers, typeIterations, func(worker int, _ int) error {
@@ -162,16 +162,16 @@ func TestRace_NewIdTagInfo(t *testing.T) {
 			status = types.AuthorizationStatusBlocked
 		}
 
-		_, err := types.NewIdTagInfo(status)
+		_, err := types.NewIDTagInfo(status)
 		if err != nil {
-			return fmt.Errorf("NewIdTagInfo: %w", err)
+			return fmt.Errorf("NewIDTagInfo: %w", err)
 		}
 
 		return nil
 	})
 }
 
-func TestRace_NewIdToken(t *testing.T) {
+func TestRace_NewIDToken(t *testing.T) {
 	t.Parallel()
 
 	runConcurrent(t, typeWorkers, typeIterations, func(worker int, iteration int) error {
@@ -182,7 +182,7 @@ func TestRace_NewIdToken(t *testing.T) {
 			return fmt.Errorf("NewCiString20Type: %w", err)
 		}
 
-		_ = types.NewIdToken(tag).String()
+		_ = types.NewIDToken(tag).String()
 
 		return nil
 	})

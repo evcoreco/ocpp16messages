@@ -3,7 +3,7 @@ package testsjson_test
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/reset"
+	"github.com/evcoreco/ocpp16messages/reset"
 )
 
 func TestResetReq_JSONRoundTrip(t *testing.T) {

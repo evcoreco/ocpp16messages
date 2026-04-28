@@ -7,7 +7,7 @@ import (
 	"testing"
 	"unicode/utf8"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzNewCiString20Type(f *testing.F) {

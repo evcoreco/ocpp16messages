@@ -3,16 +3,16 @@ package testsjson_test
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/metervalues"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/metervalues"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func TestMeterValuesReq_JSONRoundTrip(t *testing.T) {
 	t.Parallel()
 
 	req, err := metervalues.Req(metervalues.ReqInput{
-		ConnectorId:   1,
-		TransactionId: nil,
+		ConnectorID:   1,
+		TransactionID: nil,
 		MeterValue: []types.MeterValueInput{
 			{
 				Timestamp: "2025-01-02T15:00:00Z",
