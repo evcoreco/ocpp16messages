@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/sendlocallist"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/sendlocallist"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (

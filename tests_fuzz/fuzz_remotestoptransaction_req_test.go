@@ -7,8 +7,8 @@ import (
 	"math"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/remotestoptransaction"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/remotestoptransaction"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzRemoteStopTransactionReq(f *testing.F) {
@@ -19,7 +19,7 @@ func FuzzRemoteStopTransactionReq(f *testing.F) {
 
 	f.Fuzz(func(t *testing.T, transactionId int) {
 		req, err := remotestoptransaction.Req(remotestoptransaction.ReqInput{
-			TransactionId: transactionId,
+			TransactionID: transactionId,
 		})
 		if err != nil {
 			if !errors.Is(err, types.ErrInvalidValue) {
@@ -33,8 +33,8 @@ func FuzzRemoteStopTransactionReq(f *testing.F) {
 			t.Fatalf("Req succeeded with transactionId=%d", transactionId)
 		}
 
-		if got := req.TransactionId.Value(); got != uint16(transactionId) {
-			t.Fatalf("TransactionId = %d, want %d", got, transactionId)
+		if got := req.TransactionID.Value(); got != uint16(transactionId) {
+			t.Fatalf("TransactionID = %d, want %d", got, transactionId)
 		}
 	})
 }

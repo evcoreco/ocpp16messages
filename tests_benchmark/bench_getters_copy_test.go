@@ -5,7 +5,7 @@ package benchmark
 import (
 	"testing"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 var (
@@ -133,7 +133,7 @@ func BenchmarkGetConfigurationKeyValueValueGetter_Copy(b *testing.B) {
 	}
 }
 
-func BenchmarkSetChargingProfileTransactionIdGetter_Copy(b *testing.B) {
+func BenchmarkSetChargingProfileTransactionIDGetter_Copy(b *testing.B) {
 	b.ReportAllocs()
 
 	transactionId := 1
@@ -149,8 +149,8 @@ func BenchmarkSetChargingProfileTransactionIdGetter_Copy(b *testing.B) {
 	}
 
 	profile, err := types.NewChargingProfile(types.ChargingProfileInput{
-		ChargingProfileId:      1,
-		TransactionId:          &transactionId,
+		ChargingProfileID:      1,
+		TransactionID:          &transactionId,
 		StackLevel:             0,
 		ChargingProfilePurpose: types.TxProfile.String(),
 		ChargingProfileKind:    types.ChargingProfileKindAbsolute.String(),
@@ -165,6 +165,6 @@ func BenchmarkSetChargingProfileTransactionIdGetter_Copy(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		sinkInteger = profile.TransactionId()
+		sinkInteger = profile.TransactionID()
 	}
 }

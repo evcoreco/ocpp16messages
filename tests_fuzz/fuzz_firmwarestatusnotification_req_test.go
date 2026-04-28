@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/firmwarestatusnotification"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/firmwarestatusnotification"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzFirmwareStatusNotificationReq(f *testing.F) {

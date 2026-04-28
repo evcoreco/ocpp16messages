@@ -3,7 +3,7 @@ package changeavailability_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/changeavailability"
+	"github.com/evcoreco/ocpp16messages/changeavailability"
 )
 
 const statusLabel = "Status:"

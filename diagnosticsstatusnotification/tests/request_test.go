@@ -4,8 +4,8 @@ import (
 	"errors"
 	"testing"
 
-	dsn "github.com/aasanchez/ocpp16messages/diagnosticsstatusnotification"
-	types "github.com/aasanchez/ocpp16types"
+	dsn "github.com/evcoreco/ocpp16messages/diagnosticsstatusnotification"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (

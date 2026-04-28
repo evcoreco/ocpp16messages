@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/cancelreservation"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/cancelreservation"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzCancelReservationConf(f *testing.F) {

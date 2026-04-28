@@ -4,12 +4,12 @@ import (
 	"strings"
 	"testing"
 
-	ca "github.com/aasanchez/ocpp16messages/changeavailability"
-	types "github.com/aasanchez/ocpp16types"
+	ca "github.com/evcoreco/ocpp16messages/changeavailability"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
-	errConnectorId = "connectorId"
+	errConnectorID = "connectorId"
 	errType        = "type"
 
 	typeOperative   = "Operative"
@@ -25,15 +25,15 @@ const (
 func TestReq_Valid_ConnectorZero_Inoperative(t *testing.T) {
 	t.Parallel()
 
-	input := ca.ReqInput{ConnectorId: valueZero, Type: typeInoperative}
+	input := ca.ReqInput{ConnectorID: valueZero, Type: typeInoperative}
 
 	req, err := ca.Req(input)
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.ConnectorId.Value() != valueZero {
-		t.Errorf(types.ErrorMismatchValue, valueZero, req.ConnectorId.Value())
+	if req.ConnectorID.Value() != valueZero {
+		t.Errorf(types.ErrorMismatchValue, valueZero, req.ConnectorID.Value())
 	}
 
 	if req.Type != types.AvailabilityTypeInoperative {
@@ -48,16 +48,16 @@ func TestReq_Valid_ConnectorZero_Inoperative(t *testing.T) {
 func TestReq_Valid_ConnectorOne_Operative(t *testing.T) {
 	t.Parallel()
 
-	input := ca.ReqInput{ConnectorId: valuePositive, Type: typeOperative}
+	input := ca.ReqInput{ConnectorID: valuePositive, Type: typeOperative}
 
 	req, err := ca.Req(input)
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.ConnectorId.Value() != valuePositive {
+	if req.ConnectorID.Value() != valuePositive {
 		t.Errorf(
-			types.ErrorMismatchValue, valuePositive, req.ConnectorId.Value(),
+			types.ErrorMismatchValue, valuePositive, req.ConnectorID.Value(),
 		)
 	}
 
@@ -70,57 +70,57 @@ func TestReq_Valid_ConnectorOne_Operative(t *testing.T) {
 	}
 }
 
-func TestReq_Valid_MaxConnectorId(t *testing.T) {
+func TestReq_Valid_MaxConnectorID(t *testing.T) {
 	t.Parallel()
 
-	input := ca.ReqInput{ConnectorId: valueMaxUint16, Type: typeOperative}
+	input := ca.ReqInput{ConnectorID: valueMaxUint16, Type: typeOperative}
 
 	req, err := ca.Req(input)
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.ConnectorId.Value() != valueMaxUint16 {
+	if req.ConnectorID.Value() != valueMaxUint16 {
 		t.Errorf(
-			types.ErrorMismatchValue, valueMaxUint16, req.ConnectorId.Value(),
+			types.ErrorMismatchValue, valueMaxUint16, req.ConnectorID.Value(),
 		)
 	}
 }
 
-func TestReq_NegativeConnectorId(t *testing.T) {
+func TestReq_NegativeConnectorID(t *testing.T) {
 	t.Parallel()
 
-	input := ca.ReqInput{ConnectorId: valueNegative, Type: typeOperative}
+	input := ca.ReqInput{ConnectorID: valueNegative, Type: typeOperative}
 
 	_, err := ca.Req(input)
 	if err == nil {
 		t.Errorf(types.ErrorWantNil, "negative connector ID")
 	}
 
-	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(types.ErrorWantContains, err, errConnectorId)
+	if !strings.Contains(err.Error(), errConnectorID) {
+		t.Errorf(types.ErrorWantContains, err, errConnectorID)
 	}
 }
 
-func TestReq_ExceedsMaxConnectorId(t *testing.T) {
+func TestReq_ExceedsMaxConnectorID(t *testing.T) {
 	t.Parallel()
 
-	input := ca.ReqInput{ConnectorId: valueExceedsMax, Type: typeOperative}
+	input := ca.ReqInput{ConnectorID: valueExceedsMax, Type: typeOperative}
 
 	_, err := ca.Req(input)
 	if err == nil {
 		t.Errorf(types.ErrorWantNil, "connector ID exceeds max")
 	}
 
-	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(types.ErrorWantContains, err, errConnectorId)
+	if !strings.Contains(err.Error(), errConnectorID) {
+		t.Errorf(types.ErrorWantContains, err, errConnectorID)
 	}
 }
 
 func TestReq_InvalidType_Empty(t *testing.T) {
 	t.Parallel()
 
-	_, err := ca.Req(ca.ReqInput{ConnectorId: valuePositive, Type: ""})
+	_, err := ca.Req(ca.ReqInput{ConnectorID: valuePositive, Type: ""})
 	if err == nil {
 		t.Errorf(types.ErrorWantNil, "empty type")
 	}
@@ -133,7 +133,7 @@ func TestReq_InvalidType_Empty(t *testing.T) {
 func TestReq_InvalidType_Unknown(t *testing.T) {
 	t.Parallel()
 
-	_, err := ca.Req(ca.ReqInput{ConnectorId: valuePositive, Type: "Unknown"})
+	_, err := ca.Req(ca.ReqInput{ConnectorID: valuePositive, Type: "Unknown"})
 	if err == nil {
 		t.Errorf(types.ErrorWantNil, "unknown type")
 	}
@@ -146,7 +146,7 @@ func TestReq_InvalidType_Unknown(t *testing.T) {
 func TestReq_InvalidType_Lowercase(t *testing.T) {
 	t.Parallel()
 
-	_, err := ca.Req(ca.ReqInput{ConnectorId: valuePositive, Type: "operative"})
+	_, err := ca.Req(ca.ReqInput{ConnectorID: valuePositive, Type: "operative"})
 	if err == nil {
 		t.Errorf(types.ErrorWantNil, "lowercase type")
 	}
@@ -159,13 +159,13 @@ func TestReq_InvalidType_Lowercase(t *testing.T) {
 func TestReq_MultipleErrors_NegativeConnectorAndInvalidType(t *testing.T) {
 	t.Parallel()
 
-	_, err := ca.Req(ca.ReqInput{ConnectorId: valueNegative, Type: "Unknown"})
+	_, err := ca.Req(ca.ReqInput{ConnectorID: valueNegative, Type: "Unknown"})
 	if err == nil {
 		t.Errorf(types.ErrorWantNil, "multiple invalid fields")
 	}
 
-	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(types.ErrorWantContains, err, errConnectorId)
+	if !strings.Contains(err.Error(), errConnectorID) {
+		t.Errorf(types.ErrorWantContains, err, errConnectorID)
 	}
 
 	if !strings.Contains(err.Error(), errType) {

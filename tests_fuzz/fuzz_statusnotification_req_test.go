@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	sn "github.com/aasanchez/ocpp16messages/statusnotification"
-	types "github.com/aasanchez/ocpp16types"
+	sn "github.com/evcoreco/ocpp16messages/statusnotification"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzStatusNotificationReq(f *testing.F) {
@@ -29,7 +29,7 @@ func FuzzStatusNotificationReq(f *testing.F) {
 		info string,
 		hasTimestamp bool,
 		timestamp string,
-		hasVendorId bool,
+		hasVendorID bool,
 		vendorId string,
 		hasVendorErrorCode bool,
 		vendorErrorCode string,
@@ -54,7 +54,7 @@ func FuzzStatusNotificationReq(f *testing.F) {
 		}
 
 		var vendorIdPtr *string
-		if hasVendorId {
+		if hasVendorID {
 			vendorIdPtr = &vendorId
 		}
 
@@ -64,12 +64,12 @@ func FuzzStatusNotificationReq(f *testing.F) {
 		}
 
 		req, err := sn.Req(sn.ReqInput{
-			ConnectorId:     connectorId,
+			ConnectorID:     connectorId,
 			ErrorCode:       errorCode,
 			Status:          status,
 			Info:            infoPtr,
 			Timestamp:       timestampPtr,
-			VendorId:        vendorIdPtr,
+			VendorID:        vendorIdPtr,
 			VendorErrorCode: vendorErrorCodePtr,
 		})
 		if err != nil {
@@ -87,10 +87,10 @@ func FuzzStatusNotificationReq(f *testing.F) {
 			t.Fatalf("Req succeeded with connectorId=%d", connectorId)
 		}
 
-		if req.ConnectorId.Value() != uint16(connectorId) {
+		if req.ConnectorID.Value() != uint16(connectorId) {
 			t.Fatalf(
-				"ConnectorId = %d, want %d",
-				req.ConnectorId.Value(),
+				"ConnectorID = %d, want %d",
+				req.ConnectorID.Value(),
 				connectorId,
 			)
 		}
@@ -128,18 +128,18 @@ func FuzzStatusNotificationReq(f *testing.F) {
 			t.Fatal("Timestamp != nil, want nil")
 		}
 
-		if hasVendorId {
-			if req.VendorId == nil {
-				t.Fatal("VendorId = nil, want non-nil")
+		if hasVendorID {
+			if req.VendorID == nil {
+				t.Fatal("VendorID = nil, want non-nil")
 			}
 			if vendorId == "" {
-				t.Fatal("Req succeeded with empty VendorId")
+				t.Fatal("Req succeeded with empty VendorID")
 			}
-			if req.VendorId.String() != vendorId {
-				t.Fatalf("VendorId = %q, want %q", req.VendorId.String(), vendorId)
+			if req.VendorID.String() != vendorId {
+				t.Fatalf("VendorID = %q, want %q", req.VendorID.String(), vendorId)
 			}
-		} else if req.VendorId != nil {
-			t.Fatal("VendorId != nil, want nil")
+		} else if req.VendorID != nil {
+			t.Fatal("VendorID != nil, want nil")
 		}
 
 		if hasVendorErrorCode {

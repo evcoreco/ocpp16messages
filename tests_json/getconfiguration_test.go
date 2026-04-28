@@ -3,8 +3,8 @@ package testsjson_test
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/getconfiguration"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/getconfiguration"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func TestGetConfigurationReq_JSONRoundTrip(t *testing.T) {

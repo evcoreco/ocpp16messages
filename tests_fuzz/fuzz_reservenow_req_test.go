@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	rn "github.com/aasanchez/ocpp16messages/reservenow"
-	types "github.com/aasanchez/ocpp16types"
+	rn "github.com/evcoreco/ocpp16messages/reservenow"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzReserveNowReq(f *testing.F) {
@@ -26,26 +26,26 @@ func FuzzReserveNowReq(f *testing.F) {
 		connectorId int,
 		idTag string,
 		expiryDate string,
-		hasParentIdTag bool,
-		parentIdTag string,
+		hasParentIDTag bool,
+		parentIDTag string,
 	) {
 		if len(idTag) > maxFuzzStringLen ||
 			len(expiryDate) > maxFuzzStringLen ||
-			len(parentIdTag) > maxFuzzStringLen {
+			len(parentIDTag) > maxFuzzStringLen {
 			t.Skip()
 		}
 
-		var parentIdTagPtr *string
-		if hasParentIdTag {
-			parentIdTagPtr = &parentIdTag
+		var parentIDTagPtr *string
+		if hasParentIDTag {
+			parentIDTagPtr = &parentIDTag
 		}
 
 		req, err := rn.Req(rn.ReqInput{
-			ReservationId: reservationId,
-			ConnectorId:   connectorId,
-			IdTag:         idTag,
+			ReservationID: reservationId,
+			ConnectorID:   connectorId,
+			IDTag:         idTag,
 			ExpiryDate:    expiryDate,
-			ParentIdTag:   parentIdTagPtr,
+			ParentIDTag:   parentIDTagPtr,
 		})
 		if err != nil {
 			if !errors.Is(err, types.ErrInvalidValue) && !errors.Is(err, types.ErrEmptyValue) {
@@ -67,23 +67,23 @@ func FuzzReserveNowReq(f *testing.F) {
 		}
 
 		if idTag == "" {
-			t.Fatal("Req succeeded with empty IdTag")
+			t.Fatal("Req succeeded with empty IDTag")
 		}
 
-		if req.ReservationId.Value() != uint16(reservationId) {
+		if req.ReservationID.Value() != uint16(reservationId) {
 			t.Fatalf(
-				"ReservationId = %d, want %d",
-				req.ReservationId.Value(),
+				"ReservationID = %d, want %d",
+				req.ReservationID.Value(),
 				reservationId,
 			)
 		}
 
-		if req.ConnectorId.Value() != uint16(connectorId) {
-			t.Fatalf("ConnectorId = %d, want %d", req.ConnectorId.Value(), connectorId)
+		if req.ConnectorID.Value() != uint16(connectorId) {
+			t.Fatalf("ConnectorID = %d, want %d", req.ConnectorID.Value(), connectorId)
 		}
 
-		if req.IdTag.String() != idTag {
-			t.Fatalf("IdTag = %q, want %q", req.IdTag.String(), idTag)
+		if req.IDTag.String() != idTag {
+			t.Fatalf("IDTag = %q, want %q", req.IDTag.String(), idTag)
 		}
 
 		if req.ExpiryDate.Value().Location() != time.UTC {
@@ -93,22 +93,22 @@ func FuzzReserveNowReq(f *testing.F) {
 			)
 		}
 
-		if hasParentIdTag {
-			if req.ParentIdTag == nil {
-				t.Fatal("ParentIdTag = nil, want non-nil")
+		if hasParentIDTag {
+			if req.ParentIDTag == nil {
+				t.Fatal("ParentIDTag = nil, want non-nil")
 			}
-			if parentIdTag == "" {
-				t.Fatal("Req succeeded with empty ParentIdTag")
+			if parentIDTag == "" {
+				t.Fatal("Req succeeded with empty ParentIDTag")
 			}
-			if req.ParentIdTag.String() != parentIdTag {
+			if req.ParentIDTag.String() != parentIDTag {
 				t.Fatalf(
-					"ParentIdTag = %q, want %q",
-					req.ParentIdTag.String(),
-					parentIdTag,
+					"ParentIDTag = %q, want %q",
+					req.ParentIDTag.String(),
+					parentIDTag,
 				)
 			}
-		} else if req.ParentIdTag != nil {
-			t.Fatal("ParentIdTag != nil, want nil")
+		} else if req.ParentIDTag != nil {
+			t.Fatal("ParentIDTag != nil, want nil")
 		}
 	})
 }

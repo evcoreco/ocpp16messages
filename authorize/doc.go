@@ -15,5 +15,5 @@
 //
 // The Central System shall respond to Authorize.req with an Authorize.conf
 // indicating whether the idTag is accepted or rejected. An accepted response
-// must include an authorization status and may include a parentIdTag.
+// must include an authorization status and may include a parentIDTag.
 package authorize

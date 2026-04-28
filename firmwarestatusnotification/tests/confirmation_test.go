@@ -3,8 +3,8 @@ package firmwarestatusnotification_test
 import (
 	"testing"
 
-	fsn "github.com/aasanchez/ocpp16messages/firmwarestatusnotification"
-	types "github.com/aasanchez/ocpp16types"
+	fsn "github.com/evcoreco/ocpp16messages/firmwarestatusnotification"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const repeatCount = 3

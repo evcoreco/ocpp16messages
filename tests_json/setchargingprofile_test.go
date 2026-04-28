@@ -3,18 +3,18 @@ package testsjson_test
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/setchargingprofile"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/setchargingprofile"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func TestSetChargingProfileReq_JSONRoundTrip(t *testing.T) {
 	t.Parallel()
 
 	req, err := setchargingprofile.Req(setchargingprofile.ReqInput{
-		ConnectorId: 0,
+		ConnectorID: 0,
 		CsChargingProfiles: types.ChargingProfileInput{
-			ChargingProfileId:      1,
-			TransactionId:          nil,
+			ChargingProfileID:      1,
+			TransactionID:          nil,
 			StackLevel:             0,
 			ChargingProfilePurpose: "TxDefaultProfile",
 			ChargingProfileKind:    "Absolute",

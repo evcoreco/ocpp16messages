@@ -3,14 +3,14 @@ package testsjson_test
 import (
 	"testing"
 
-	gcs "github.com/aasanchez/ocpp16messages/getcompositeschedule"
+	gcs "github.com/evcoreco/ocpp16messages/getcompositeschedule"
 )
 
 func TestGetCompositeScheduleReq_JSONRoundTrip(t *testing.T) {
 	t.Parallel()
 
 	req, err := gcs.Req(gcs.ReqInput{
-		ConnectorId:      1,
+		ConnectorID:      1,
 		Duration:         300,
 		ChargingRateUnit: nil,
 	})
@@ -27,7 +27,7 @@ func TestGetCompositeScheduleConf_JSONRoundTrip(t *testing.T) {
 
 	conf, err := gcs.Conf(gcs.ConfInput{
 		Status:           "Accepted",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 		ScheduleStart:    nil,
 		ChargingSchedule: nil,
 	})

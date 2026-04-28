@@ -3,19 +3,19 @@ package testsjson_test
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/statusnotification"
+	"github.com/evcoreco/ocpp16messages/statusnotification"
 )
 
 func TestStatusNotificationReq_JSONRoundTrip(t *testing.T) {
 	t.Parallel()
 
 	req, err := statusnotification.Req(statusnotification.ReqInput{
-		ConnectorId:     1,
+		ConnectorID:     1,
 		ErrorCode:       "NoError",
 		Status:          "Available",
 		Info:            nil,
 		Timestamp:       nil,
-		VendorId:        nil,
+		VendorID:        nil,
 		VendorErrorCode: nil,
 	})
 	if err != nil {

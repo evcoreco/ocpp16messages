@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/unlockconnector"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/unlockconnector"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzUnlockConnectorConf(f *testing.F) {

@@ -7,8 +7,8 @@ import (
 	"math"
 	"testing"
 
-	gc "github.com/aasanchez/ocpp16messages/getcompositeschedule"
-	types "github.com/aasanchez/ocpp16types"
+	gc "github.com/evcoreco/ocpp16messages/getcompositeschedule"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzGetCompositeScheduleReq(f *testing.F) {
@@ -36,7 +36,7 @@ func FuzzGetCompositeScheduleReq(f *testing.F) {
 		}
 
 		req, err := gc.Req(gc.ReqInput{
-			ConnectorId:      connectorId,
+			ConnectorID:      connectorId,
 			Duration:         duration,
 			ChargingRateUnit: chargingRateUnitPtr,
 		})
@@ -56,8 +56,8 @@ func FuzzGetCompositeScheduleReq(f *testing.F) {
 			t.Fatalf("Req succeeded with duration=%d", duration)
 		}
 
-		if got := req.ConnectorId.Value(); got != uint16(connectorId) {
-			t.Fatalf("ConnectorId = %d, want %d", got, connectorId)
+		if got := req.ConnectorID.Value(); got != uint16(connectorId) {
+			t.Fatalf("ConnectorID = %d, want %d", got, connectorId)
 		}
 
 		if got := req.Duration.Value(); got != uint16(duration) {

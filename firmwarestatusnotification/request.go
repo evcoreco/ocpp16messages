@@ -3,7 +3,7 @@ package firmwarestatusnotification
 import (
 	"fmt"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 // ReqInput represents the raw input data for creating a

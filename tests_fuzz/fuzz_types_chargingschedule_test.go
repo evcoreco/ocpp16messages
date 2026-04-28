@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 // maxFuzzStringLen is kept for backward compatibility;

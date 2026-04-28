@@ -6,23 +6,23 @@ import (
 	"fmt"
 	"testing"
 
-	bn "github.com/aasanchez/ocpp16messages/bootnotification"
-	ccp "github.com/aasanchez/ocpp16messages/clearchargingprofile"
-	dt "github.com/aasanchez/ocpp16messages/datatransfer"
-	csc "github.com/aasanchez/ocpp16messages/getcompositeschedule"
-	gconf "github.com/aasanchez/ocpp16messages/getconfiguration"
-	gd "github.com/aasanchez/ocpp16messages/getdiagnostics"
-	mv "github.com/aasanchez/ocpp16messages/metervalues"
-	rst "github.com/aasanchez/ocpp16messages/remotestarttransaction"
-	rn "github.com/aasanchez/ocpp16messages/reservenow"
-	sl "github.com/aasanchez/ocpp16messages/sendlocallist"
-	scp "github.com/aasanchez/ocpp16messages/setchargingprofile"
-	stt "github.com/aasanchez/ocpp16messages/starttransaction"
-	sn "github.com/aasanchez/ocpp16messages/statusnotification"
-	stp "github.com/aasanchez/ocpp16messages/stoptransaction"
-	tm "github.com/aasanchez/ocpp16messages/triggermessage"
-	uf "github.com/aasanchez/ocpp16messages/updatefirmware"
-	types "github.com/aasanchez/ocpp16types"
+	bn "github.com/evcoreco/ocpp16messages/bootnotification"
+	ccp "github.com/evcoreco/ocpp16messages/clearchargingprofile"
+	dt "github.com/evcoreco/ocpp16messages/datatransfer"
+	csc "github.com/evcoreco/ocpp16messages/getcompositeschedule"
+	gconf "github.com/evcoreco/ocpp16messages/getconfiguration"
+	gd "github.com/evcoreco/ocpp16messages/getdiagnostics"
+	mv "github.com/evcoreco/ocpp16messages/metervalues"
+	rst "github.com/evcoreco/ocpp16messages/remotestarttransaction"
+	rn "github.com/evcoreco/ocpp16messages/reservenow"
+	sl "github.com/evcoreco/ocpp16messages/sendlocallist"
+	scp "github.com/evcoreco/ocpp16messages/setchargingprofile"
+	stt "github.com/evcoreco/ocpp16messages/starttransaction"
+	sn "github.com/evcoreco/ocpp16messages/statusnotification"
+	stp "github.com/evcoreco/ocpp16messages/stoptransaction"
+	tm "github.com/evcoreco/ocpp16messages/triggermessage"
+	uf "github.com/evcoreco/ocpp16messages/updatefirmware"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func TestRace_BootNotificationReq(t *testing.T) {
@@ -67,11 +67,11 @@ func TestRace_StartTransactionReq(t *testing.T) {
 
 	reservationId := 42
 	input := stt.ReqInput{
-		ConnectorId:   1,
-		IdTag:         "TAG-1",
+		ConnectorID:   1,
+		IDTag:         "TAG-1",
 		MeterStart:    100,
 		Timestamp:     "2025-01-02T15:00:00Z",
-		ReservationId: &reservationId,
+		ReservationID: &reservationId,
 	}
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
@@ -89,10 +89,10 @@ func TestRace_StartTransactionConf(t *testing.T) {
 	expiry := "2025-01-03T15:00:00Z"
 	parent := "PARENT-1"
 	input := stt.ConfInput{
-		TransactionId: 1,
+		TransactionID: 1,
 		Status:        "Accepted",
 		ExpiryDate:    &expiry,
-		ParentIdTag:   &parent,
+		ParentIDTag:   &parent,
 	}
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
@@ -119,8 +119,8 @@ func TestRace_StopTransactionReq(t *testing.T) {
 	}
 
 	input := stp.ReqInput{
-		TransactionId:   1,
-		IdTag:           &idTag,
+		TransactionID:   1,
+		IDTag:           &idTag,
 		MeterStop:       200,
 		Timestamp:       "2025-01-02T15:01:00Z",
 		Reason:          &reason,
@@ -145,7 +145,7 @@ func TestRace_StopTransactionConf(t *testing.T) {
 	input := stp.ConfInput{
 		Status:      &status,
 		ExpiryDate:  &expiry,
-		ParentIdTag: &parent,
+		ParentIDTag: &parent,
 	}
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
@@ -176,7 +176,7 @@ func TestRace_TriggerMessageReq(t *testing.T) {
 	connectorId := 1
 	input := tm.ReqInput{
 		RequestedMessage: requestedMessage,
-		ConnectorId:      &connectorId,
+		ConnectorID:      &connectorId,
 	}
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
@@ -194,8 +194,8 @@ func TestRace_DataTransferReq(t *testing.T) {
 	messageId := "Message-1"
 	data := "payload"
 	input := dt.ReqInput{
-		VendorId:  "Vendor-1",
-		MessageId: &messageId,
+		VendorID:  "Vendor-1",
+		MessageID: &messageId,
 		Data:      &data,
 	}
 
@@ -217,12 +217,12 @@ func TestRace_StatusNotificationReq(t *testing.T) {
 	vendorErrorCode := "E-1"
 
 	input := sn.ReqInput{
-		ConnectorId:     0,
+		ConnectorID:     0,
 		ErrorCode:       types.ErrCodeNoError.String(),
 		Status:          types.ChargePointStatusAvailable.String(),
 		Info:            &info,
 		Timestamp:       &timestamp,
-		VendorId:        &vendorId,
+		VendorID:        &vendorId,
 		VendorErrorCode: &vendorErrorCode,
 	}
 
@@ -240,8 +240,8 @@ func TestRace_RemoteStartTransactionReq(t *testing.T) {
 
 	connectorId := 1
 	input := rst.ReqInput{
-		IdTag:       "TAG-1",
-		ConnectorId: &connectorId,
+		IDTag:       "TAG-1",
+		ConnectorID: &connectorId,
 	}
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
@@ -256,13 +256,13 @@ func TestRace_RemoteStartTransactionReq(t *testing.T) {
 func TestRace_ReserveNowReq(t *testing.T) {
 	t.Parallel()
 
-	parentIdTag := "PARENT-1"
+	parentIDTag := "PARENT-1"
 	input := rn.ReqInput{
-		ReservationId: 1,
-		ConnectorId:   1,
-		IdTag:         "TAG-1",
+		ReservationID: 1,
+		ConnectorID:   1,
+		IDTag:         "TAG-1",
 		ExpiryDate:    "2025-01-02T16:00:00Z",
-		ParentIdTag:   &parentIdTag,
+		ParentIDTag:   &parentIDTag,
 	}
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
@@ -378,7 +378,7 @@ func TestRace_GetCompositeScheduleReq(t *testing.T) {
 
 	unit := types.ChargingRateUnitWatts.String()
 	input := csc.ReqInput{
-		ConnectorId:      0,
+		ConnectorID:      0,
 		Duration:         60,
 		ChargingRateUnit: &unit,
 	}
@@ -411,7 +411,7 @@ func TestRace_GetCompositeScheduleConf(t *testing.T) {
 
 	input := csc.ConfInput{
 		Status:           "Accepted",
-		ConnectorId:      &connectorId,
+		ConnectorID:      &connectorId,
 		ScheduleStart:    &scheduleStart,
 		ChargingSchedule: &chargingScheduleInput,
 	}
@@ -435,7 +435,7 @@ func TestRace_ClearChargingProfileReq(t *testing.T) {
 
 	input := ccp.ReqInput{
 		Id:                     &id,
-		ConnectorId:            &connectorId,
+		ConnectorID:            &connectorId,
 		ChargingProfilePurpose: &purpose,
 		StackLevel:             &stackLevel,
 	}
@@ -453,7 +453,7 @@ func TestRace_SendLocalListReq(t *testing.T) {
 	t.Parallel()
 
 	authList := []types.AuthorizationDataInput{
-		{IdTag: "TAG-1"},
+		{IDTag: "TAG-1"},
 	}
 
 	input := sl.ReqInput{
@@ -502,8 +502,8 @@ func TestRace_SetChargingProfileReq(t *testing.T) {
 	}
 
 	profileInput := types.ChargingProfileInput{
-		ChargingProfileId:      1,
-		TransactionId:          nil,
+		ChargingProfileID:      1,
+		TransactionID:          nil,
 		StackLevel:             0,
 		ChargingProfilePurpose: types.TxProfile.String(),
 		ChargingProfileKind:    types.ChargingProfileKindAbsolute.String(),
@@ -514,7 +514,7 @@ func TestRace_SetChargingProfileReq(t *testing.T) {
 	}
 
 	input := scp.ReqInput{
-		ConnectorId:        0,
+		ConnectorID:        0,
 		CsChargingProfiles: profileInput,
 	}
 

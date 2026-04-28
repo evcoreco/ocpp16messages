@@ -4,14 +4,14 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/triggermessage"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/triggermessage"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
 	errRequestedMessage = "requestedMessage"
-	errConnectorId      = "connectorId"
-	fieldConnectorId    = "ConnectorId"
+	errConnectorID      = "connectorId"
+	fieldConnectorID    = "ConnectorID"
 	connectorIdZero     = 0
 	connectorIdOne      = 1
 	connectorIdNegative = -1
@@ -24,7 +24,7 @@ func TestReq_Valid_BootNotification(t *testing.T) {
 
 	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "BootNotification",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
@@ -44,7 +44,7 @@ func TestReq_Valid_DiagnosticsStatusNotification(t *testing.T) {
 
 	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "DiagnosticsStatusNotification",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
@@ -65,7 +65,7 @@ func TestReq_Valid_FirmwareStatusNotification(t *testing.T) {
 
 	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "FirmwareStatusNotification",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
@@ -85,7 +85,7 @@ func TestReq_Valid_Heartbeat(t *testing.T) {
 
 	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "Heartbeat",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
@@ -105,7 +105,7 @@ func TestReq_Valid_MeterValues(t *testing.T) {
 
 	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "MeterValues",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
@@ -125,7 +125,7 @@ func TestReq_Valid_StatusNotification(t *testing.T) {
 
 	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "StatusNotification",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
@@ -140,97 +140,97 @@ func TestReq_Valid_StatusNotification(t *testing.T) {
 	}
 }
 
-func TestReq_Valid_WithConnectorIdZero(t *testing.T) {
+func TestReq_Valid_WithConnectorIDZero(t *testing.T) {
 	t.Parallel()
 
 	connectorId := connectorIdZero
 
 	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "StatusNotification",
-		ConnectorId:      &connectorId,
+		ConnectorID:      &connectorId,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.ConnectorId == nil {
-		t.Errorf(types.ErrorWantNonNil, fieldConnectorId)
+	if req.ConnectorID == nil {
+		t.Errorf(types.ErrorWantNonNil, fieldConnectorID)
 	}
 
-	if req.ConnectorId.Value() != uint16(connectorIdZero) {
+	if req.ConnectorID.Value() != uint16(connectorIdZero) {
 		t.Errorf(
 			types.ErrorMismatchValue,
 			uint16(connectorIdZero),
-			req.ConnectorId.Value(),
+			req.ConnectorID.Value(),
 		)
 	}
 }
 
-func TestReq_Valid_WithConnectorIdOne(t *testing.T) {
+func TestReq_Valid_WithConnectorIDOne(t *testing.T) {
 	t.Parallel()
 
 	connectorId := connectorIdOne
 
 	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "MeterValues",
-		ConnectorId:      &connectorId,
+		ConnectorID:      &connectorId,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.ConnectorId == nil {
-		t.Errorf(types.ErrorWantNonNil, fieldConnectorId)
+	if req.ConnectorID == nil {
+		t.Errorf(types.ErrorWantNonNil, fieldConnectorID)
 	}
 
-	if req.ConnectorId.Value() != uint16(connectorIdOne) {
+	if req.ConnectorID.Value() != uint16(connectorIdOne) {
 		t.Errorf(
 			types.ErrorMismatchValue,
 			uint16(connectorIdOne),
-			req.ConnectorId.Value(),
+			req.ConnectorID.Value(),
 		)
 	}
 }
 
-func TestReq_Valid_WithConnectorIdMax(t *testing.T) {
+func TestReq_Valid_WithConnectorIDMax(t *testing.T) {
 	t.Parallel()
 
 	connectorId := connectorIdMax
 
 	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "Heartbeat",
-		ConnectorId:      &connectorId,
+		ConnectorID:      &connectorId,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.ConnectorId == nil {
-		t.Errorf(types.ErrorWantNonNil, fieldConnectorId)
+	if req.ConnectorID == nil {
+		t.Errorf(types.ErrorWantNonNil, fieldConnectorID)
 	}
 
-	if req.ConnectorId.Value() != uint16(connectorIdMax) {
+	if req.ConnectorID.Value() != uint16(connectorIdMax) {
 		t.Errorf(
 			types.ErrorMismatchValue,
 			uint16(connectorIdMax),
-			req.ConnectorId.Value(),
+			req.ConnectorID.Value(),
 		)
 	}
 }
 
-func TestReq_Valid_WithoutConnectorId(t *testing.T) {
+func TestReq_Valid_WithoutConnectorID(t *testing.T) {
 	t.Parallel()
 
 	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "Heartbeat",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.ConnectorId != nil {
-		t.Errorf("ConnectorId = %v, want nil", req.ConnectorId)
+	if req.ConnectorID != nil {
+		t.Errorf("ConnectorID = %v, want nil", req.ConnectorID)
 	}
 }
 
@@ -239,7 +239,7 @@ func TestReq_EmptyRequestedMessage(t *testing.T) {
 
 	_, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 	})
 	if err == nil {
 		t.Errorf(types.ErrorWantNil, "empty requestedMessage")
@@ -255,7 +255,7 @@ func TestReq_InvalidRequestedMessage_Unknown(t *testing.T) {
 
 	_, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "Unknown",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 	})
 	if err == nil {
 		t.Errorf(types.ErrorWantNil, "unknown requestedMessage")
@@ -271,7 +271,7 @@ func TestReq_InvalidRequestedMessage_Lowercase(t *testing.T) {
 
 	_, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "heartbeat",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 	})
 	if err == nil {
 		t.Errorf(types.ErrorWantNil, "lowercase requestedMessage")
@@ -287,7 +287,7 @@ func TestReq_InvalidRequestedMessage_StartTransaction(t *testing.T) {
 
 	_, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "StartTransaction",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 	})
 	if err == nil {
 		t.Errorf(
@@ -301,50 +301,50 @@ func TestReq_InvalidRequestedMessage_StartTransaction(t *testing.T) {
 	}
 }
 
-func TestReq_InvalidConnectorId_Negative(t *testing.T) {
+func TestReq_InvalidConnectorID_Negative(t *testing.T) {
 	t.Parallel()
 
 	connectorId := connectorIdNegative
 
 	_, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "Heartbeat",
-		ConnectorId:      &connectorId,
+		ConnectorID:      &connectorId,
 	})
 	if err == nil {
 		t.Errorf(types.ErrorWantNil, "negative connectorId")
 	}
 
-	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(types.ErrorWantContains, err, errConnectorId)
+	if !strings.Contains(err.Error(), errConnectorID) {
+		t.Errorf(types.ErrorWantContains, err, errConnectorID)
 	}
 }
 
-func TestReq_InvalidConnectorId_Overflow(t *testing.T) {
+func TestReq_InvalidConnectorID_Overflow(t *testing.T) {
 	t.Parallel()
 
 	connectorId := connectorIdOverflow
 
 	_, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "Heartbeat",
-		ConnectorId:      &connectorId,
+		ConnectorID:      &connectorId,
 	})
 	if err == nil {
 		t.Errorf(types.ErrorWantNil, "connectorId overflow")
 	}
 
-	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(types.ErrorWantContains, err, errConnectorId)
+	if !strings.Contains(err.Error(), errConnectorID) {
+		t.Errorf(types.ErrorWantContains, err, errConnectorID)
 	}
 }
 
-func TestReq_MultipleErrors_InvalidMessageAndConnectorId(t *testing.T) {
+func TestReq_MultipleErrors_InvalidMessageAndConnectorID(t *testing.T) {
 	t.Parallel()
 
 	connectorId := connectorIdNegative
 
 	_, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "Unknown",
-		ConnectorId:      &connectorId,
+		ConnectorID:      &connectorId,
 	})
 	if err == nil {
 		t.Errorf(types.ErrorWantNil, "invalid message and connectorId")
@@ -354,7 +354,7 @@ func TestReq_MultipleErrors_InvalidMessageAndConnectorId(t *testing.T) {
 		t.Errorf(types.ErrorWantContains, err, errRequestedMessage)
 	}
 
-	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(types.ErrorWantContains, err, errConnectorId)
+	if !strings.Contains(err.Error(), errConnectorID) {
+		t.Errorf(types.ErrorWantContains, err, errConnectorID)
 	}
 }

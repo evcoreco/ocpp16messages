@@ -7,10 +7,10 @@ import (
 	"strings"
 	"testing"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
-func FuzzNewIdTagInfo(f *testing.F) {
+func FuzzNewIDTagInfo(f *testing.F) {
 	f.Add(types.AuthorizationStatusAccepted.String())
 	f.Add(types.AuthorizationStatusBlocked.String())
 	f.Add(types.AuthorizationStatusExpired.String())
@@ -20,7 +20,7 @@ func FuzzNewIdTagInfo(f *testing.F) {
 	f.Add("invalid-status")
 
 	f.Fuzz(func(t *testing.T, status string) {
-		idTagInfo, err := types.NewIdTagInfo(types.AuthorizationStatus(status))
+		idTagInfo, err := types.NewIDTagInfo(types.AuthorizationStatus(status))
 		if err != nil {
 			if !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf("error = %v, want wrapping ErrInvalidValue", err)
@@ -37,8 +37,8 @@ func FuzzNewIdTagInfo(f *testing.F) {
 			t.Fatal("ExpiryDate != nil, want nil")
 		}
 
-		if idTagInfo.ParentIdTag() != nil {
-			t.Fatal("ParentIdTag != nil, want nil")
+		if idTagInfo.ParentIDTag() != nil {
+			t.Fatal("ParentIDTag != nil, want nil")
 		}
 
 		// String() determinism

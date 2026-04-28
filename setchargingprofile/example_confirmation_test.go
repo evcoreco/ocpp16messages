@@ -3,7 +3,7 @@ package setchargingprofile_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/setchargingprofile"
+	"github.com/evcoreco/ocpp16messages/setchargingprofile"
 )
 
 const fmtStatus = "Status: %s\n"

@@ -3,22 +3,22 @@ package starttransaction_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/starttransaction"
+	"github.com/evcoreco/ocpp16messages/starttransaction"
 )
 
 const (
 	labelStatus        = "Status:"
-	labelTransactionId = "TransactionId:"
+	labelTransactionID = "TransactionID:"
 )
 
 // ExampleConf demonstrates creating a valid StartTransaction.conf message
 // with an Accepted status.
 func ExampleConf() {
 	conf, err := starttransaction.Conf(starttransaction.ConfInput{
-		TransactionId: 12345,
+		TransactionID: 12345,
 		Status:        "Accepted",
 		ExpiryDate:    nil,
-		ParentIdTag:   nil,
+		ParentIDTag:   nil,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -26,10 +26,10 @@ func ExampleConf() {
 		return
 	}
 
-	fmt.Println(labelTransactionId, conf.TransactionId.Value())
-	fmt.Println(labelStatus, conf.IdTagInfo.Status().String())
+	fmt.Println(labelTransactionID, conf.TransactionID.Value())
+	fmt.Println(labelStatus, conf.IDTagInfo.Status().String())
 	// Output:
-	// TransactionId: 12345
+	// TransactionID: 12345
 	// Status: Accepted
 }
 
@@ -37,10 +37,10 @@ func ExampleConf() {
 // with a Blocked status.
 func ExampleConf_blocked() {
 	conf, err := starttransaction.Conf(starttransaction.ConfInput{
-		TransactionId: 12346,
+		TransactionID: 12346,
 		Status:        "Blocked",
 		ExpiryDate:    nil,
-		ParentIdTag:   nil,
+		ParentIDTag:   nil,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -48,10 +48,10 @@ func ExampleConf_blocked() {
 		return
 	}
 
-	fmt.Println(labelTransactionId, conf.TransactionId.Value())
-	fmt.Println(labelStatus, conf.IdTagInfo.Status().String())
+	fmt.Println(labelTransactionID, conf.TransactionID.Value())
+	fmt.Println(labelStatus, conf.IDTagInfo.Status().String())
 	// Output:
-	// TransactionId: 12346
+	// TransactionID: 12346
 	// Status: Blocked
 }
 
@@ -61,10 +61,10 @@ func ExampleConf_withExpiryDate() {
 	expiryDate := "2025-12-31T23:59:59Z"
 
 	conf, err := starttransaction.Conf(starttransaction.ConfInput{
-		TransactionId: 12347,
+		TransactionID: 12347,
 		Status:        "Accepted",
 		ExpiryDate:    &expiryDate,
-		ParentIdTag:   nil,
+		ParentIDTag:   nil,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -72,25 +72,25 @@ func ExampleConf_withExpiryDate() {
 		return
 	}
 
-	fmt.Println(labelTransactionId, conf.TransactionId.Value())
-	fmt.Println(labelStatus, conf.IdTagInfo.Status().String())
-	fmt.Println("HasExpiryDate:", conf.IdTagInfo.ExpiryDate() != nil)
+	fmt.Println(labelTransactionID, conf.TransactionID.Value())
+	fmt.Println(labelStatus, conf.IDTagInfo.Status().String())
+	fmt.Println("HasExpiryDate:", conf.IDTagInfo.ExpiryDate() != nil)
 	// Output:
-	// TransactionId: 12347
+	// TransactionID: 12347
 	// Status: Accepted
 	// HasExpiryDate: true
 }
 
-// ExampleConf_withParentIdTag demonstrates creating a StartTransaction.conf
+// ExampleConf_withParentIDTag demonstrates creating a StartTransaction.conf
 // message with a parent ID tag.
-func ExampleConf_withParentIdTag() {
+func ExampleConf_withParentIDTag() {
 	parentTag := "PARENT-123"
 
 	conf, err := starttransaction.Conf(starttransaction.ConfInput{
-		TransactionId: 12348,
+		TransactionID: 12348,
 		Status:        "Accepted",
 		ExpiryDate:    nil,
-		ParentIdTag:   &parentTag,
+		ParentIDTag:   &parentTag,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -98,13 +98,13 @@ func ExampleConf_withParentIdTag() {
 		return
 	}
 
-	fmt.Println(labelTransactionId, conf.TransactionId.Value())
-	fmt.Println(labelStatus, conf.IdTagInfo.Status().String())
-	fmt.Println("ParentIdTag:", conf.IdTagInfo.ParentIdTag().String())
+	fmt.Println(labelTransactionID, conf.TransactionID.Value())
+	fmt.Println(labelStatus, conf.IDTagInfo.Status().String())
+	fmt.Println("ParentIDTag:", conf.IDTagInfo.ParentIDTag().String())
 	// Output:
-	// TransactionId: 12348
+	// TransactionID: 12348
 	// Status: Accepted
-	// ParentIdTag: PARENT-123
+	// ParentIDTag: PARENT-123
 }
 
 // ExampleConf_complete demonstrates creating a complete StartTransaction.conf
@@ -114,10 +114,10 @@ func ExampleConf_complete() {
 	parentTag := "PARENT-123"
 
 	conf, err := starttransaction.Conf(starttransaction.ConfInput{
-		TransactionId: 12349,
+		TransactionID: 12349,
 		Status:        "Accepted",
 		ExpiryDate:    &expiryDate,
-		ParentIdTag:   &parentTag,
+		ParentIDTag:   &parentTag,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -125,31 +125,31 @@ func ExampleConf_complete() {
 		return
 	}
 
-	fmt.Println(labelTransactionId, conf.TransactionId.Value())
-	fmt.Println(labelStatus, conf.IdTagInfo.Status().String())
-	fmt.Println("HasExpiryDate:", conf.IdTagInfo.ExpiryDate() != nil)
-	fmt.Println("ParentIdTag:", conf.IdTagInfo.ParentIdTag().String())
+	fmt.Println(labelTransactionID, conf.TransactionID.Value())
+	fmt.Println(labelStatus, conf.IDTagInfo.Status().String())
+	fmt.Println("HasExpiryDate:", conf.IDTagInfo.ExpiryDate() != nil)
+	fmt.Println("ParentIDTag:", conf.IDTagInfo.ParentIDTag().String())
 	// Output:
-	// TransactionId: 12349
+	// TransactionID: 12349
 	// Status: Accepted
 	// HasExpiryDate: true
-	// ParentIdTag: PARENT-123
+	// ParentIDTag: PARENT-123
 }
 
 // ExampleConf_invalidStatus demonstrates the error returned when
 // an invalid status is provided.
 func ExampleConf_invalidStatus() {
 	_, err := starttransaction.Conf(starttransaction.ConfInput{
-		TransactionId: 12345,
+		TransactionID: 12345,
 		Status:        "Unknown",
 		ExpiryDate:    nil,
-		ParentIdTag:   nil,
+		ParentIDTag:   nil,
 	})
 	if err != nil {
 		fmt.Println(err)
 	}
 	// Output:
-	// status: NewIdTagInfo: AuthorizationStatus: invalid value
+	// status: NewIDTagInfo: AuthorizationStatus: invalid value
 }
 
 // ExampleConf_multipleErrors demonstrates that all validation errors
@@ -159,10 +159,10 @@ func ExampleConf_multipleErrors() {
 	longTag := "THIS-TAG-IS-WAY-TOO-LONG-FOR-OCPP"
 
 	_, err := starttransaction.Conf(starttransaction.ConfInput{
-		TransactionId: -1,
+		TransactionID: -1,
 		Status:        "Invalid-Status",
 		ExpiryDate:    &invalidDate,
-		ParentIdTag:   &longTag,
+		ParentIDTag:   &longTag,
 	})
 	if err != nil {
 		fmt.Println("Multiple errors")

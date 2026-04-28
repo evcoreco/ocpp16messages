@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzNewChargingProfile(f *testing.F) {
@@ -75,7 +75,7 @@ func FuzzNewChargingProfile(f *testing.F) {
 		stackLevel int,
 		purpose string,
 		kind string,
-		hasTransactionId bool,
+		hasTransactionID bool,
 		transactionId int,
 		hasRecurrencyKind bool,
 		recurrencyKind string,
@@ -93,7 +93,7 @@ func FuzzNewChargingProfile(f *testing.F) {
 		}
 
 		var transactionIdPtr *int
-		if hasTransactionId {
+		if hasTransactionID {
 			transactionIdPtr = &transactionId
 		}
 
@@ -113,8 +113,8 @@ func FuzzNewChargingProfile(f *testing.F) {
 		}
 
 		profile, err := types.NewChargingProfile(types.ChargingProfileInput{
-			ChargingProfileId:      chargingProfileId,
-			TransactionId:          transactionIdPtr,
+			ChargingProfileID:      chargingProfileId,
+			TransactionID:          transactionIdPtr,
 			StackLevel:             stackLevel,
 			ChargingProfilePurpose: purpose,
 			ChargingProfileKind:    kind,
@@ -150,8 +150,8 @@ func FuzzNewChargingProfile(f *testing.F) {
 			)
 		}
 
-		if got := profile.ChargingProfileId().Value(); got != uint16(chargingProfileId) {
-			t.Fatalf("ChargingProfileId() = %d, want %d", got, chargingProfileId)
+		if got := profile.ChargingProfileID().Value(); got != uint16(chargingProfileId) {
+			t.Fatalf("ChargingProfileID() = %d, want %d", got, chargingProfileId)
 		}
 
 		if !profile.ChargingProfilePurpose().IsValid() {
@@ -176,9 +176,9 @@ func FuzzNewChargingProfile(f *testing.F) {
 			t.Fatalf("StackLevel() = %d, want %d", got, stackLevel)
 		}
 
-		if hasTransactionId {
-			if profile.TransactionId() == nil {
-				t.Fatal("TransactionId() = nil, want non-nil")
+		if hasTransactionID {
+			if profile.TransactionID() == nil {
+				t.Fatal("TransactionID() = nil, want non-nil")
 			}
 
 			if transactionId < 0 || transactionId > math.MaxUint16 {
@@ -188,11 +188,11 @@ func FuzzNewChargingProfile(f *testing.F) {
 				)
 			}
 
-			if got := profile.TransactionId().Value(); got != uint16(transactionId) {
-				t.Fatalf("TransactionId() = %d, want %d", got, transactionId)
+			if got := profile.TransactionID().Value(); got != uint16(transactionId) {
+				t.Fatalf("TransactionID() = %d, want %d", got, transactionId)
 			}
-		} else if profile.TransactionId() != nil {
-			t.Fatal("TransactionId() != nil, want nil")
+		} else if profile.TransactionID() != nil {
+			t.Fatal("TransactionID() != nil, want nil")
 		}
 
 		if hasRecurrencyKind {

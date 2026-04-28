@@ -7,8 +7,8 @@ import (
 	"testing"
 	"unicode/utf8"
 
-	"github.com/aasanchez/ocpp16messages/getconfiguration"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/getconfiguration"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzGetConfigurationReq(f *testing.F) {

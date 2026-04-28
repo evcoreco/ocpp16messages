@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	tm "github.com/aasanchez/ocpp16messages/triggermessage"
-	types "github.com/aasanchez/ocpp16types"
+	tm "github.com/evcoreco/ocpp16messages/triggermessage"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzTriggerMessageConf(f *testing.F) {

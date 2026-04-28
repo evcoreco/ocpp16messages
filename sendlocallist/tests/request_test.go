@@ -4,15 +4,15 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/sendlocallist"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/sendlocallist"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
 	errListVersion            = "ListVersion"
 	errUpdateType             = "UpdateType"
 	errLocalAuthorizationList = "localAuthorizationList"
-	validIdTag                = "RFID12345"
+	validIDTag                = "RFID12345"
 	validStatus               = "Accepted"
 	listVersionZero           = 0
 	listVersionOne            = 1
@@ -92,11 +92,11 @@ func TestReq_Valid_WithAuthorizationList(t *testing.T) {
 		ListVersion: listVersionOne,
 		LocalAuthorizationList: []types.AuthorizationDataInput{
 			{
-				IdTag: validIdTag,
-				IdTagInfo: &types.IdTagInfoInput{
+				IDTag: validIDTag,
+				IDTagInfo: &types.IDTagInfoInput{
 					Status:      validStatus,
 					ExpiryDate:  nil,
-					ParentIdTag: nil,
+					ParentIDTag: nil,
 				},
 			},
 		},
@@ -122,24 +122,24 @@ func TestReq_Valid_WithMultipleAuthorizationEntries(t *testing.T) {
 		ListVersion: listVersionOne,
 		LocalAuthorizationList: []types.AuthorizationDataInput{
 			{
-				IdTag: "RFID001",
-				IdTagInfo: &types.IdTagInfoInput{
+				IDTag: "RFID001",
+				IDTagInfo: &types.IDTagInfoInput{
 					Status:      "Accepted",
 					ExpiryDate:  nil,
-					ParentIdTag: nil,
+					ParentIDTag: nil,
 				},
 			},
 			{
-				IdTag: "RFID002",
-				IdTagInfo: &types.IdTagInfoInput{
+				IDTag: "RFID002",
+				IDTagInfo: &types.IDTagInfoInput{
 					Status:      "Blocked",
 					ExpiryDate:  nil,
-					ParentIdTag: nil,
+					ParentIDTag: nil,
 				},
 			},
 			{
-				IdTag:     "RFID003",
-				IdTagInfo: nil,
+				IDTag:     "RFID003",
+				IDTagInfo: nil,
 			},
 		},
 		UpdateType: "Differential",
@@ -250,13 +250,13 @@ func TestReq_InvalidUpdateType_Lowercase(t *testing.T) {
 	}
 }
 
-func TestReq_InvalidAuthorizationList_EmptyIdTag(t *testing.T) {
+func TestReq_InvalidAuthorizationList_EmptyIDTag(t *testing.T) {
 	t.Parallel()
 
 	_, err := sendlocallist.Req(sendlocallist.ReqInput{
 		ListVersion: listVersionOne,
 		LocalAuthorizationList: []types.AuthorizationDataInput{
-			{IdTag: "", IdTagInfo: nil},
+			{IDTag: "", IDTagInfo: nil},
 		},
 		UpdateType: "Full",
 	})
@@ -276,11 +276,11 @@ func TestReq_InvalidAuthorizationList_InvalidStatus(t *testing.T) {
 		ListVersion: listVersionOne,
 		LocalAuthorizationList: []types.AuthorizationDataInput{
 			{
-				IdTag: validIdTag,
-				IdTagInfo: &types.IdTagInfoInput{
+				IDTag: validIDTag,
+				IDTagInfo: &types.IDTagInfoInput{
 					Status:      "InvalidStatus",
 					ExpiryDate:  nil,
-					ParentIdTag: nil,
+					ParentIDTag: nil,
 				},
 			},
 		},

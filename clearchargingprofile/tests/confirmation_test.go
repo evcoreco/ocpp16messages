@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	ccp "github.com/aasanchez/ocpp16messages/clearchargingprofile"
-	types "github.com/aasanchez/ocpp16types"
+	ccp "github.com/evcoreco/ocpp16messages/clearchargingprofile"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (

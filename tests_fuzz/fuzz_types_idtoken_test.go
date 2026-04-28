@@ -5,10 +5,10 @@ package fuzz
 import (
 	"testing"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
-func FuzzNewIdToken(f *testing.F) {
+func FuzzNewIDToken(f *testing.F) {
 	f.Add("RFID-ABC123")
 	f.Add("")
 	f.Add("a")
@@ -26,7 +26,7 @@ func FuzzNewIdToken(f *testing.F) {
 			return
 		}
 
-		token := types.NewIdToken(ciStr)
+		token := types.NewIDToken(ciStr)
 
 		if got := token.Value().String(); got != input {
 			t.Fatalf(

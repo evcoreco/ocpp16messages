@@ -4,33 +4,33 @@ import (
 	"strings"
 	"testing"
 
-	uc "github.com/aasanchez/ocpp16messages/unlockconnector"
-	types "github.com/aasanchez/ocpp16types"
+	uc "github.com/evcoreco/ocpp16messages/unlockconnector"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
-	testConnectorIdValid = 1
-	testConnectorIdTwo   = 2
-	testConnectorIdMax   = 65535
-	testConnectorIdZero  = 0
-	testConnectorIdOver  = 65536
-	testConnectorIdNeg   = -1
-	errConnectorId       = "connectorId"
+	testConnectorIDValid = 1
+	testConnectorIDTwo   = 2
+	testConnectorIDMax   = 65535
+	testConnectorIDZero  = 0
+	testConnectorIDOver  = 65536
+	testConnectorIDNeg   = -1
+	errConnectorID       = "connectorId"
 )
 
 func TestReq_Valid(t *testing.T) {
 	t.Parallel()
 
-	req, err := uc.Req(uc.ReqInput{ConnectorId: testConnectorIdValid})
+	req, err := uc.Req(uc.ReqInput{ConnectorID: testConnectorIDValid})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.ConnectorId.Value() != uint16(testConnectorIdValid) {
+	if req.ConnectorID.Value() != uint16(testConnectorIDValid) {
 		t.Errorf(
 			types.ErrorMismatchValue,
-			uint16(testConnectorIdValid),
-			req.ConnectorId.Value(),
+			uint16(testConnectorIDValid),
+			req.ConnectorID.Value(),
 		)
 	}
 }
@@ -38,16 +38,16 @@ func TestReq_Valid(t *testing.T) {
 func TestReq_Valid_ConnectorTwo(t *testing.T) {
 	t.Parallel()
 
-	req, err := uc.Req(uc.ReqInput{ConnectorId: testConnectorIdTwo})
+	req, err := uc.Req(uc.ReqInput{ConnectorID: testConnectorIDTwo})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.ConnectorId.Value() != uint16(testConnectorIdTwo) {
+	if req.ConnectorID.Value() != uint16(testConnectorIDTwo) {
 		t.Errorf(
 			types.ErrorMismatchValue,
-			uint16(testConnectorIdTwo),
-			req.ConnectorId.Value(),
+			uint16(testConnectorIDTwo),
+			req.ConnectorID.Value(),
 		)
 	}
 }
@@ -55,55 +55,55 @@ func TestReq_Valid_ConnectorTwo(t *testing.T) {
 func TestReq_Valid_Max(t *testing.T) {
 	t.Parallel()
 
-	req, err := uc.Req(uc.ReqInput{ConnectorId: testConnectorIdMax})
+	req, err := uc.Req(uc.ReqInput{ConnectorID: testConnectorIDMax})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.ConnectorId.Value() != uint16(testConnectorIdMax) {
+	if req.ConnectorID.Value() != uint16(testConnectorIDMax) {
 		t.Errorf(
 			types.ErrorMismatchValue,
-			uint16(testConnectorIdMax),
-			req.ConnectorId.Value(),
+			uint16(testConnectorIDMax),
+			req.ConnectorID.Value(),
 		)
 	}
 }
 
-func TestReq_Invalid_ConnectorIdZero(t *testing.T) {
+func TestReq_Invalid_ConnectorIDZero(t *testing.T) {
 	t.Parallel()
 
-	_, err := uc.Req(uc.ReqInput{ConnectorId: testConnectorIdZero})
+	_, err := uc.Req(uc.ReqInput{ConnectorID: testConnectorIDZero})
 	if err == nil {
 		t.Errorf(types.ErrorWantNil, "connectorId zero")
 	}
 
-	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(types.ErrorWantContains, err, errConnectorId)
+	if !strings.Contains(err.Error(), errConnectorID) {
+		t.Errorf(types.ErrorWantContains, err, errConnectorID)
 	}
 }
 
-func TestReq_Invalid_ConnectorIdNegative(t *testing.T) {
+func TestReq_Invalid_ConnectorIDNegative(t *testing.T) {
 	t.Parallel()
 
-	_, err := uc.Req(uc.ReqInput{ConnectorId: testConnectorIdNeg})
+	_, err := uc.Req(uc.ReqInput{ConnectorID: testConnectorIDNeg})
 	if err == nil {
 		t.Errorf(types.ErrorWantNil, "negative connectorId")
 	}
 
-	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(types.ErrorWantContains, err, errConnectorId)
+	if !strings.Contains(err.Error(), errConnectorID) {
+		t.Errorf(types.ErrorWantContains, err, errConnectorID)
 	}
 }
 
-func TestReq_Invalid_ConnectorIdExceedsMax(t *testing.T) {
+func TestReq_Invalid_ConnectorIDExceedsMax(t *testing.T) {
 	t.Parallel()
 
-	_, err := uc.Req(uc.ReqInput{ConnectorId: testConnectorIdOver})
+	_, err := uc.Req(uc.ReqInput{ConnectorID: testConnectorIDOver})
 	if err == nil {
 		t.Errorf(types.ErrorWantNil, "connectorId exceeds max")
 	}
 
-	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(types.ErrorWantContains, err, errConnectorId)
+	if !strings.Contains(err.Error(), errConnectorID) {
+		t.Errorf(types.ErrorWantContains, err, errConnectorID)
 	}
 }

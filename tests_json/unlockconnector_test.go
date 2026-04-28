@@ -3,13 +3,13 @@ package testsjson_test
 import (
 	"testing"
 
-	uc "github.com/aasanchez/ocpp16messages/unlockconnector"
+	uc "github.com/evcoreco/ocpp16messages/unlockconnector"
 )
 
 func TestUnlockConnectorReq_JSONRoundTrip(t *testing.T) {
 	t.Parallel()
 
-	req, err := uc.Req(uc.ReqInput{ConnectorId: 1})
+	req, err := uc.Req(uc.ReqInput{ConnectorID: 1})
 	if err != nil {
 		t.Fatalf("unlockconnector.Req: %v", err)
 	}

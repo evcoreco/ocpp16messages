@@ -1,9 +1,9 @@
 # OCPP 1.6 Messages for Go
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/aasanchez/ocpp16messages.svg)](https://pkg.go.dev/github.com/aasanchez/ocpp16messages)
-[![Go Report Card](https://goreportcard.com/badge/github.com/aasanchez/ocpp16messages)](https://goreportcard.com/report/github.com/aasanchez/ocpp16messages)
+[![Go Reference](https://pkg.go.dev/badge/github.com/evcoreco/ocpp16messages.svg)](https://pkg.go.dev/github.com/evcoreco/ocpp16messages)
+[![Go Report Card](https://goreportcard.com/badge/github.com/evcoreco/ocpp16messages)](https://goreportcard.com/report/github.com/evcoreco/ocpp16messages)
 [![codecov](https://codecov.io/gh/aasanchez/ocpp16messages/graph/badge.svg?token=1I9VVL7DWO)](https://codecov.io/gh/aasanchez/ocpp16messages)
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/aasanchez/ocpp16messages/badge)](https://securityscorecards.dev/viewer/?uri=github.com/aasanchez/ocpp16messages)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/evcoreco/ocpp16messages/badge)](https://securityscorecards.dev/viewer/?uri=github.com/evcoreco/ocpp16messages)
 [![Supported Go versions](https://img.shields.io/badge/Go-1.25.8%20%7C%201.26.1-00ADD8?logo=go)](#versioning-and-support)
 [![CLA assistant](https://cla-assistant.io/readme/badge/aasanchez/ocpp16messages)](https://cla-assistant.io/aasanchez/ocpp16messages)
 
@@ -55,7 +55,7 @@ The library covers the full OCPP 1.6 message surface, including:
 
 ## Installation
 
-    go get github.com/aasanchez/ocpp16messages
+    go get github.com/evcoreco/ocpp16messages
 
 **Requirements:** Go 1.25.8 or later (CI and go.mod aligned)
 
@@ -128,7 +128,7 @@ The library covers the full OCPP 1.6 message surface, including:
 
 The library provides validated OCPP 1.6 data types:
 
-    import "github.com/aasanchez/ocpp16messages/types"
+    import "github.com/evcoreco/ocpp16messages/types"
 
     // CiString types (case-insensitive, ASCII printable, length-validated)
     idTag, err := types.NewCiString20Type("RFID-ABC123")
@@ -152,7 +152,7 @@ The library provides validated OCPP 1.6 data types:
 
 Messages use OCPP terminology with `Req()` for requests and `Conf()` for responses:
 
-    import "github.com/aasanchez/ocpp16messages/authorize"
+    import "github.com/evcoreco/ocpp16messages/authorize"
 
     // Create an Authorize.req message using the ReqInput struct
     // Validation happens automatically in the constructor
@@ -166,7 +166,7 @@ Messages use OCPP terminology with `Req()` for requests and `Conf()` for respons
     // Access the validated IdTag
     fmt.Println(req.IdTag.String()) // "RFID-ABC123"
 
-    import "github.com/aasanchez/ocpp16messages/clearchargingprofile"
+    import "github.com/evcoreco/ocpp16messages/clearchargingprofile"
 
     // ClearChargingProfile.req with optional fields
     id := 123
@@ -205,8 +205,8 @@ Detect the common failure modes via `errors.Is`:
         "errors"
         "fmt"
 
-        "github.com/aasanchez/ocpp16messages/authorize"
-        "github.com/aasanchez/ocpp16messages/types"
+        "github.com/evcoreco/ocpp16messages/authorize"
+        "github.com/evcoreco/ocpp16messages/types"
     )
 
     req, err := authorize.Req(authorize.ReqInput{
@@ -589,7 +589,7 @@ See [LICENSE](./LICENSE)
 ## Resources
 
 - [OCPP 1.6 Specification](https://www.openchargealliance.org/protocols/ocpp-16/)
-- [Go Package Documentation](https://pkg.go.dev/github.com/aasanchez/ocpp16messages)
+- [Go Package Documentation](https://pkg.go.dev/github.com/evcoreco/ocpp16messages)
 - [Security Policy](SECURITY.md)
 - [Compatibility Contract](COMPATIBILITY.md)
 - [Development Guide](CLAUDE.md)

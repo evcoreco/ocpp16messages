@@ -3,8 +3,8 @@ package diagnosticsstatusnotification_test
 import (
 	"testing"
 
-	dsn "github.com/aasanchez/ocpp16messages/diagnosticsstatusnotification"
-	types "github.com/aasanchez/ocpp16types"
+	dsn "github.com/evcoreco/ocpp16messages/diagnosticsstatusnotification"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const repeatCount = 3

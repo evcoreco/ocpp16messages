@@ -3,26 +3,26 @@ package reservenow_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/reservenow"
+	"github.com/evcoreco/ocpp16messages/reservenow"
 )
 
 const (
-	exampleReservationId = 1
-	exampleConnectorId   = 1
-	exampleIdTag         = "RFID-TAG-12345"
+	exampleReservationID = 1
+	exampleConnectorID   = 1
+	exampleIDTag         = "RFID-TAG-12345"
 	exampleExpiryDate    = "2025-01-15T10:00:00Z"
-	exampleParentIdTag   = "PARENT-12345"
+	exampleParentIDTag   = "PARENT-12345"
 )
 
 // ExampleReq demonstrates creating a valid ReserveNow.req message with only
 // the required fields.
 func ExampleReq() {
 	req, err := reservenow.Req(reservenow.ReqInput{
-		ReservationId: exampleReservationId,
-		ConnectorId:   exampleConnectorId,
-		IdTag:         exampleIdTag,
+		ReservationID: exampleReservationID,
+		ConnectorID:   exampleConnectorID,
+		IDTag:         exampleIDTag,
 		ExpiryDate:    exampleExpiryDate,
-		ParentIdTag:   nil,
+		ParentIDTag:   nil,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -30,26 +30,26 @@ func ExampleReq() {
 		return
 	}
 
-	fmt.Println("ReservationId:", req.ReservationId.Value())
-	fmt.Println("ConnectorId:", req.ConnectorId.Value())
-	fmt.Println("IdTag:", req.IdTag.Value())
+	fmt.Println("ReservationID:", req.ReservationID.Value())
+	fmt.Println("ConnectorID:", req.ConnectorID.Value())
+	fmt.Println("IDTag:", req.IDTag.Value())
 	// Output:
-	// ReservationId: 1
-	// ConnectorId: 1
-	// IdTag: RFID-TAG-12345
+	// ReservationID: 1
+	// ConnectorID: 1
+	// IDTag: RFID-TAG-12345
 }
 
-// ExampleReq_withParentIdTag demonstrates creating a ReserveNow.req message
-// with all fields including the optional parentIdTag.
-func ExampleReq_withParentIdTag() {
-	parentIdTag := exampleParentIdTag
+// ExampleReq_withParentIDTag demonstrates creating a ReserveNow.req message
+// with all fields including the optional parentIDTag.
+func ExampleReq_withParentIDTag() {
+	parentIDTag := exampleParentIDTag
 
 	req, err := reservenow.Req(reservenow.ReqInput{
-		ReservationId: exampleReservationId,
-		ConnectorId:   exampleConnectorId,
-		IdTag:         exampleIdTag,
+		ReservationID: exampleReservationID,
+		ConnectorID:   exampleConnectorID,
+		IDTag:         exampleIDTag,
 		ExpiryDate:    exampleExpiryDate,
-		ParentIdTag:   &parentIdTag,
+		ParentIDTag:   &parentIDTag,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -57,22 +57,22 @@ func ExampleReq_withParentIdTag() {
 		return
 	}
 
-	fmt.Println("IdTag:", req.IdTag.Value())
-	fmt.Println("ParentIdTag:", req.ParentIdTag.Value())
+	fmt.Println("IDTag:", req.IDTag.Value())
+	fmt.Println("ParentIDTag:", req.ParentIDTag.Value())
 	// Output:
-	// IdTag: RFID-TAG-12345
-	// ParentIdTag: PARENT-12345
+	// IDTag: RFID-TAG-12345
+	// ParentIDTag: PARENT-12345
 }
 
-// ExampleReq_emptyIdTag demonstrates the error returned when an empty idTag
+// ExampleReq_emptyIDTag demonstrates the error returned when an empty idTag
 // is provided.
-func ExampleReq_emptyIdTag() {
+func ExampleReq_emptyIDTag() {
 	_, err := reservenow.Req(reservenow.ReqInput{
-		ReservationId: exampleReservationId,
-		ConnectorId:   exampleConnectorId,
-		IdTag:         "",
+		ReservationID: exampleReservationID,
+		ConnectorID:   exampleConnectorID,
+		IDTag:         "",
 		ExpiryDate:    exampleExpiryDate,
-		ParentIdTag:   nil,
+		ParentIDTag:   nil,
 	})
 	if err != nil {
 		fmt.Println("idTag: value cannot be empty")
@@ -85,11 +85,11 @@ func ExampleReq_emptyIdTag() {
 // expiry date is provided.
 func ExampleReq_invalidExpiryDate() {
 	_, err := reservenow.Req(reservenow.ReqInput{
-		ReservationId: exampleReservationId,
-		ConnectorId:   exampleConnectorId,
-		IdTag:         exampleIdTag,
+		ReservationID: exampleReservationID,
+		ConnectorID:   exampleConnectorID,
+		IDTag:         exampleIDTag,
 		ExpiryDate:    "invalid-date",
-		ParentIdTag:   nil,
+		ParentIDTag:   nil,
 	})
 	if err != nil {
 		fmt.Println("expiryDate: invalid value")

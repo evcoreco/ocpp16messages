@@ -52,7 +52,7 @@
 // # Authorization Cache
 //
 //   - If implemented, the Charge Point SHALL update the cache with
-//     IdTagInfo from ReserveNow.conf if the idTag is not in the Local
+//     IDTagInfo from ReserveNow.conf if the idTag is not in the Local
 //     Authorization List.
 //
 // # Recommendation

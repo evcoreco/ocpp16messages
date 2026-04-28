@@ -40,7 +40,7 @@
 // # Cache Updates
 //
 // If Authorization Cache is implemented, the Charge Point SHALL update the
-// cache with IdTagInfo from StopTransaction.conf if the idTag is not in
+// cache with IDTagInfo from StopTransaction.conf if the idTag is not in
 // the Local Authorization List.
 //
 // # Notes

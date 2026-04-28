@@ -7,8 +7,8 @@ import (
 	"math"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/cancelreservation"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/cancelreservation"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzCancelReservationReq(f *testing.F) {
@@ -19,7 +19,7 @@ func FuzzCancelReservationReq(f *testing.F) {
 
 	f.Fuzz(func(t *testing.T, reservationId int) {
 		req, err := cancelreservation.Req(cancelreservation.ReqInput{
-			ReservationId: reservationId,
+			ReservationID: reservationId,
 		})
 		if err != nil {
 			if !errors.Is(err, types.ErrInvalidValue) {
@@ -33,8 +33,8 @@ func FuzzCancelReservationReq(f *testing.F) {
 			t.Fatalf("Req succeeded with reservationId=%d", reservationId)
 		}
 
-		if got := req.ReservationId.Value(); got != uint16(reservationId) {
-			t.Fatalf("ReservationId = %d, want %d", got, reservationId)
+		if got := req.ReservationID.Value(); got != uint16(reservationId) {
+			t.Fatalf("ReservationID = %d, want %d", got, reservationId)
 		}
 	})
 }

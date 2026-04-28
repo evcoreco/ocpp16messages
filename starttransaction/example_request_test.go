@@ -3,20 +3,20 @@ package starttransaction_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/starttransaction"
+	"github.com/evcoreco/ocpp16messages/starttransaction"
 )
 
-const testReservationId = 42
+const testReservationID = 42
 
 // ExampleReq demonstrates creating a valid StartTransaction.req message
 // with all required fields.
 func ExampleReq() {
 	req, err := starttransaction.Req(starttransaction.ReqInput{
-		ConnectorId:   1,
-		IdTag:         "RFID-TAG-12345",
+		ConnectorID:   1,
+		IDTag:         "RFID-TAG-12345",
 		MeterStart:    1000,
 		Timestamp:     "2025-01-15T10:30:00Z",
-		ReservationId: nil,
+		ReservationID: nil,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -24,26 +24,26 @@ func ExampleReq() {
 		return
 	}
 
-	fmt.Println("ConnectorId:", req.ConnectorId.Value())
-	fmt.Println("IdTag:", req.IdTag.String())
+	fmt.Println("ConnectorID:", req.ConnectorID.Value())
+	fmt.Println("IDTag:", req.IDTag.String())
 	fmt.Println("MeterStart:", req.MeterStart.Value())
 	// Output:
-	// ConnectorId: 1
-	// IdTag: RFID-TAG-12345
+	// ConnectorID: 1
+	// IDTag: RFID-TAG-12345
 	// MeterStart: 1000
 }
 
 // ExampleReq_withReservation demonstrates creating a StartTransaction.req
 // message that includes a reservation ID.
 func ExampleReq_withReservation() {
-	reservationId := testReservationId
+	reservationId := testReservationID
 
 	req, err := starttransaction.Req(starttransaction.ReqInput{
-		ConnectorId:   2,
-		IdTag:         "RFID-TAG-67890",
+		ConnectorID:   2,
+		IDTag:         "RFID-TAG-67890",
 		MeterStart:    500,
 		Timestamp:     "2025-01-15T11:00:00Z",
-		ReservationId: &reservationId,
+		ReservationID: &reservationId,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -51,26 +51,26 @@ func ExampleReq_withReservation() {
 		return
 	}
 
-	fmt.Println("ConnectorId:", req.ConnectorId.Value())
-	fmt.Println("IdTag:", req.IdTag.String())
-	fmt.Println("HasReservation:", req.ReservationId != nil)
-	fmt.Println("ReservationId:", req.ReservationId.Value())
+	fmt.Println("ConnectorID:", req.ConnectorID.Value())
+	fmt.Println("IDTag:", req.IDTag.String())
+	fmt.Println("HasReservation:", req.ReservationID != nil)
+	fmt.Println("ReservationID:", req.ReservationID.Value())
 	// Output:
-	// ConnectorId: 2
-	// IdTag: RFID-TAG-67890
+	// ConnectorID: 2
+	// IDTag: RFID-TAG-67890
 	// HasReservation: true
-	// ReservationId: 42
+	// ReservationID: 42
 }
 
-// ExampleReq_emptyIdTag demonstrates the error returned when
+// ExampleReq_emptyIDTag demonstrates the error returned when
 // an empty ID tag is provided.
-func ExampleReq_emptyIdTag() {
+func ExampleReq_emptyIDTag() {
 	_, err := starttransaction.Req(starttransaction.ReqInput{
-		ConnectorId:   1,
-		IdTag:         "",
+		ConnectorID:   1,
+		IDTag:         "",
 		MeterStart:    1000,
 		Timestamp:     "2025-01-15T10:30:00Z",
-		ReservationId: nil,
+		ReservationID: nil,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -83,11 +83,11 @@ func ExampleReq_emptyIdTag() {
 // an invalid timestamp is provided.
 func ExampleReq_invalidTimestamp() {
 	_, err := starttransaction.Req(starttransaction.ReqInput{
-		ConnectorId:   1,
-		IdTag:         "RFID-TAG-12345",
+		ConnectorID:   1,
+		IDTag:         "RFID-TAG-12345",
 		MeterStart:    1000,
 		Timestamp:     "not-a-timestamp",
-		ReservationId: nil,
+		ReservationID: nil,
 	})
 	if err != nil {
 		fmt.Println("Invalid timestamp error")
@@ -100,11 +100,11 @@ func ExampleReq_invalidTimestamp() {
 // are returned at once, not just the first one encountered.
 func ExampleReq_multipleErrors() {
 	_, err := starttransaction.Req(starttransaction.ReqInput{
-		ConnectorId:   -1,
-		IdTag:         "",
+		ConnectorID:   -1,
+		IDTag:         "",
 		MeterStart:    -1,
 		Timestamp:     "invalid",
-		ReservationId: nil,
+		ReservationID: nil,
 	})
 	if err != nil {
 		fmt.Println("Multiple errors")

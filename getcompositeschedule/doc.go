@@ -13,7 +13,7 @@
 // The reported schedule SHALL cover the interval from the time the request
 // is received (X) up to X + Duration.
 //
-// If ConnectorId is set to 0, the Charge Point SHALL report the total
+// If ConnectorID is set to 0, the Charge Point SHALL report the total
 // expected power or current consumption of the entire Charge Point for
 // the requested period.
 //
@@ -21,5 +21,5 @@
 // change due to external factors such as local load balancing.
 //
 // If the Charge Point cannot report the requested schedule (e.g. unknown
-// ConnectorId), it SHALL respond with status Rejected.
+// ConnectorID), it SHALL respond with status Rejected.
 package getcompositeschedule

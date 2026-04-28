@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	scp "github.com/aasanchez/ocpp16messages/setchargingprofile"
-	types "github.com/aasanchez/ocpp16types"
+	scp "github.com/evcoreco/ocpp16messages/setchargingprofile"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzSetChargingProfileConf(f *testing.F) {

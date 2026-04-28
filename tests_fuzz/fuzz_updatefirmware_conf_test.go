@@ -5,7 +5,7 @@ package fuzz
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/updatefirmware"
+	"github.com/evcoreco/ocpp16messages/updatefirmware"
 )
 
 func FuzzUpdateFirmwareConf(f *testing.F) {

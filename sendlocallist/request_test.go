@@ -3,7 +3,7 @@ package sendlocallist
 import (
 	"testing"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func Test_validateReqAuthorizationList_EmptySlice(t *testing.T) {

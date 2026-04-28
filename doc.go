@@ -21,16 +21,16 @@
 //	import (
 //		"fmt"
 //
-//		"github.com/aasanchez/ocpp16messages/authorize"
+//		"github.com/evcoreco/ocpp16messages/authorize"
 //	)
 //
 //	func main() {
 //		req, err := authorize.Req(authorize.ReqInput{
-//			IdTag: "RFID-ABC123",
+//			IDTag: "RFID-ABC123",
 //		})
 //		if err != nil {
 //			panic(err)
 //		}
-//		fmt.Println(req.IdTag.String())
+//		fmt.Println(req.IDTag.String())
 //	}
 package ocpp16messages

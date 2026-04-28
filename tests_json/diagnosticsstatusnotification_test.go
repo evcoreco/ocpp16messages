@@ -3,7 +3,7 @@ package testsjson_test
 import (
 	"testing"
 
-	dsn "github.com/aasanchez/ocpp16messages/diagnosticsstatusnotification"
+	dsn "github.com/evcoreco/ocpp16messages/diagnosticsstatusnotification"
 )
 
 func TestDiagnosticsStatusNotificationReq_JSONRoundTrip(t *testing.T) {

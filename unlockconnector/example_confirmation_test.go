@@ -3,7 +3,7 @@ package unlockconnector_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/unlockconnector"
+	"github.com/evcoreco/ocpp16messages/unlockconnector"
 )
 
 const (

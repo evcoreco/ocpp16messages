@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzChargingProfileMultiFieldErrors(f *testing.F) {
@@ -30,7 +30,7 @@ func FuzzChargingProfileMultiFieldErrors(f *testing.F) {
 
 		_, err := types.NewChargingProfile(
 			types.ChargingProfileInput{
-				ChargingProfileId:      profileId,
+				ChargingProfileID:      profileId,
 				StackLevel:             stackLevel,
 				ChargingProfilePurpose: purpose,
 				ChargingProfileKind:    kind,

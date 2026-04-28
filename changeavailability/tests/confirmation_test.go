@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	ca "github.com/aasanchez/ocpp16messages/changeavailability"
-	types "github.com/aasanchez/ocpp16types"
+	ca "github.com/evcoreco/ocpp16messages/changeavailability"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (

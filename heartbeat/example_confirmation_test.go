@@ -3,7 +3,7 @@ package heartbeat_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/heartbeat"
+	"github.com/evcoreco/ocpp16messages/heartbeat"
 )
 
 // ExampleConf demonstrates creating a valid Heartbeat.conf message

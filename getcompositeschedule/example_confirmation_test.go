@@ -3,12 +3,12 @@ package getcompositeschedule_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/getcompositeschedule"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/getcompositeschedule"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
-	exampleConnectorIdConf   = 1
+	exampleConnectorIDConf   = 1
 	exampleScheduleStartConf = "2025-01-15T10:00:00Z"
 	exampleDurationConf      = 3600
 	exampleStartPeriodConf   = 0
@@ -23,7 +23,7 @@ const (
 func ExampleConf() {
 	conf, err := getcompositeschedule.Conf(getcompositeschedule.ConfInput{
 		Status:           "Accepted",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 		ScheduleStart:    nil,
 		ChargingSchedule: nil,
 	})
@@ -43,7 +43,7 @@ func ExampleConf() {
 func ExampleConf_rejected() {
 	conf, err := getcompositeschedule.Conf(getcompositeschedule.ConfInput{
 		Status:           "Rejected",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 		ScheduleStart:    nil,
 		ChargingSchedule: nil,
 	})
@@ -61,13 +61,13 @@ func ExampleConf_rejected() {
 // ExampleConf_withAllFields demonstrates creating a GetCompositeSchedule.conf
 // message with all optional fields including a composite charging schedule.
 func ExampleConf_withAllFields() {
-	connectorId := exampleConnectorIdConf
+	connectorId := exampleConnectorIDConf
 	scheduleStart := exampleScheduleStartConf
 	duration := exampleDurationConf
 
 	conf, err := getcompositeschedule.Conf(getcompositeschedule.ConfInput{
 		Status:        "Accepted",
-		ConnectorId:   &connectorId,
+		ConnectorID:   &connectorId,
 		ScheduleStart: &scheduleStart,
 		ChargingSchedule: &types.ChargingScheduleInput{
 			Duration:         &duration,
@@ -95,11 +95,11 @@ func ExampleConf_withAllFields() {
 	}
 
 	fmt.Println(statusLabel, conf.Status.String())
-	fmt.Println("ConnectorId:", conf.ConnectorId.Value())
+	fmt.Println("ConnectorID:", conf.ConnectorID.Value())
 	fmt.Println("Periods:", len(conf.ChargingSchedule.ChargingSchedulePeriod()))
 	// Output:
 	// Status: Accepted
-	// ConnectorId: 1
+	// ConnectorID: 1
 	// Periods: 2
 }
 
@@ -108,7 +108,7 @@ func ExampleConf_withAllFields() {
 func ExampleConf_invalidStatus() {
 	_, err := getcompositeschedule.Conf(getcompositeschedule.ConfInput{
 		Status:           "Invalid",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 		ScheduleStart:    nil,
 		ChargingSchedule: nil,
 	})

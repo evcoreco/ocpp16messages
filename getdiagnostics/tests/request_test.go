@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	gd "github.com/aasanchez/ocpp16messages/getdiagnostics"
-	types "github.com/aasanchez/ocpp16types"
+	gd "github.com/evcoreco/ocpp16messages/getdiagnostics"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (

@@ -3,7 +3,7 @@ package testsjson_test
 import (
 	"testing"
 
-	fsn "github.com/aasanchez/ocpp16messages/firmwarestatusnotification"
+	fsn "github.com/evcoreco/ocpp16messages/firmwarestatusnotification"
 )
 
 func TestFirmwareStatusNotificationReq_JSONRoundTrip(t *testing.T) {

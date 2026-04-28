@@ -1,6 +1,6 @@
 goos: darwin
 goarch: arm64
-pkg: github.com/aasanchez/ocpp16messages/analysis_benchmak
+pkg: github.com/evcoreco/ocpp16messages/analysis_benchmak
 cpu: Apple M4
 BenchmarkGetConfigurationReq_Custom_1-10                   	41662868	        27.73 ns/op	      16 B/op	       1 allocs/op
 BenchmarkGetConfigurationReq_Custom_25-10                  	 2303264	       510.4 ns/op	    1008 B/op	       6 allocs/op
@@ -50,4 +50,4 @@ BenchmarkSendLocalListReq_PrimitiveValidated_250-10        	 1614704	       799.
 BenchmarkSendLocalListReq_PrimitiveValidated_500-10        	  789724	      1541 ns/op	       0 B/op	       0 allocs/op
 BenchmarkSendLocalListReq_PrimitiveValidated_1000-10       	  388695	      3066 ns/op	       0 B/op	       0 allocs/op
 PASS
-ok  	github.com/aasanchez/ocpp16messages/analysis_benchmak	53.084s
+ok  	github.com/evcoreco/ocpp16messages/analysis_benchmak	53.084s

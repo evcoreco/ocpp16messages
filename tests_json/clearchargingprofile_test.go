@@ -3,7 +3,7 @@ package testsjson_test
 import (
 	"testing"
 
-	ccp "github.com/aasanchez/ocpp16messages/clearchargingprofile"
+	ccp "github.com/evcoreco/ocpp16messages/clearchargingprofile"
 )
 
 func TestClearChargingProfileReq_JSONRoundTrip(t *testing.T) {
@@ -11,7 +11,7 @@ func TestClearChargingProfileReq_JSONRoundTrip(t *testing.T) {
 
 	req, err := ccp.Req(ccp.ReqInput{
 		Id:                     nil,
-		ConnectorId:            nil,
+		ConnectorID:            nil,
 		ChargingProfilePurpose: nil,
 		StackLevel:             nil,
 	})

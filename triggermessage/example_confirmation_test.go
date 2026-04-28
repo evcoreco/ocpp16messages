@@ -3,7 +3,7 @@ package triggermessage_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/triggermessage"
+	"github.com/evcoreco/ocpp16messages/triggermessage"
 )
 
 const (

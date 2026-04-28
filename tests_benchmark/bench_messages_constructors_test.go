@@ -5,21 +5,21 @@ package benchmark
 import (
 	"testing"
 
-	ar "github.com/aasanchez/ocpp16messages/authorize"
-	bn "github.com/aasanchez/ocpp16messages/bootnotification"
-	dt "github.com/aasanchez/ocpp16messages/datatransfer"
-	gcs "github.com/aasanchez/ocpp16messages/getcompositeschedule"
-	gconf "github.com/aasanchez/ocpp16messages/getconfiguration"
-	sll "github.com/aasanchez/ocpp16messages/sendlocallist"
-	scp "github.com/aasanchez/ocpp16messages/setchargingprofile"
-	tm "github.com/aasanchez/ocpp16messages/triggermessage"
-	types "github.com/aasanchez/ocpp16types"
+	ar "github.com/evcoreco/ocpp16messages/authorize"
+	bn "github.com/evcoreco/ocpp16messages/bootnotification"
+	dt "github.com/evcoreco/ocpp16messages/datatransfer"
+	gcs "github.com/evcoreco/ocpp16messages/getcompositeschedule"
+	gconf "github.com/evcoreco/ocpp16messages/getconfiguration"
+	sll "github.com/evcoreco/ocpp16messages/sendlocallist"
+	scp "github.com/evcoreco/ocpp16messages/setchargingprofile"
+	tm "github.com/evcoreco/ocpp16messages/triggermessage"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func BenchmarkAuthorizeReq(b *testing.B) {
 	b.ReportAllocs()
 
-	input := ar.ReqInput{IdTag: "TAG-1"}
+	input := ar.ReqInput{IDTag: "TAG-1"}
 
 	for i := 0; i < b.N; i++ {
 		if _, err := ar.Req(input); err != nil {
@@ -36,7 +36,7 @@ func BenchmarkAuthorizeConf(b *testing.B) {
 	input := ar.ConfInput{
 		Status:      types.AuthorizationStatusAccepted.String(),
 		ExpiryDate:  &expiry,
-		ParentIdTag: &parent,
+		ParentIDTag: &parent,
 	}
 
 	for i := 0; i < b.N; i++ {
@@ -86,8 +86,8 @@ func BenchmarkDataTransferReq(b *testing.B) {
 	data := "payload"
 
 	input := dt.ReqInput{
-		VendorId:  "Vendor-1",
-		MessageId: &messageId,
+		VendorID:  "Vendor-1",
+		MessageID: &messageId,
 		Data:      &data,
 	}
 
@@ -119,7 +119,7 @@ func BenchmarkGetCompositeScheduleReq(b *testing.B) {
 
 	unit := types.ChargingRateUnitWatts.String()
 	input := gcs.ReqInput{
-		ConnectorId:      0,
+		ConnectorID:      0,
 		Duration:         60,
 		ChargingRateUnit: &unit,
 	}
@@ -151,7 +151,7 @@ func BenchmarkGetCompositeScheduleConf_WithSchedule(b *testing.B) {
 
 	input := gcs.ConfInput{
 		Status:           "Accepted",
-		ConnectorId:      &connectorId,
+		ConnectorID:      &connectorId,
 		ScheduleStart:    &scheduleStart,
 		ChargingSchedule: &chargingScheduleInput,
 	}
@@ -199,7 +199,7 @@ func BenchmarkSendLocalListReq_ManyEntries(b *testing.B) {
 
 	var entries []types.AuthorizationDataInput
 	for i := 0; i < 25; i++ {
-		entries = append(entries, types.AuthorizationDataInput{IdTag: "TAG-1"})
+		entries = append(entries, types.AuthorizationDataInput{IDTag: "TAG-1"})
 	}
 
 	input := sll.ReqInput{
@@ -232,8 +232,8 @@ func BenchmarkSetChargingProfileReq(b *testing.B) {
 	}
 
 	profileInput := types.ChargingProfileInput{
-		ChargingProfileId:      1,
-		TransactionId:          nil,
+		ChargingProfileID:      1,
+		TransactionID:          nil,
 		StackLevel:             0,
 		ChargingProfilePurpose: types.TxProfile.String(),
 		ChargingProfileKind:    types.ChargingProfileKindAbsolute.String(),
@@ -244,7 +244,7 @@ func BenchmarkSetChargingProfileReq(b *testing.B) {
 	}
 
 	input := scp.ReqInput{
-		ConnectorId:        0,
+		ConnectorID:        0,
 		CsChargingProfiles: profileInput,
 	}
 
@@ -263,7 +263,7 @@ func BenchmarkTriggerMessageReq(b *testing.B) {
 
 	input := tm.ReqInput{
 		RequestedMessage: requestedMessage,
-		ConnectorId:      &connectorId,
+		ConnectorID:      &connectorId,
 	}
 
 	for i := 0; i < b.N; i++ {

@@ -4,12 +4,12 @@ import (
 	"strings"
 	"testing"
 
-	gcs "github.com/aasanchez/ocpp16messages/getcompositeschedule"
-	types "github.com/aasanchez/ocpp16types"
+	gcs "github.com/evcoreco/ocpp16messages/getcompositeschedule"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
-	errConnectorId      = "connectorId"
+	errConnectorID      = "connectorId"
 	errDuration         = "duration"
 	errChargingRateUnit = "chargingRateUnit"
 
@@ -31,7 +31,7 @@ func TestReq_Valid_RequiredFieldsOnly(t *testing.T) {
 	t.Parallel()
 
 	req, err := gcs.Req(gcs.ReqInput{
-		ConnectorId:      valueOne,
+		ConnectorID:      valueOne,
 		Duration:         valueThreeHund,
 		ChargingRateUnit: nil,
 	})
@@ -39,8 +39,8 @@ func TestReq_Valid_RequiredFieldsOnly(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.ConnectorId.Value() != valueOne {
-		t.Errorf(types.ErrorMismatchValue, valueOne, req.ConnectorId.Value())
+	if req.ConnectorID.Value() != valueOne {
+		t.Errorf(types.ErrorMismatchValue, valueOne, req.ConnectorID.Value())
 	}
 
 	if req.Duration.Value() != valueThreeHund {
@@ -52,11 +52,11 @@ func TestReq_Valid_RequiredFieldsOnly(t *testing.T) {
 	}
 }
 
-func TestReq_Valid_ConnectorIdZero(t *testing.T) {
+func TestReq_Valid_ConnectorIDZero(t *testing.T) {
 	t.Parallel()
 
 	req, err := gcs.Req(gcs.ReqInput{
-		ConnectorId:      valueZero,
+		ConnectorID:      valueZero,
 		Duration:         valueThreeHund,
 		ChargingRateUnit: nil,
 	})
@@ -64,8 +64,8 @@ func TestReq_Valid_ConnectorIdZero(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.ConnectorId.Value() != valueZero {
-		t.Errorf(types.ErrorMismatchValue, valueZero, req.ConnectorId.Value())
+	if req.ConnectorID.Value() != valueZero {
+		t.Errorf(types.ErrorMismatchValue, valueZero, req.ConnectorID.Value())
 	}
 }
 
@@ -73,7 +73,7 @@ func TestReq_Valid_WithChargingRateUnitWatts(t *testing.T) {
 	t.Parallel()
 
 	req, err := gcs.Req(gcs.ReqInput{
-		ConnectorId:      valueOne,
+		ConnectorID:      valueOne,
 		Duration:         valueThreeHund,
 		ChargingRateUnit: strPtr("W"),
 	})
@@ -98,7 +98,7 @@ func TestReq_Valid_WithChargingRateUnitAmperes(t *testing.T) {
 	t.Parallel()
 
 	req, err := gcs.Req(gcs.ReqInput{
-		ConnectorId:      valueOne,
+		ConnectorID:      valueOne,
 		Duration:         valueSixHund,
 		ChargingRateUnit: strPtr("A"),
 	})
@@ -119,37 +119,37 @@ func TestReq_Valid_WithChargingRateUnitAmperes(t *testing.T) {
 	}
 }
 
-func TestReq_Invalid_NegativeConnectorId(t *testing.T) {
+func TestReq_Invalid_NegativeConnectorID(t *testing.T) {
 	t.Parallel()
 
 	_, err := gcs.Req(gcs.ReqInput{
-		ConnectorId:      valueNegative,
+		ConnectorID:      valueNegative,
 		Duration:         valueThreeHund,
 		ChargingRateUnit: nil,
 	})
 	if err == nil {
-		t.Errorf(types.ErrorWantNil, "negative ConnectorId")
+		t.Errorf(types.ErrorWantNil, "negative ConnectorID")
 	}
 
-	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(types.ErrorWantContains, err, errConnectorId)
+	if !strings.Contains(err.Error(), errConnectorID) {
+		t.Errorf(types.ErrorWantContains, err, errConnectorID)
 	}
 }
 
-func TestReq_Invalid_ConnectorIdExceedsMax(t *testing.T) {
+func TestReq_Invalid_ConnectorIDExceedsMax(t *testing.T) {
 	t.Parallel()
 
 	_, err := gcs.Req(gcs.ReqInput{
-		ConnectorId:      valueExceedsMax,
+		ConnectorID:      valueExceedsMax,
 		Duration:         valueThreeHund,
 		ChargingRateUnit: nil,
 	})
 	if err == nil {
-		t.Errorf(types.ErrorWantNil, "ConnectorId exceeds max")
+		t.Errorf(types.ErrorWantNil, "ConnectorID exceeds max")
 	}
 
-	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(types.ErrorWantContains, err, errConnectorId)
+	if !strings.Contains(err.Error(), errConnectorID) {
+		t.Errorf(types.ErrorWantContains, err, errConnectorID)
 	}
 }
 
@@ -157,7 +157,7 @@ func TestReq_Invalid_NegativeDuration(t *testing.T) {
 	t.Parallel()
 
 	_, err := gcs.Req(gcs.ReqInput{
-		ConnectorId:      valueOne,
+		ConnectorID:      valueOne,
 		Duration:         valueNegative,
 		ChargingRateUnit: nil,
 	})
@@ -174,7 +174,7 @@ func TestReq_Invalid_DurationExceedsMax(t *testing.T) {
 	t.Parallel()
 
 	_, err := gcs.Req(gcs.ReqInput{
-		ConnectorId:      valueOne,
+		ConnectorID:      valueOne,
 		Duration:         valueExceedsMax,
 		ChargingRateUnit: nil,
 	})
@@ -191,7 +191,7 @@ func TestReq_Invalid_ChargingRateUnit(t *testing.T) {
 	t.Parallel()
 
 	_, err := gcs.Req(gcs.ReqInput{
-		ConnectorId:      valueOne,
+		ConnectorID:      valueOne,
 		Duration:         valueThreeHund,
 		ChargingRateUnit: strPtr("X"),
 	})
@@ -208,7 +208,7 @@ func TestReq_Invalid_EmptyChargingRateUnit(t *testing.T) {
 	t.Parallel()
 
 	_, err := gcs.Req(gcs.ReqInput{
-		ConnectorId:      valueOne,
+		ConnectorID:      valueOne,
 		Duration:         valueThreeHund,
 		ChargingRateUnit: strPtr(""),
 	})
@@ -225,7 +225,7 @@ func TestReq_Invalid_LowercaseChargingRateUnit(t *testing.T) {
 	t.Parallel()
 
 	_, err := gcs.Req(gcs.ReqInput{
-		ConnectorId:      valueOne,
+		ConnectorID:      valueOne,
 		Duration:         valueThreeHund,
 		ChargingRateUnit: strPtr("w"),
 	})
@@ -242,7 +242,7 @@ func TestReq_Invalid_MultipleErrors(t *testing.T) {
 	t.Parallel()
 
 	_, err := gcs.Req(gcs.ReqInput{
-		ConnectorId:      valueNegative,
+		ConnectorID:      valueNegative,
 		Duration:         valueNegative,
 		ChargingRateUnit: strPtr("X"),
 	})
@@ -250,8 +250,8 @@ func TestReq_Invalid_MultipleErrors(t *testing.T) {
 		t.Errorf(types.ErrorWantNil, "multiple invalid fields")
 	}
 
-	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(types.ErrorWantContains, err, errConnectorId)
+	if !strings.Contains(err.Error(), errConnectorID) {
+		t.Errorf(types.ErrorWantContains, err, errConnectorID)
 	}
 
 	if !strings.Contains(err.Error(), errDuration) {

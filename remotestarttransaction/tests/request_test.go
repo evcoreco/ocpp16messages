@@ -5,131 +5,131 @@ import (
 	"strings"
 	"testing"
 
-	rst "github.com/aasanchez/ocpp16messages/remotestarttransaction"
-	types "github.com/aasanchez/ocpp16types"
+	rst "github.com/evcoreco/ocpp16messages/remotestarttransaction"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
-	testValidIdTag        = "RFID-TAG-12345"
-	testConnectorIdOne    = 1
-	testConnectorIdZero   = 0
-	testConnectorIdMax    = 65535
-	testConnectorIdOver   = 65536
-	testConnectorIdNeg    = -1
-	errIdTag              = "idTag"
-	errConnectorId        = "connectorId"
+	testValidIDTag        = "RFID-TAG-12345"
+	testConnectorIDOne    = 1
+	testConnectorIDZero   = 0
+	testConnectorIDMax    = 65535
+	testConnectorIDOver   = 65536
+	testConnectorIDNeg    = -1
+	errIDTag              = "idTag"
+	errConnectorID        = "connectorId"
 	errExceedsMaxLength   = "exceeds maximum length"
 	errNonPrintableASCII  = "non-printable ASCII"
-	fieldNameConnectorId  = "ConnectorId"
-	wantConnectorIdNilMsg = "ConnectorId should be nil"
+	fieldNameConnectorID  = "ConnectorID"
+	wantConnectorIDNilMsg = "ConnectorID should be nil"
 )
 
-func TestReq_Valid_IdTagOnly(t *testing.T) {
+func TestReq_Valid_IDTagOnly(t *testing.T) {
 	t.Parallel()
 
 	req, err := rst.Req(rst.ReqInput{
-		IdTag:       testValidIdTag,
-		ConnectorId: nil,
+		IDTag:       testValidIDTag,
+		ConnectorID: nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.IdTag.Value() != testValidIdTag {
-		t.Errorf(types.ErrorMismatch, testValidIdTag, req.IdTag.Value())
+	if req.IDTag.Value() != testValidIDTag {
+		t.Errorf(types.ErrorMismatch, testValidIDTag, req.IDTag.Value())
 	}
 
-	if req.ConnectorId != nil {
-		t.Errorf(types.ErrorWantNonNil, wantConnectorIdNilMsg)
+	if req.ConnectorID != nil {
+		t.Errorf(types.ErrorWantNonNil, wantConnectorIDNilMsg)
 	}
 }
 
-func TestReq_Valid_WithConnectorId(t *testing.T) {
+func TestReq_Valid_WithConnectorID(t *testing.T) {
 	t.Parallel()
 
-	connectorId := testConnectorIdOne
+	connectorId := testConnectorIDOne
 
 	req, err := rst.Req(rst.ReqInput{
-		IdTag:       testValidIdTag,
-		ConnectorId: &connectorId,
+		IDTag:       testValidIDTag,
+		ConnectorID: &connectorId,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.IdTag.Value() != testValidIdTag {
-		t.Errorf(types.ErrorMismatch, testValidIdTag, req.IdTag.Value())
+	if req.IDTag.Value() != testValidIDTag {
+		t.Errorf(types.ErrorMismatch, testValidIDTag, req.IDTag.Value())
 	}
 
-	if req.ConnectorId == nil {
-		t.Errorf(types.ErrorWantNonNil, fieldNameConnectorId)
+	if req.ConnectorID == nil {
+		t.Errorf(types.ErrorWantNonNil, fieldNameConnectorID)
 	}
 
-	if req.ConnectorId.Value() != uint16(testConnectorIdOne) {
+	if req.ConnectorID.Value() != uint16(testConnectorIDOne) {
 		t.Errorf(
 			types.ErrorMismatchValue,
-			uint16(testConnectorIdOne),
-			req.ConnectorId.Value(),
+			uint16(testConnectorIDOne),
+			req.ConnectorID.Value(),
 		)
 	}
 }
 
-func TestReq_Valid_ConnectorIdZero(t *testing.T) {
+func TestReq_Valid_ConnectorIDZero(t *testing.T) {
 	t.Parallel()
 
-	connectorId := testConnectorIdZero
+	connectorId := testConnectorIDZero
 
 	req, err := rst.Req(rst.ReqInput{
-		IdTag:       testValidIdTag,
-		ConnectorId: &connectorId,
+		IDTag:       testValidIDTag,
+		ConnectorID: &connectorId,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.ConnectorId == nil {
-		t.Errorf(types.ErrorWantNonNil, fieldNameConnectorId)
+	if req.ConnectorID == nil {
+		t.Errorf(types.ErrorWantNonNil, fieldNameConnectorID)
 	}
 
-	if req.ConnectorId.Value() != uint16(testConnectorIdZero) {
+	if req.ConnectorID.Value() != uint16(testConnectorIDZero) {
 		t.Errorf(
 			types.ErrorMismatchValue,
-			uint16(testConnectorIdZero),
-			req.ConnectorId.Value(),
+			uint16(testConnectorIDZero),
+			req.ConnectorID.Value(),
 		)
 	}
 }
 
-func TestReq_Valid_ConnectorIdMax(t *testing.T) {
+func TestReq_Valid_ConnectorIDMax(t *testing.T) {
 	t.Parallel()
 
-	connectorId := testConnectorIdMax
+	connectorId := testConnectorIDMax
 
 	req, err := rst.Req(rst.ReqInput{
-		IdTag:       testValidIdTag,
-		ConnectorId: &connectorId,
+		IDTag:       testValidIDTag,
+		ConnectorID: &connectorId,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.ConnectorId == nil {
-		t.Errorf(types.ErrorWantNonNil, fieldNameConnectorId)
+	if req.ConnectorID == nil {
+		t.Errorf(types.ErrorWantNonNil, fieldNameConnectorID)
 	}
 
-	if req.ConnectorId.Value() != uint16(testConnectorIdMax) {
+	if req.ConnectorID.Value() != uint16(testConnectorIDMax) {
 		t.Errorf(
 			types.ErrorMismatchValue,
-			uint16(testConnectorIdMax),
-			req.ConnectorId.Value(),
+			uint16(testConnectorIDMax),
+			req.ConnectorID.Value(),
 		)
 	}
 }
 
-func TestReq_EmptyIdTag(t *testing.T) {
+func TestReq_EmptyIDTag(t *testing.T) {
 	t.Parallel()
 
-	_, err := rst.Req(rst.ReqInput{IdTag: "", ConnectorId: nil})
+	_, err := rst.Req(rst.ReqInput{IDTag: "", ConnectorID: nil})
 	if err == nil {
 		t.Errorf(types.ErrorWantNil, "empty idTag")
 	}
@@ -139,16 +139,16 @@ func TestReq_EmptyIdTag(t *testing.T) {
 	}
 }
 
-func TestReq_IdTagTooLong(t *testing.T) {
+func TestReq_IDTagTooLong(t *testing.T) {
 	t.Parallel()
 
 	// 23 chars, max is 20
 	_, err := rst.Req(rst.ReqInput{
-		IdTag:       "RFID-ABC123456789012345",
-		ConnectorId: nil,
+		IDTag:       "RFID-ABC123456789012345",
+		ConnectorID: nil,
 	})
 	if err == nil {
-		t.Errorf(types.ErrorWantNil, "IdTag too long")
+		t.Errorf(types.ErrorWantNil, "IDTag too long")
 	}
 
 	if !strings.Contains(err.Error(), errExceedsMaxLength) {
@@ -156,11 +156,11 @@ func TestReq_IdTagTooLong(t *testing.T) {
 	}
 }
 
-func TestReq_IdTagInvalidCharacters(t *testing.T) {
+func TestReq_IDTagInvalidCharacters(t *testing.T) {
 	t.Parallel()
 
 	// Contains null byte
-	_, err := rst.Req(rst.ReqInput{IdTag: "RFID\x00ABC", ConnectorId: nil})
+	_, err := rst.Req(rst.ReqInput{IDTag: "RFID\x00ABC", ConnectorID: nil})
 	if err == nil {
 		t.Errorf(types.ErrorWantNil, "non-printable chars in idTag")
 	}
@@ -170,61 +170,61 @@ func TestReq_IdTagInvalidCharacters(t *testing.T) {
 	}
 }
 
-func TestReq_ConnectorIdNegative(t *testing.T) {
+func TestReq_ConnectorIDNegative(t *testing.T) {
 	t.Parallel()
 
-	connectorId := testConnectorIdNeg
+	connectorId := testConnectorIDNeg
 
 	_, err := rst.Req(rst.ReqInput{
-		IdTag:       testValidIdTag,
-		ConnectorId: &connectorId,
+		IDTag:       testValidIDTag,
+		ConnectorID: &connectorId,
 	})
 	if err == nil {
 		t.Errorf(types.ErrorWantNil, "negative connectorId")
 	}
 
-	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(types.ErrorWantContains, err, errConnectorId)
+	if !strings.Contains(err.Error(), errConnectorID) {
+		t.Errorf(types.ErrorWantContains, err, errConnectorID)
 	}
 }
 
-func TestReq_ConnectorIdExceedsMax(t *testing.T) {
+func TestReq_ConnectorIDExceedsMax(t *testing.T) {
 	t.Parallel()
 
-	connectorId := testConnectorIdOver
+	connectorId := testConnectorIDOver
 
 	_, err := rst.Req(rst.ReqInput{
-		IdTag:       testValidIdTag,
-		ConnectorId: &connectorId,
+		IDTag:       testValidIDTag,
+		ConnectorID: &connectorId,
 	})
 	if err == nil {
 		t.Errorf(types.ErrorWantNil, "connectorId exceeds max")
 	}
 
-	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(types.ErrorWantContains, err, errConnectorId)
+	if !strings.Contains(err.Error(), errConnectorID) {
+		t.Errorf(types.ErrorWantContains, err, errConnectorID)
 	}
 }
 
-func TestReq_MultipleErrors_EmptyIdTagAndInvalidConnectorId(t *testing.T) {
+func TestReq_MultipleErrors_EmptyIDTagAndInvalidConnectorID(t *testing.T) {
 	t.Parallel()
 
-	connectorId := testConnectorIdNeg
+	connectorId := testConnectorIDNeg
 
 	_, err := rst.Req(rst.ReqInput{
-		IdTag:       "",
-		ConnectorId: &connectorId,
+		IDTag:       "",
+		ConnectorID: &connectorId,
 	})
 	if err == nil {
 		t.Errorf(types.ErrorWantNil, "empty idTag and negative connectorId")
 	}
 
 	// Should contain both errors
-	if !strings.Contains(err.Error(), errIdTag) {
-		t.Errorf(types.ErrorWantContains, err, errIdTag)
+	if !strings.Contains(err.Error(), errIDTag) {
+		t.Errorf(types.ErrorWantContains, err, errIDTag)
 	}
 
-	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(types.ErrorWantContains, err, errConnectorId)
+	if !strings.Contains(err.Error(), errConnectorID) {
+		t.Errorf(types.ErrorWantContains, err, errConnectorID)
 	}
 }

@@ -3,7 +3,7 @@ package statusnotification_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/statusnotification"
+	"github.com/evcoreco/ocpp16messages/statusnotification"
 )
 
 // ExampleConf demonstrates creating a StatusNotification.conf message.

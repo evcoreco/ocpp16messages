@@ -20,7 +20,7 @@
 // If the recipient does not support the given vendorId, it SHALL return
 // status UnknownVendor and SHALL NOT include the data field.
 // If a messageId is provided and does not match, the recipient SHALL return
-// status UnknownMessageId.
+// status UnknownMessageID.
 //
 // In all other cases, the meaning of status Accepted or Rejected and the usage
 // of the data field are defined by vendor-specific agreement.

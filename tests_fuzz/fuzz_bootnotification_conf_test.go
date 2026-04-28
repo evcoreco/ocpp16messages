@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	bn "github.com/aasanchez/ocpp16messages/bootnotification"
-	types "github.com/aasanchez/ocpp16types"
+	bn "github.com/evcoreco/ocpp16messages/bootnotification"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzBootNotificationConf(f *testing.F) {

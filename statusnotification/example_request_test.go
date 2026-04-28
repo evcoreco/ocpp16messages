@@ -3,11 +3,11 @@ package statusnotification_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/statusnotification"
+	"github.com/evcoreco/ocpp16messages/statusnotification"
 )
 
 const (
-	labelConnectorId = "ConnectorId:"
+	labelConnectorID = "ConnectorID:"
 	labelStatus      = "Status:"
 	labelErrorCode   = "ErrorCode:"
 )
@@ -16,12 +16,12 @@ const (
 // with required fields only.
 func ExampleReq() {
 	req, err := statusnotification.Req(statusnotification.ReqInput{
-		ConnectorId:     1,
+		ConnectorID:     1,
 		ErrorCode:       "NoError",
 		Status:          "Available",
 		Info:            nil,
 		Timestamp:       nil,
-		VendorId:        nil,
+		VendorID:        nil,
 		VendorErrorCode: nil,
 	})
 	if err != nil {
@@ -30,11 +30,11 @@ func ExampleReq() {
 		return
 	}
 
-	fmt.Println(labelConnectorId, req.ConnectorId.Value())
+	fmt.Println(labelConnectorID, req.ConnectorID.Value())
 	fmt.Println(labelErrorCode, req.ErrorCode.String())
 	fmt.Println(labelStatus, req.Status.String())
 	// Output:
-	// ConnectorId: 1
+	// ConnectorID: 1
 	// ErrorCode: NoError
 	// Status: Available
 }
@@ -42,12 +42,12 @@ func ExampleReq() {
 // ExampleReq_charging demonstrates a Charging status notification.
 func ExampleReq_charging() {
 	req, err := statusnotification.Req(statusnotification.ReqInput{
-		ConnectorId:     2,
+		ConnectorID:     2,
 		ErrorCode:       "NoError",
 		Status:          "Charging",
 		Info:            nil,
 		Timestamp:       nil,
-		VendorId:        nil,
+		VendorID:        nil,
 		VendorErrorCode: nil,
 	})
 	if err != nil {
@@ -56,10 +56,10 @@ func ExampleReq_charging() {
 		return
 	}
 
-	fmt.Println(labelConnectorId, req.ConnectorId.Value())
+	fmt.Println(labelConnectorID, req.ConnectorID.Value())
 	fmt.Println(labelStatus, req.Status.String())
 	// Output:
-	// ConnectorId: 2
+	// ConnectorID: 2
 	// Status: Charging
 }
 
@@ -68,12 +68,12 @@ func ExampleReq_faulted() {
 	info := "Ground fault detected on connector"
 
 	req, err := statusnotification.Req(statusnotification.ReqInput{
-		ConnectorId:     1,
+		ConnectorID:     1,
 		ErrorCode:       "GroundFailure",
 		Status:          "Faulted",
 		Info:            &info,
 		Timestamp:       nil,
-		VendorId:        nil,
+		VendorID:        nil,
 		VendorErrorCode: nil,
 	})
 	if err != nil {
@@ -99,12 +99,12 @@ func ExampleReq_withAllFields() {
 	vendorErrorCode := "V001"
 
 	req, err := statusnotification.Req(statusnotification.ReqInput{
-		ConnectorId:     1,
+		ConnectorID:     1,
 		ErrorCode:       "NoError",
 		Status:          "Charging",
 		Info:            &info,
 		Timestamp:       &timestamp,
-		VendorId:        &vendorId,
+		VendorID:        &vendorId,
 		VendorErrorCode: &vendorErrorCode,
 	})
 	if err != nil {
@@ -113,26 +113,26 @@ func ExampleReq_withAllFields() {
 		return
 	}
 
-	fmt.Println(labelConnectorId, req.ConnectorId.Value())
+	fmt.Println(labelConnectorID, req.ConnectorID.Value())
 	fmt.Println(labelStatus, req.Status.String())
 	fmt.Println("HasTimestamp:", req.Timestamp != nil)
-	fmt.Println("HasVendorId:", req.VendorId != nil)
+	fmt.Println("HasVendorID:", req.VendorID != nil)
 	// Output:
-	// ConnectorId: 1
+	// ConnectorID: 1
 	// Status: Charging
 	// HasTimestamp: true
-	// HasVendorId: true
+	// HasVendorID: true
 }
 
 // ExampleReq_invalidStatus demonstrates the error for an invalid status.
 func ExampleReq_invalidStatus() {
 	_, err := statusnotification.Req(statusnotification.ReqInput{
-		ConnectorId:     1,
+		ConnectorID:     1,
 		ErrorCode:       "NoError",
 		Status:          "InvalidStatus",
 		Info:            nil,
 		Timestamp:       nil,
-		VendorId:        nil,
+		VendorID:        nil,
 		VendorErrorCode: nil,
 	})
 	if err != nil {
@@ -145,12 +145,12 @@ func ExampleReq_invalidStatus() {
 // ExampleReq_invalidErrorCode demonstrates the error for an invalid error code.
 func ExampleReq_invalidErrorCode() {
 	_, err := statusnotification.Req(statusnotification.ReqInput{
-		ConnectorId:     1,
+		ConnectorID:     1,
 		ErrorCode:       "InvalidCode",
 		Status:          "Available",
 		Info:            nil,
 		Timestamp:       nil,
-		VendorId:        nil,
+		VendorID:        nil,
 		VendorErrorCode: nil,
 	})
 	if err != nil {

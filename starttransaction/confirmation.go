@@ -4,44 +4,44 @@ import (
 	"errors"
 	"fmt"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 // ConfInput represents the raw input data for creating a StartTransaction.conf
 // message. The constructor Conf validates all fields automatically.
 type ConfInput struct {
 	// Required: The transaction identifier assigned by the Central System.
-	TransactionId int
+	TransactionID int
 	// Required: AuthorizationStatus value.
 	Status string
 	// Optional: RFC3339 formatted expiry date for the authorization.
 	ExpiryDate *string
 	// Optional: Parent ID tag (max 20 chars).
-	ParentIdTag *string
+	ParentIDTag *string
 }
 
 // ConfMessage represents an OCPP 1.6 StartTransaction.conf message.
 type ConfMessage struct {
-	TransactionId types.Integer
-	IdTagInfo     types.IdTagInfo
+	TransactionID types.Integer
+	IDTagInfo     types.IDTagInfo
 }
 
 // confValidation holds validated fields during Conf construction.
 type confValidation struct {
 	transactionId types.Integer
-	idTagInfo     types.IdTagInfo
+	idTagInfo     types.IDTagInfo
 	expiryDate    types.DateTime
-	parentIdToken types.IdToken
+	parentIDToken types.IDToken
 }
 
 // Conf creates a StartTransaction.conf message from the given input.
 // It validates all fields and accumulates all errors, returning them together.
 // This allows callers to see all validation issues at once rather than one at
 // a time. Returns an error if:
-//   - TransactionId is negative or exceeds uint16 max value (65535)
+//   - TransactionID is negative or exceeds uint16 max value (65535)
 //   - Status is not a valid AuthorizationStatus value
 //   - ExpiryDate (if provided) is not a valid RFC3339 date
-//   - ParentIdTag (if provided) exceeds 20 characters or contains invalid chars
+//   - ParentIDTag (if provided) exceeds 20 characters or contains invalid chars
 func Conf(input ConfInput) (ConfMessage, error) {
 	validated, errs := validateConfInput(input)
 
@@ -60,8 +60,8 @@ func validateConfInput(input ConfInput) (confValidation, []error) {
 	var validated confValidation
 
 	// Validate transactionId (required)
-	validated.transactionId, errs = validateTransactionId(
-		input.TransactionId,
+	validated.transactionId, errs = validateTransactionID(
+		input.TransactionID,
 		errs,
 	)
 
@@ -73,10 +73,10 @@ func validateConfInput(input ConfInput) (confValidation, []error) {
 		validated.expiryDate, errs = validateExpiryDate(*input.ExpiryDate, errs)
 	}
 
-	// Validate parentIdTag (optional)
-	if input.ParentIdTag != nil {
-		validated.parentIdToken, errs = validateParentIdTag(
-			*input.ParentIdTag,
+	// Validate parentIDTag (optional)
+	if input.ParentIDTag != nil {
+		validated.parentIDToken, errs = validateParentIDTag(
+			*input.ParentIDTag,
 			errs,
 		)
 	}
@@ -84,8 +84,8 @@ func validateConfInput(input ConfInput) (confValidation, []error) {
 	return validated, errs
 }
 
-// validateTransactionId validates the transactionId field.
-func validateTransactionId(
+// validateTransactionID validates the transactionId field.
+func validateTransactionID(
 	transactionId int,
 	errs []error,
 ) (types.Integer, []error) {
@@ -99,11 +99,11 @@ func validateTransactionId(
 	return val, errs
 }
 
-// validateStatus validates the status field and returns the IdTagInfo.
-func validateStatus(status string, errs []error) (types.IdTagInfo, []error) {
-	info, err := types.NewIdTagInfo(types.AuthorizationStatus(status))
+// validateStatus validates the status field and returns the IDTagInfo.
+func validateStatus(status string, errs []error) (types.IDTagInfo, []error) {
+	info, err := types.NewIDTagInfo(types.AuthorizationStatus(status))
 	if err != nil {
-		return types.IdTagInfo{}, append(errs, fmt.Errorf("status: %w", err))
+		return types.IDTagInfo{}, append(errs, fmt.Errorf("status: %w", err))
 	}
 
 	return info, errs
@@ -119,14 +119,14 @@ func validateExpiryDate(date string, errs []error) (types.DateTime, []error) {
 	return expiryDate, errs
 }
 
-// validateParentIdTag validates the parent ID tag and returns the token.
-func validateParentIdTag(tag string, errs []error) (types.IdToken, []error) {
+// validateParentIDTag validates the parent ID tag and returns the token.
+func validateParentIDTag(tag string, errs []error) (types.IDToken, []error) {
 	ciStr, err := types.NewCiString20Type(tag)
 	if err != nil {
-		return types.IdToken{}, append(errs, fmt.Errorf("parentIdTag: %w", err))
+		return types.IDToken{}, append(errs, fmt.Errorf("parentIDTag: %w", err))
 	}
 
-	return types.NewIdToken(ciStr), errs
+	return types.NewIDToken(ciStr), errs
 }
 
 // buildConfMessage constructs the final ConfMessage with validated fields.
@@ -137,12 +137,12 @@ func buildConfMessage(input ConfInput, validated confValidation) ConfMessage {
 		idTagInfo = idTagInfo.WithExpiryDate(validated.expiryDate)
 	}
 
-	if input.ParentIdTag != nil {
-		idTagInfo = idTagInfo.WithParentIdTag(validated.parentIdToken)
+	if input.ParentIDTag != nil {
+		idTagInfo = idTagInfo.WithParentIDTag(validated.parentIDToken)
 	}
 
 	return ConfMessage{
-		TransactionId: validated.transactionId,
-		IdTagInfo:     idTagInfo,
+		TransactionID: validated.transactionId,
+		IDTagInfo:     idTagInfo,
 	}
 }

@@ -3,15 +3,15 @@ package testsjson_test
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/stoptransaction"
+	"github.com/evcoreco/ocpp16messages/stoptransaction"
 )
 
 func TestStopTransactionReq_JSONRoundTrip(t *testing.T) {
 	t.Parallel()
 
 	req, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId:   12345,
-		IdTag:           nil,
+		TransactionID:   12345,
+		IDTag:           nil,
 		MeterStop:       5000,
 		Timestamp:       "2025-01-15T10:30:00Z",
 		Reason:          nil,
@@ -33,7 +33,7 @@ func TestStopTransactionConf_JSONRoundTrip(t *testing.T) {
 	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
-		ParentIdTag: nil,
+		ParentIDTag: nil,
 	})
 	if err != nil {
 		t.Fatalf("stoptransaction.Conf: %v", err)

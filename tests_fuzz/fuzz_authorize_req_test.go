@@ -7,8 +7,8 @@ import (
 	"testing"
 	"unicode/utf8"
 
-	"github.com/aasanchez/ocpp16messages/authorize"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/authorize"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzAuthorizeReq(f *testing.F) {
@@ -28,7 +28,7 @@ func FuzzAuthorizeReq(f *testing.F) {
 		}
 
 		req, err := authorize.Req(authorize.ReqInput{
-			IdTag: idTag,
+			IDTag: idTag,
 		})
 		if err != nil {
 			if !errors.Is(err, types.ErrEmptyValue) && !errors.Is(err, types.ErrInvalidValue) {
@@ -42,10 +42,10 @@ func FuzzAuthorizeReq(f *testing.F) {
 		}
 
 		if idTag == "" {
-			t.Fatal("Req succeeded with empty IdTag")
+			t.Fatal("Req succeeded with empty IDTag")
 		}
 		if len(idTag) > types.CiString20Max {
-			t.Fatalf("Req succeeded with IdTag len=%d", len(idTag))
+			t.Fatalf("Req succeeded with IDTag len=%d", len(idTag))
 		}
 
 		for _, r := range idTag {
@@ -54,8 +54,8 @@ func FuzzAuthorizeReq(f *testing.F) {
 			}
 		}
 
-		if req.IdTag.String() != idTag {
-			t.Fatalf("IdTag = %q, want %q", req.IdTag.String(), idTag)
+		if req.IDTag.String() != idTag {
+			t.Fatalf("IDTag = %q, want %q", req.IDTag.String(), idTag)
 		}
 	})
 }

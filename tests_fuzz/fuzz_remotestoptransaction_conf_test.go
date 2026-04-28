@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/remotestoptransaction"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/remotestoptransaction"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzRemoteStopTransactionConf(f *testing.F) {

@@ -5,7 +5,7 @@ package benchmark
 import (
 	"testing"
 
-	stt "github.com/aasanchez/ocpp16messages/starttransaction"
+	stt "github.com/evcoreco/ocpp16messages/starttransaction"
 )
 
 var (
@@ -18,11 +18,11 @@ func BenchmarkStartTransactionReq_Custom(b *testing.B) {
 
 	reservationId := 42
 	input := stt.ReqInput{
-		ConnectorId:   1,
-		IdTag:         "TAG-123",
+		ConnectorID:   1,
+		IDTag:         "TAG-123",
 		MeterStart:    100,
 		Timestamp:     benchmarkTimestamp,
-		ReservationId: &reservationId,
+		ReservationID: &reservationId,
 	}
 
 	for i := 0; i < b.N; i++ {
@@ -40,11 +40,11 @@ func BenchmarkStartTransactionReq_PrimitiveDirect(b *testing.B) {
 
 	reservationId := 42
 	input := primitiveStartTransactionReq{
-		ConnectorId:   1,
-		IdTag:         "TAG-123",
+		ConnectorID:   1,
+		IDTag:         "TAG-123",
 		MeterStart:    100,
 		Timestamp:     benchmarkTimestamp,
-		ReservationId: &reservationId,
+		ReservationID: &reservationId,
 	}
 
 	for i := 0; i < b.N; i++ {
@@ -57,11 +57,11 @@ func BenchmarkStartTransactionReq_PrimitiveValidated(b *testing.B) {
 
 	reservationId := 42
 	input := primitiveStartTransactionReq{
-		ConnectorId:   1,
-		IdTag:         "TAG-123",
+		ConnectorID:   1,
+		IDTag:         "TAG-123",
 		MeterStart:    100,
 		Timestamp:     benchmarkTimestamp,
-		ReservationId: &reservationId,
+		ReservationID: &reservationId,
 	}
 
 	for i := 0; i < b.N; i++ {

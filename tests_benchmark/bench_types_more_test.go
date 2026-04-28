@@ -5,7 +5,7 @@ package benchmark
 import (
 	"testing"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func BenchmarkNewChargingSchedulePeriod_WithNumberPhases(b *testing.B) {
@@ -58,18 +58,18 @@ func BenchmarkGetConfigurationNewKeyValue_ValueSet(b *testing.B) {
 	}
 }
 
-func BenchmarkSendLocalListNewAuthorizationData_WithIdTagInfo(b *testing.B) {
+func BenchmarkSendLocalListNewAuthorizationData_WithIDTagInfo(b *testing.B) {
 	b.ReportAllocs()
 
 	expiry := sampleTimestamp
-	parentIdTag := "PARENT-1"
+	parentIDTag := "PARENT-1"
 
 	input := types.AuthorizationDataInput{
-		IdTag: "TAG-1",
-		IdTagInfo: &types.IdTagInfoInput{
+		IDTag: "TAG-1",
+		IDTagInfo: &types.IDTagInfoInput{
 			Status:      types.AuthorizationStatusAccepted.String(),
 			ExpiryDate:  &expiry,
-			ParentIdTag: &parentIdTag,
+			ParentIDTag: &parentIDTag,
 		},
 	}
 
@@ -97,8 +97,8 @@ func BenchmarkSetChargingProfileNewChargingProfile(b *testing.B) {
 	}
 
 	input := types.ChargingProfileInput{
-		ChargingProfileId:      1,
-		TransactionId:          nil,
+		ChargingProfileID:      1,
+		TransactionID:          nil,
 		StackLevel:             0,
 		ChargingProfilePurpose: types.TxProfile.String(),
 		ChargingProfileKind:    types.ChargingProfileKindAbsolute.String(),

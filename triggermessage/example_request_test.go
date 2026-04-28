@@ -3,12 +3,12 @@ package triggermessage_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/triggermessage"
+	"github.com/evcoreco/ocpp16messages/triggermessage"
 )
 
 const (
 	labelRequestedMessage = "RequestedMessage:"
-	labelConnectorId      = "ConnectorId:"
+	labelConnectorID      = "ConnectorID:"
 	connectorIdZero       = 0
 	connectorIdOne        = 1
 )
@@ -18,7 +18,7 @@ const (
 func ExampleReq() {
 	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "Heartbeat",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -31,14 +31,14 @@ func ExampleReq() {
 	// RequestedMessage: Heartbeat
 }
 
-// ExampleReq_withConnectorId demonstrates creating a TriggerMessage.req
+// ExampleReq_withConnectorID demonstrates creating a TriggerMessage.req
 // message with an optional connectorId.
-func ExampleReq_withConnectorId() {
+func ExampleReq_withConnectorID() {
 	connectorId := connectorIdOne
 
 	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "StatusNotification",
-		ConnectorId:      &connectorId,
+		ConnectorID:      &connectorId,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -47,10 +47,10 @@ func ExampleReq_withConnectorId() {
 	}
 
 	fmt.Println(labelRequestedMessage, req.RequestedMessage.String())
-	fmt.Println(labelConnectorId, req.ConnectorId.Value())
+	fmt.Println(labelConnectorID, req.ConnectorID.Value())
 	// Output:
 	// RequestedMessage: StatusNotification
-	// ConnectorId: 1
+	// ConnectorID: 1
 }
 
 // ExampleReq_metervalues demonstrates triggering a MeterValues message.
@@ -59,7 +59,7 @@ func ExampleReq_metervalues() {
 
 	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "MeterValues",
-		ConnectorId:      &connectorId,
+		ConnectorID:      &connectorId,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -68,10 +68,10 @@ func ExampleReq_metervalues() {
 	}
 
 	fmt.Println(labelRequestedMessage, req.RequestedMessage.String())
-	fmt.Println(labelConnectorId, req.ConnectorId.Value())
+	fmt.Println(labelConnectorID, req.ConnectorID.Value())
 	// Output:
 	// RequestedMessage: MeterValues
-	// ConnectorId: 0
+	// ConnectorID: 0
 }
 
 // ExampleReq_invalidMessage demonstrates the error returned when
@@ -79,7 +79,7 @@ func ExampleReq_metervalues() {
 func ExampleReq_invalidMessage() {
 	_, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "Unknown",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 	})
 	if err != nil {
 		fmt.Println("Error: invalid requestedMessage")
@@ -93,7 +93,7 @@ func ExampleReq_invalidMessage() {
 func ExampleReq_emptyMessage() {
 	_, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "",
-		ConnectorId:      nil,
+		ConnectorID:      nil,
 	})
 	if err != nil {
 		fmt.Println("Error: invalid requestedMessage")

@@ -3,7 +3,7 @@ package metervalues_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/metervalues"
+	"github.com/evcoreco/ocpp16messages/metervalues"
 )
 
 // ExampleConf demonstrates creating a MeterValues.conf message.

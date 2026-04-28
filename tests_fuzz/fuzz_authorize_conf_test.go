@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/aasanchez/ocpp16messages/authorize"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/authorize"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzAuthorizeConf(f *testing.F) {
@@ -24,12 +24,12 @@ func FuzzAuthorizeConf(f *testing.F) {
 		status string,
 		hasExpiryDate bool,
 		expiryDate string,
-		hasParentIdTag bool,
-		parentIdTag string,
+		hasParentIDTag bool,
+		parentIDTag string,
 	) {
 		if len(status) > maxFuzzStringLen ||
 			len(expiryDate) > maxFuzzStringLen ||
-			len(parentIdTag) > maxFuzzStringLen {
+			len(parentIDTag) > maxFuzzStringLen {
 			t.Skip()
 		}
 
@@ -38,15 +38,15 @@ func FuzzAuthorizeConf(f *testing.F) {
 			expiryDatePtr = &expiryDate
 		}
 
-		var parentIdTagPtr *string
-		if hasParentIdTag {
-			parentIdTagPtr = &parentIdTag
+		var parentIDTagPtr *string
+		if hasParentIDTag {
+			parentIDTagPtr = &parentIDTag
 		}
 
 		conf, err := authorize.Conf(authorize.ConfInput{
 			Status:      status,
 			ExpiryDate:  expiryDatePtr,
-			ParentIdTag: parentIdTagPtr,
+			ParentIDTag: parentIDTagPtr,
 		})
 		if err != nil {
 			if !errors.Is(err, types.ErrEmptyValue) && !errors.Is(err, types.ErrInvalidValue) {
@@ -59,43 +59,43 @@ func FuzzAuthorizeConf(f *testing.F) {
 			return
 		}
 
-		if !conf.IdTagInfo.Status().IsValid() {
-			t.Fatalf("Status = %q, want valid", conf.IdTagInfo.Status().String())
+		if !conf.IDTagInfo.Status().IsValid() {
+			t.Fatalf("Status = %q, want valid", conf.IDTagInfo.Status().String())
 		}
-		if conf.IdTagInfo.Status().String() != status {
-			t.Fatalf("Status = %q, want %q", conf.IdTagInfo.Status().String(), status)
+		if conf.IDTagInfo.Status().String() != status {
+			t.Fatalf("Status = %q, want %q", conf.IDTagInfo.Status().String(), status)
 		}
 
 		if hasExpiryDate {
-			if conf.IdTagInfo.ExpiryDate() == nil {
+			if conf.IDTagInfo.ExpiryDate() == nil {
 				t.Fatal("ExpiryDate = nil, want non-nil")
 			}
-			if conf.IdTagInfo.ExpiryDate().Value().Location() != time.UTC {
+			if conf.IDTagInfo.ExpiryDate().Value().Location() != time.UTC {
 				t.Fatalf(
 					"ExpiryDate location = %v, want UTC",
-					conf.IdTagInfo.ExpiryDate().Value().Location(),
+					conf.IDTagInfo.ExpiryDate().Value().Location(),
 				)
 			}
-		} else if conf.IdTagInfo.ExpiryDate() != nil {
+		} else if conf.IDTagInfo.ExpiryDate() != nil {
 			t.Fatal("ExpiryDate != nil, want nil")
 		}
 
-		if hasParentIdTag {
-			if conf.IdTagInfo.ParentIdTag() == nil {
-				t.Fatal("ParentIdTag = nil, want non-nil")
+		if hasParentIDTag {
+			if conf.IDTagInfo.ParentIDTag() == nil {
+				t.Fatal("ParentIDTag = nil, want non-nil")
 			}
-			if parentIdTag == "" {
-				t.Fatal("Conf succeeded with empty ParentIdTag")
+			if parentIDTag == "" {
+				t.Fatal("Conf succeeded with empty ParentIDTag")
 			}
-			if conf.IdTagInfo.ParentIdTag().String() != parentIdTag {
+			if conf.IDTagInfo.ParentIDTag().String() != parentIDTag {
 				t.Fatalf(
-					"ParentIdTag = %q, want %q",
-					conf.IdTagInfo.ParentIdTag().String(),
-					parentIdTag,
+					"ParentIDTag = %q, want %q",
+					conf.IDTagInfo.ParentIDTag().String(),
+					parentIDTag,
 				)
 			}
-		} else if conf.IdTagInfo.ParentIdTag() != nil {
-			t.Fatal("ParentIdTag != nil, want nil")
+		} else if conf.IDTagInfo.ParentIDTag() != nil {
+			t.Fatal("ParentIDTag != nil, want nil")
 		}
 	})
 }

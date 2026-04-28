@@ -3,7 +3,7 @@ package testsjson_test
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/getlocallistversion"
+	"github.com/evcoreco/ocpp16messages/getlocallistversion"
 )
 
 func TestGetLocalListVersionReq_JSONRoundTrip(t *testing.T) {

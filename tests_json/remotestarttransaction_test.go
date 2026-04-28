@@ -3,15 +3,15 @@ package testsjson_test
 import (
 	"testing"
 
-	rst "github.com/aasanchez/ocpp16messages/remotestarttransaction"
+	rst "github.com/evcoreco/ocpp16messages/remotestarttransaction"
 )
 
 func TestRemoteStartTransactionReq_JSONRoundTrip(t *testing.T) {
 	t.Parallel()
 
 	req, err := rst.Req(rst.ReqInput{
-		IdTag:       "RFID-TAG-12345",
-		ConnectorId: nil,
+		IDTag:       "RFID-TAG-12345",
+		ConnectorID: nil,
 	})
 	if err != nil {
 		t.Fatalf("remotestarttransaction.Req: %v", err)

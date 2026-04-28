@@ -3,7 +3,7 @@ package getdiagnostics_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/getdiagnostics"
+	"github.com/evcoreco/ocpp16messages/getdiagnostics"
 )
 
 const (

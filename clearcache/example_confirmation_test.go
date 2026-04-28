@@ -3,7 +3,7 @@ package clearcache_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/clearcache"
+	"github.com/evcoreco/ocpp16messages/clearcache"
 )
 
 // ExampleConf demonstrates creating a valid ClearCache.conf message

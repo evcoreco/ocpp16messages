@@ -3,8 +3,8 @@ package getlocallistversion_test
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/getlocallistversion"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/getlocallistversion"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (

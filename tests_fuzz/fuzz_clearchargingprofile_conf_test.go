@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/clearchargingprofile"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/clearchargingprofile"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzClearChargingProfileConf(f *testing.F) {

@@ -6,26 +6,26 @@ import (
 	"fmt"
 	"testing"
 
-	ar "github.com/aasanchez/ocpp16messages/authorize"
-	cc "github.com/aasanchez/ocpp16messages/cancelreservation"
-	cac "github.com/aasanchez/ocpp16messages/changeavailability"
-	cconf "github.com/aasanchez/ocpp16messages/changeconfiguration"
-	clc "github.com/aasanchez/ocpp16messages/clearcache"
-	cpt "github.com/aasanchez/ocpp16messages/clearchargingprofile"
-	dt "github.com/aasanchez/ocpp16messages/datatransfer"
-	dsn "github.com/aasanchez/ocpp16messages/diagnosticsstatusnotification"
-	fn "github.com/aasanchez/ocpp16messages/firmwarestatusnotification"
-	gllv "github.com/aasanchez/ocpp16messages/getlocallistversion"
-	hb "github.com/aasanchez/ocpp16messages/heartbeat"
-	rstt "github.com/aasanchez/ocpp16messages/remotestarttransaction"
-	rstp "github.com/aasanchez/ocpp16messages/remotestoptransaction"
-	rn "github.com/aasanchez/ocpp16messages/reservenow"
-	rst "github.com/aasanchez/ocpp16messages/reset"
-	sn "github.com/aasanchez/ocpp16messages/statusnotification"
-	tm "github.com/aasanchez/ocpp16messages/triggermessage"
-	uc "github.com/aasanchez/ocpp16messages/unlockconnector"
-	uf "github.com/aasanchez/ocpp16messages/updatefirmware"
-	types "github.com/aasanchez/ocpp16types"
+	ar "github.com/evcoreco/ocpp16messages/authorize"
+	cc "github.com/evcoreco/ocpp16messages/cancelreservation"
+	cac "github.com/evcoreco/ocpp16messages/changeavailability"
+	cconf "github.com/evcoreco/ocpp16messages/changeconfiguration"
+	clc "github.com/evcoreco/ocpp16messages/clearcache"
+	cpt "github.com/evcoreco/ocpp16messages/clearchargingprofile"
+	dt "github.com/evcoreco/ocpp16messages/datatransfer"
+	dsn "github.com/evcoreco/ocpp16messages/diagnosticsstatusnotification"
+	fn "github.com/evcoreco/ocpp16messages/firmwarestatusnotification"
+	gllv "github.com/evcoreco/ocpp16messages/getlocallistversion"
+	hb "github.com/evcoreco/ocpp16messages/heartbeat"
+	rstt "github.com/evcoreco/ocpp16messages/remotestarttransaction"
+	rstp "github.com/evcoreco/ocpp16messages/remotestoptransaction"
+	rn "github.com/evcoreco/ocpp16messages/reservenow"
+	rst "github.com/evcoreco/ocpp16messages/reset"
+	sn "github.com/evcoreco/ocpp16messages/statusnotification"
+	tm "github.com/evcoreco/ocpp16messages/triggermessage"
+	uc "github.com/evcoreco/ocpp16messages/unlockconnector"
+	uf "github.com/evcoreco/ocpp16messages/updatefirmware"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func TestRace_ClearCacheReq(t *testing.T) {
@@ -83,7 +83,7 @@ func TestRace_HeartbeatConf(t *testing.T) {
 func TestRace_CancelReservationReq(t *testing.T) {
 	t.Parallel()
 
-	input := cc.ReqInput{ReservationId: 1}
+	input := cc.ReqInput{ReservationID: 1}
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := cc.Req(input)
@@ -111,7 +111,7 @@ func TestRace_CancelReservationConf(t *testing.T) {
 func TestRace_RemoteStopTransactionReq(t *testing.T) {
 	t.Parallel()
 
-	input := rstp.ReqInput{TransactionId: 1}
+	input := rstp.ReqInput{TransactionID: 1}
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := rstp.Req(input)
@@ -217,7 +217,7 @@ func TestRace_FirmwareStatusNotificationConf(t *testing.T) {
 func TestRace_UnlockConnectorReq(t *testing.T) {
 	t.Parallel()
 
-	input := uc.ReqInput{ConnectorId: 1}
+	input := uc.ReqInput{ConnectorID: 1}
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := uc.Req(input)
@@ -354,7 +354,7 @@ func TestRace_ReserveNowConf(t *testing.T) {
 func TestRace_AuthorizeReq(t *testing.T) {
 	t.Parallel()
 
-	input := ar.ReqInput{IdTag: "TAG-1"}
+	input := ar.ReqInput{IDTag: "TAG-1"}
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := ar.Req(input)
@@ -373,7 +373,7 @@ func TestRace_AuthorizeConf(t *testing.T) {
 	input := ar.ConfInput{
 		Status:      "Accepted",
 		ExpiryDate:  &expiry,
-		ParentIdTag: &parent,
+		ParentIDTag: &parent,
 	}
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
@@ -388,7 +388,7 @@ func TestRace_AuthorizeConf(t *testing.T) {
 func TestRace_ChangeAvailabilityReq(t *testing.T) {
 	t.Parallel()
 
-	input := cac.ReqInput{ConnectorId: 0, Type: "Operative"}
+	input := cac.ReqInput{ConnectorID: 0, Type: "Operative"}
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := cac.Req(input)

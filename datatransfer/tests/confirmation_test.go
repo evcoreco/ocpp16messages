@@ -4,14 +4,14 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/datatransfer"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/datatransfer"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
 	statusAccepted         = "Accepted"
 	statusRejected         = "Rejected"
-	statusUnknownMessageId = "UnknownMessageId"
+	statusUnknownMessageID = "UnknownMessageId"
 	statusUnknownVendor    = "UnknownVendor"
 	confTestData           = `{"response": "data"}`
 )
@@ -52,21 +52,21 @@ func TestConf_ValidRejected(t *testing.T) {
 	}
 }
 
-func TestConf_ValidUnknownMessageId(t *testing.T) {
+func TestConf_ValidUnknownMessageID(t *testing.T) {
 	t.Parallel()
 
 	conf, err := datatransfer.Conf(datatransfer.ConfInput{
-		Status: statusUnknownMessageId,
+		Status: statusUnknownMessageID,
 		Data:   nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status.String() != statusUnknownMessageId {
+	if conf.Status.String() != statusUnknownMessageID {
 		t.Errorf(
 			types.ErrorMismatch,
-			statusUnknownMessageId,
+			statusUnknownMessageID,
 			conf.Status.String(),
 		)
 	}

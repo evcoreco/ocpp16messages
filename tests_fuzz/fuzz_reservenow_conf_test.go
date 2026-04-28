@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	rn "github.com/aasanchez/ocpp16messages/reservenow"
-	types "github.com/aasanchez/ocpp16types"
+	rn "github.com/evcoreco/ocpp16messages/reservenow"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzReserveNowConf(f *testing.F) {

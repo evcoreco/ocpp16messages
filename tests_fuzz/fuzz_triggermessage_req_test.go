@@ -7,8 +7,8 @@ import (
 	"math"
 	"testing"
 
-	tm "github.com/aasanchez/ocpp16messages/triggermessage"
-	types "github.com/aasanchez/ocpp16types"
+	tm "github.com/evcoreco/ocpp16messages/triggermessage"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzTriggerMessageReq(f *testing.F) {
@@ -20,7 +20,7 @@ func FuzzTriggerMessageReq(f *testing.F) {
 	f.Fuzz(func(
 		t *testing.T,
 		requestedMessage string,
-		hasConnectorId bool,
+		hasConnectorID bool,
 		connectorId int,
 	) {
 		if len(requestedMessage) > maxFuzzStringLen {
@@ -28,13 +28,13 @@ func FuzzTriggerMessageReq(f *testing.F) {
 		}
 
 		var connectorIdPtr *int
-		if hasConnectorId {
+		if hasConnectorID {
 			connectorIdPtr = &connectorId
 		}
 
 		req, err := tm.Req(tm.ReqInput{
 			RequestedMessage: requestedMessage,
-			ConnectorId:      connectorIdPtr,
+			ConnectorID:      connectorIdPtr,
 		})
 		if err != nil {
 			if !errors.Is(err, types.ErrInvalidValue) {
@@ -48,18 +48,18 @@ func FuzzTriggerMessageReq(f *testing.F) {
 			t.Fatalf("RequestedMessage = %q, want valid", req.RequestedMessage.String())
 		}
 
-		if hasConnectorId {
-			if req.ConnectorId == nil {
-				t.Fatal("ConnectorId = nil, want non-nil")
+		if hasConnectorID {
+			if req.ConnectorID == nil {
+				t.Fatal("ConnectorID = nil, want non-nil")
 			}
 			if connectorId < 0 || connectorId > math.MaxUint16 {
 				t.Fatalf("Req succeeded with connectorId=%d", connectorId)
 			}
-			if got := req.ConnectorId.Value(); got != uint16(connectorId) {
-				t.Fatalf("ConnectorId = %d, want %d", got, connectorId)
+			if got := req.ConnectorID.Value(); got != uint16(connectorId) {
+				t.Fatalf("ConnectorID = %d, want %d", got, connectorId)
 			}
-		} else if req.ConnectorId != nil {
-			t.Fatal("ConnectorId != nil, want nil")
+		} else if req.ConnectorID != nil {
+			t.Fatal("ConnectorID != nil, want nil")
 		}
 	})
 }

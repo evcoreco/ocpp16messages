@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 // ReqInput represents the raw input data for creating a MeterValues.req
@@ -12,17 +12,17 @@ import (
 type ReqInput struct {
 	// Required: The ID of the connector for which meter values are reported.
 	// Use 0 for the entire Charge Point.
-	ConnectorId int
+	ConnectorID int
 	// Optional: The transaction ID for which meter values are reported.
-	TransactionId *int
+	TransactionID *int
 	// Required: One or more meter value sets.
 	MeterValue []types.MeterValueInput
 }
 
 // ReqMessage represents an OCPP 1.6 MeterValues.req message.
 type ReqMessage struct {
-	ConnectorId   types.Integer
-	TransactionId *types.Integer
+	ConnectorID   types.Integer
+	TransactionID *types.Integer
 	MeterValue    []types.MeterValue
 }
 
@@ -36,23 +36,23 @@ type reqValidation struct {
 // Req creates a MeterValues.req message from the given input.
 // It validates all fields and accumulates all errors, returning them together.
 // Returns an error if:
-//   - ConnectorId is negative
+//   - ConnectorID is negative
 //   - MeterValue is empty or contains invalid entries
-//   - TransactionId is provided but invalid
+//   - TransactionID is provided but invalid
 func Req(input ReqInput) (ReqMessage, error) {
 	validated, errs := validateReqInput(input)
 
 	if errs != nil {
 		return ReqMessage{
-			ConnectorId:   types.Integer{},
-			TransactionId: nil,
+			ConnectorID:   types.Integer{},
+			TransactionID: nil,
 			MeterValue:    nil,
 		}, errors.Join(errs...)
 	}
 
 	return ReqMessage{
-		ConnectorId:   validated.connectorId,
-		TransactionId: validated.transactionId,
+		ConnectorID:   validated.connectorId,
+		TransactionID: validated.transactionId,
 		MeterValue:    validated.meterValue,
 	}, nil
 }
@@ -62,14 +62,14 @@ func validateReqInput(input ReqInput) (reqValidation, []error) {
 
 	var validated reqValidation
 
-	validated.connectorId, errs = validateReqConnectorId(
-		input.ConnectorId,
+	validated.connectorId, errs = validateReqConnectorID(
+		input.ConnectorID,
 		errs,
 	)
 
-	if input.TransactionId != nil {
-		validated.transactionId, errs = validateReqTransactionId(
-			*input.TransactionId,
+	if input.TransactionID != nil {
+		validated.transactionId, errs = validateReqTransactionID(
+			*input.TransactionID,
 			errs,
 		)
 	}
@@ -79,7 +79,7 @@ func validateReqInput(input ReqInput) (reqValidation, []error) {
 	return validated, errs
 }
 
-func validateReqConnectorId(
+func validateReqConnectorID(
 	connectorId int,
 	errs []error,
 ) (types.Integer, []error) {
@@ -87,14 +87,14 @@ func validateReqConnectorId(
 	if err != nil {
 		return types.Integer{}, append(
 			errs,
-			fmt.Errorf(types.ErrorFieldFormat, "ConnectorId", err),
+			fmt.Errorf(types.ErrorFieldFormat, "ConnectorID", err),
 		)
 	}
 
 	return intVal, errs
 }
 
-func validateReqTransactionId(
+func validateReqTransactionID(
 	transactionId int,
 	errs []error,
 ) (*types.Integer, []error) {
@@ -102,7 +102,7 @@ func validateReqTransactionId(
 	if err != nil {
 		return nil, append(
 			errs,
-			fmt.Errorf(types.ErrorFieldFormat, "TransactionId", err),
+			fmt.Errorf(types.ErrorFieldFormat, "TransactionID", err),
 		)
 	}
 

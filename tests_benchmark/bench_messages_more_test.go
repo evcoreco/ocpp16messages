@@ -5,17 +5,17 @@ package benchmark
 import (
 	"testing"
 
-	ccp "github.com/aasanchez/ocpp16messages/clearchargingprofile"
-	gconf "github.com/aasanchez/ocpp16messages/getconfiguration"
-	gd "github.com/aasanchez/ocpp16messages/getdiagnostics"
-	rn "github.com/aasanchez/ocpp16messages/reservenow"
-	sll "github.com/aasanchez/ocpp16messages/sendlocallist"
-	scp "github.com/aasanchez/ocpp16messages/setchargingprofile"
-	stt "github.com/aasanchez/ocpp16messages/starttransaction"
-	sn "github.com/aasanchez/ocpp16messages/statusnotification"
-	stp "github.com/aasanchez/ocpp16messages/stoptransaction"
-	uf "github.com/aasanchez/ocpp16messages/updatefirmware"
-	types "github.com/aasanchez/ocpp16types"
+	ccp "github.com/evcoreco/ocpp16messages/clearchargingprofile"
+	gconf "github.com/evcoreco/ocpp16messages/getconfiguration"
+	gd "github.com/evcoreco/ocpp16messages/getdiagnostics"
+	rn "github.com/evcoreco/ocpp16messages/reservenow"
+	sll "github.com/evcoreco/ocpp16messages/sendlocallist"
+	scp "github.com/evcoreco/ocpp16messages/setchargingprofile"
+	stt "github.com/evcoreco/ocpp16messages/starttransaction"
+	sn "github.com/evcoreco/ocpp16messages/statusnotification"
+	stp "github.com/evcoreco/ocpp16messages/stoptransaction"
+	uf "github.com/evcoreco/ocpp16messages/updatefirmware"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func BenchmarkGetConfigurationReq_SingleKey(b *testing.B) {
@@ -58,7 +58,7 @@ func BenchmarkClearChargingProfileReq_AllFields(b *testing.B) {
 
 	input := ccp.ReqInput{
 		Id:                     &id,
-		ConnectorId:            &connectorId,
+		ConnectorID:            &connectorId,
 		ChargingProfilePurpose: &purpose,
 		StackLevel:             &stackLevel,
 	}
@@ -129,13 +129,13 @@ func BenchmarkUpdateFirmwareReq_AllOptionals(b *testing.B) {
 func BenchmarkReserveNowReq_AllFields(b *testing.B) {
 	b.ReportAllocs()
 
-	parentIdTag := "PARENT-1"
+	parentIDTag := "PARENT-1"
 	input := rn.ReqInput{
-		ReservationId: 1,
-		ConnectorId:   1,
-		IdTag:         "TAG-1",
+		ReservationID: 1,
+		ConnectorID:   1,
+		IDTag:         "TAG-1",
 		ExpiryDate:    "2025-01-02T16:00:00Z",
-		ParentIdTag:   &parentIdTag,
+		ParentIDTag:   &parentIDTag,
 	}
 
 	for i := 0; i < b.N; i++ {
@@ -154,12 +154,12 @@ func BenchmarkStatusNotificationReq_AllOptionals(b *testing.B) {
 	vendorErrorCode := "E-1"
 
 	input := sn.ReqInput{
-		ConnectorId:     0,
+		ConnectorID:     0,
 		ErrorCode:       "NoError",
 		Status:          "Available",
 		Info:            &info,
 		Timestamp:       &timestamp,
-		VendorId:        &vendorId,
+		VendorID:        &vendorId,
 		VendorErrorCode: &vendorErrorCode,
 	}
 
@@ -170,16 +170,16 @@ func BenchmarkStatusNotificationReq_AllOptionals(b *testing.B) {
 	}
 }
 
-func BenchmarkStartTransactionReq_WithReservationId(b *testing.B) {
+func BenchmarkStartTransactionReq_WithReservationID(b *testing.B) {
 	b.ReportAllocs()
 
 	reservationId := 42
 	input := stt.ReqInput{
-		ConnectorId:   1,
-		IdTag:         "TAG-1",
+		ConnectorID:   1,
+		IDTag:         "TAG-1",
 		MeterStart:    100,
 		Timestamp:     sampleTimestamp,
-		ReservationId: &reservationId,
+		ReservationID: &reservationId,
 	}
 
 	for i := 0; i < b.N; i++ {
@@ -196,10 +196,10 @@ func BenchmarkStartTransactionConf_AllOptionals(b *testing.B) {
 	parent := "PARENT-1"
 
 	input := stt.ConfInput{
-		TransactionId: 1,
+		TransactionID: 1,
 		Status:        "Accepted",
 		ExpiryDate:    &expiry,
-		ParentIdTag:   &parent,
+		ParentIDTag:   &parent,
 	}
 
 	for i := 0; i < b.N; i++ {
@@ -219,7 +219,7 @@ func BenchmarkStopTransactionConf_AllOptionals(b *testing.B) {
 	input := stp.ConfInput{
 		Status:      &status,
 		ExpiryDate:  &expiry,
-		ParentIdTag: &parent,
+		ParentIDTag: &parent,
 	}
 
 	for i := 0; i < b.N; i++ {

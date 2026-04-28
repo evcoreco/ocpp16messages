@@ -5,7 +5,7 @@ package fuzz
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/heartbeat"
+	"github.com/evcoreco/ocpp16messages/heartbeat"
 )
 
 func FuzzHeartbeatReq(f *testing.F) {

@@ -5,18 +5,18 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/statusnotification"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/statusnotification"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
-	testConnectorIdOne   = 1
-	testConnectorIdZero  = 0
+	testConnectorIDOne   = 1
+	testConnectorIDZero  = 0
 	testValueNegativeOne = -1
 	testStatusAvailable  = "Available"
 	testStatusCharging   = "Charging"
 	testErrorCodeNoError = "NoError"
-	errFieldConnectorId  = "connectorId"
+	errFieldConnectorID  = "connectorId"
 	errFieldErrorCode    = "errorCode"
 	errFieldStatus       = "status"
 	errFieldInfo         = "info"
@@ -28,21 +28,21 @@ func TestReq_Valid(t *testing.T) {
 	t.Parallel()
 
 	req, err := statusnotification.Req(statusnotification.ReqInput{
-		ConnectorId:     testConnectorIdOne,
+		ConnectorID:     testConnectorIDOne,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          testStatusAvailable,
 		Info:            nil,
 		Timestamp:       nil,
-		VendorId:        nil,
+		VendorID:        nil,
 		VendorErrorCode: nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.ConnectorId.Value() != testConnectorIdOne {
+	if req.ConnectorID.Value() != testConnectorIDOne {
 		t.Errorf(
-			types.ErrorMismatch, testConnectorIdOne, req.ConnectorId.Value(),
+			types.ErrorMismatch, testConnectorIDOne, req.ConnectorID.Value(),
 		)
 	}
 
@@ -57,25 +57,25 @@ func TestReq_Valid(t *testing.T) {
 	}
 }
 
-func TestReq_ValidConnectorIdZero(t *testing.T) {
+func TestReq_ValidConnectorIDZero(t *testing.T) {
 	t.Parallel()
 
 	req, err := statusnotification.Req(statusnotification.ReqInput{
-		ConnectorId:     testConnectorIdZero,
+		ConnectorID:     testConnectorIDZero,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          testStatusAvailable,
 		Info:            nil,
 		Timestamp:       nil,
-		VendorId:        nil,
+		VendorID:        nil,
 		VendorErrorCode: nil,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.ConnectorId.Value() != testConnectorIdZero {
+	if req.ConnectorID.Value() != testConnectorIDZero {
 		t.Errorf(
-			types.ErrorMismatch, testConnectorIdZero, req.ConnectorId.Value(),
+			types.ErrorMismatch, testConnectorIDZero, req.ConnectorID.Value(),
 		)
 	}
 }
@@ -84,12 +84,12 @@ func TestReq_ValidCharging(t *testing.T) {
 	t.Parallel()
 
 	req, err := statusnotification.Req(statusnotification.ReqInput{
-		ConnectorId:     testConnectorIdOne,
+		ConnectorID:     testConnectorIDOne,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          testStatusCharging,
 		Info:            nil,
 		Timestamp:       nil,
-		VendorId:        nil,
+		VendorID:        nil,
 		VendorErrorCode: nil,
 	})
 	if err != nil {
@@ -107,12 +107,12 @@ func TestReq_ValidWithInfo(t *testing.T) {
 	info := "Ground fault detected"
 
 	req, err := statusnotification.Req(statusnotification.ReqInput{
-		ConnectorId:     testConnectorIdOne,
+		ConnectorID:     testConnectorIDOne,
 		ErrorCode:       "GroundFailure",
 		Status:          "Faulted",
 		Info:            &info,
 		Timestamp:       nil,
-		VendorId:        nil,
+		VendorID:        nil,
 		VendorErrorCode: nil,
 	})
 	if err != nil {
@@ -134,12 +134,12 @@ func TestReq_ValidWithTimestamp(t *testing.T) {
 	timestamp := "2025-01-15T10:30:00Z"
 
 	req, err := statusnotification.Req(statusnotification.ReqInput{
-		ConnectorId:     testConnectorIdOne,
+		ConnectorID:     testConnectorIDOne,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          testStatusAvailable,
 		Info:            nil,
 		Timestamp:       &timestamp,
-		VendorId:        nil,
+		VendorID:        nil,
 		VendorErrorCode: nil,
 	})
 	if err != nil {
@@ -158,49 +158,49 @@ func TestReq_ValidWithVendorFields(t *testing.T) {
 	vendorErrorCode := "V001"
 
 	req, err := statusnotification.Req(statusnotification.ReqInput{
-		ConnectorId:     testConnectorIdOne,
+		ConnectorID:     testConnectorIDOne,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          testStatusAvailable,
 		Info:            nil,
 		Timestamp:       nil,
-		VendorId:        &vendorId,
+		VendorID:        &vendorId,
 		VendorErrorCode: &vendorErrorCode,
 	})
 	if err != nil {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.VendorId == nil {
-		t.Error("Req() VendorId = nil, want non-nil")
+	if req.VendorID == nil {
+		t.Error("Req() VendorID = nil, want non-nil")
 	}
 
 	if req.VendorErrorCode == nil {
 		t.Error("Req() VendorErrorCode = nil, want non-nil")
 	}
 
-	if req.VendorId.Value() != vendorId {
-		t.Errorf(types.ErrorMismatch, vendorId, req.VendorId.Value())
+	if req.VendorID.Value() != vendorId {
+		t.Errorf(types.ErrorMismatch, vendorId, req.VendorID.Value())
 	}
 }
 
-func TestReq_ConnectorIdNegative(t *testing.T) {
+func TestReq_ConnectorIDNegative(t *testing.T) {
 	t.Parallel()
 
 	_, err := statusnotification.Req(statusnotification.ReqInput{
-		ConnectorId:     testValueNegativeOne,
+		ConnectorID:     testValueNegativeOne,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          testStatusAvailable,
 		Info:            nil,
 		Timestamp:       nil,
-		VendorId:        nil,
+		VendorID:        nil,
 		VendorErrorCode: nil,
 	})
 	if err == nil {
 		t.Error("Req() error = nil, want error for negative connectorId")
 	}
 
-	if !strings.Contains(err.Error(), errFieldConnectorId) {
-		t.Errorf(types.ErrorWantContains, err, errFieldConnectorId)
+	if !strings.Contains(err.Error(), errFieldConnectorID) {
+		t.Errorf(types.ErrorWantContains, err, errFieldConnectorID)
 	}
 }
 
@@ -208,12 +208,12 @@ func TestReq_InvalidStatus(t *testing.T) {
 	t.Parallel()
 
 	_, err := statusnotification.Req(statusnotification.ReqInput{
-		ConnectorId:     testConnectorIdOne,
+		ConnectorID:     testConnectorIDOne,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          "InvalidStatus",
 		Info:            nil,
 		Timestamp:       nil,
-		VendorId:        nil,
+		VendorID:        nil,
 		VendorErrorCode: nil,
 	})
 	if err == nil {
@@ -233,12 +233,12 @@ func TestReq_EmptyStatus(t *testing.T) {
 	t.Parallel()
 
 	_, err := statusnotification.Req(statusnotification.ReqInput{
-		ConnectorId:     testConnectorIdOne,
+		ConnectorID:     testConnectorIDOne,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          "",
 		Info:            nil,
 		Timestamp:       nil,
-		VendorId:        nil,
+		VendorID:        nil,
 		VendorErrorCode: nil,
 	})
 	if err == nil {
@@ -254,12 +254,12 @@ func TestReq_InvalidErrorCode(t *testing.T) {
 	t.Parallel()
 
 	_, err := statusnotification.Req(statusnotification.ReqInput{
-		ConnectorId:     testConnectorIdOne,
+		ConnectorID:     testConnectorIDOne,
 		ErrorCode:       "InvalidCode",
 		Status:          testStatusAvailable,
 		Info:            nil,
 		Timestamp:       nil,
-		VendorId:        nil,
+		VendorID:        nil,
 		VendorErrorCode: nil,
 	})
 	if err == nil {
@@ -279,12 +279,12 @@ func TestReq_EmptyErrorCode(t *testing.T) {
 	t.Parallel()
 
 	_, err := statusnotification.Req(statusnotification.ReqInput{
-		ConnectorId:     testConnectorIdOne,
+		ConnectorID:     testConnectorIDOne,
 		ErrorCode:       "",
 		Status:          testStatusAvailable,
 		Info:            nil,
 		Timestamp:       nil,
-		VendorId:        nil,
+		VendorID:        nil,
 		VendorErrorCode: nil,
 	})
 	if err == nil {
@@ -302,12 +302,12 @@ func TestReq_InvalidTimestamp(t *testing.T) {
 	invalidTimestamp := "not-a-timestamp"
 
 	_, err := statusnotification.Req(statusnotification.ReqInput{
-		ConnectorId:     testConnectorIdOne,
+		ConnectorID:     testConnectorIDOne,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          testStatusAvailable,
 		Info:            nil,
 		Timestamp:       &invalidTimestamp,
-		VendorId:        nil,
+		VendorID:        nil,
 		VendorErrorCode: nil,
 	})
 	if err == nil {
@@ -326,12 +326,12 @@ func TestReq_InfoTooLong(t *testing.T) {
 	longInfo := "This info string is way too long for the OCPP spec!"
 
 	_, err := statusnotification.Req(statusnotification.ReqInput{
-		ConnectorId:     testConnectorIdOne,
+		ConnectorID:     testConnectorIDOne,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          testStatusAvailable,
 		Info:            &longInfo,
 		Timestamp:       nil,
-		VendorId:        nil,
+		VendorID:        nil,
 		VendorErrorCode: nil,
 	})
 	if err == nil {
@@ -349,12 +349,12 @@ func TestReq_MultipleErrors(t *testing.T) {
 	invalidTimestamp := "invalid"
 
 	_, err := statusnotification.Req(statusnotification.ReqInput{
-		ConnectorId:     testValueNegativeOne,
+		ConnectorID:     testValueNegativeOne,
 		ErrorCode:       "InvalidCode",
 		Status:          "InvalidStatus",
 		Info:            nil,
 		Timestamp:       &invalidTimestamp,
-		VendorId:        nil,
+		VendorID:        nil,
 		VendorErrorCode: nil,
 	})
 	if err == nil {
@@ -363,8 +363,8 @@ func TestReq_MultipleErrors(t *testing.T) {
 
 	errStr := err.Error()
 
-	if !strings.Contains(errStr, errFieldConnectorId) {
-		t.Errorf(types.ErrorWantContains, err, errFieldConnectorId)
+	if !strings.Contains(errStr, errFieldConnectorID) {
+		t.Errorf(types.ErrorWantContains, err, errFieldConnectorID)
 	}
 
 	if !strings.Contains(errStr, errFieldErrorCode) {
@@ -397,12 +397,12 @@ func TestReq_AllStatuses(t *testing.T) {
 
 	for _, status := range statuses {
 		req, err := statusnotification.Req(statusnotification.ReqInput{
-			ConnectorId:     testConnectorIdOne,
+			ConnectorID:     testConnectorIDOne,
 			ErrorCode:       testErrorCodeNoError,
 			Status:          status,
 			Info:            nil,
 			Timestamp:       nil,
-			VendorId:        nil,
+			VendorID:        nil,
 			VendorErrorCode: nil,
 		})
 		if err != nil {
@@ -439,12 +439,12 @@ func TestReq_AllErrorCodes(t *testing.T) {
 
 	for _, errorCode := range errorCodes {
 		req, err := statusnotification.Req(statusnotification.ReqInput{
-			ConnectorId:     testConnectorIdOne,
+			ConnectorID:     testConnectorIDOne,
 			ErrorCode:       errorCode,
 			Status:          testStatusAvailable,
 			Info:            nil,
 			Timestamp:       nil,
-			VendorId:        nil,
+			VendorID:        nil,
 			VendorErrorCode: nil,
 		})
 		if err != nil {
@@ -457,19 +457,19 @@ func TestReq_AllErrorCodes(t *testing.T) {
 	}
 }
 
-func TestReq_InvalidVendorId(t *testing.T) {
+func TestReq_InvalidVendorID(t *testing.T) {
 	t.Parallel()
 
-	// VendorId must be valid CiString255, test with invalid ASCII
-	invalidVendorId := "Vendor\x00Id"
+	// VendorID must be valid CiString255, test with invalid ASCII
+	invalidVendorID := "Vendor\x00Id"
 
 	_, err := statusnotification.Req(statusnotification.ReqInput{
-		ConnectorId:     testConnectorIdOne,
+		ConnectorID:     testConnectorIDOne,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          testStatusAvailable,
 		Info:            nil,
 		Timestamp:       nil,
-		VendorId:        &invalidVendorId,
+		VendorID:        &invalidVendorID,
 		VendorErrorCode: nil,
 	})
 	if err == nil {
@@ -488,12 +488,12 @@ func TestReq_InvalidVendorErrorCode(t *testing.T) {
 	invalidVendorErrorCode := "Error\x00Code"
 
 	_, err := statusnotification.Req(statusnotification.ReqInput{
-		ConnectorId:     testConnectorIdOne,
+		ConnectorID:     testConnectorIDOne,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          testStatusAvailable,
 		Info:            nil,
 		Timestamp:       nil,
-		VendorId:        nil,
+		VendorID:        nil,
 		VendorErrorCode: &invalidVendorErrorCode,
 	})
 	if err == nil {

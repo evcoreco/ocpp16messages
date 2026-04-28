@@ -3,7 +3,7 @@ package diagnosticsstatusnotification_test
 import (
 	"fmt"
 
-	dsn "github.com/aasanchez/ocpp16messages/diagnosticsstatusnotification"
+	dsn "github.com/evcoreco/ocpp16messages/diagnosticsstatusnotification"
 )
 
 const labelStatus = "Status:"

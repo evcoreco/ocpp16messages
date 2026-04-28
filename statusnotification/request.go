@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
@@ -17,7 +17,7 @@ const (
 type ReqInput struct {
 	// Required: The id of the connector for which the status is reported.
 	// Id 0 (zero) is used for the Charge Point main controller.
-	ConnectorId int
+	ConnectorID int
 	// Required: The error code reported by the Charge Point.
 	ErrorCode string
 	// Required: The current status of the Charge Point.
@@ -27,19 +27,19 @@ type ReqInput struct {
 	// Optional: The time for which the status is reported (RFC3339 format).
 	Timestamp *string
 	// Optional: Identifies the vendor-specific implementation.
-	VendorId *string
+	VendorID *string
 	// Optional: Vendor-specific error code.
 	VendorErrorCode *string
 }
 
 // ReqMessage represents an OCPP 1.6 StatusNotification.req message.
 type ReqMessage struct {
-	ConnectorId     types.Integer
+	ConnectorID     types.Integer
 	ErrorCode       types.ChargePointErrorCode
 	Status          types.ChargePointStatus
 	Info            *types.CiString50Type
 	Timestamp       *types.DateTime
-	VendorId        *types.CiString255Type
+	VendorID        *types.CiString255Type
 	VendorErrorCode *types.CiString50Type
 }
 
@@ -57,12 +57,12 @@ type reqValidation struct {
 // Req creates a StatusNotification.req message from the given input.
 // It validates all fields and accumulates all errors, returning them together.
 // Returns an error if:
-//   - ConnectorId is negative or exceeds uint16 max value (65535)
+//   - ConnectorID is negative or exceeds uint16 max value (65535)
 //   - ErrorCode is not a valid ChargePointErrorCode value
 //   - Status is not a valid ChargePointStatus value
 //   - Info (if provided) exceeds 50 characters or contains invalid chars
 //   - Timestamp (if provided) is not a valid RFC3339 date
-//   - VendorId (if provided) exceeds 255 characters or contains invalid chars
+//   - VendorID (if provided) exceeds 255 characters or contains invalid chars
 //   - VendorErrorCode (if provided) exceeds 50 chars or contains invalid chars
 func Req(input ReqInput) (ReqMessage, error) {
 	validated, errs := validateReqInput(input)
@@ -82,7 +82,7 @@ func validateReqInput(input ReqInput) (reqValidation, []error) {
 	var validated reqValidation
 
 	// Validate required fields
-	validated.connectorId, errs = validateConnectorId(input.ConnectorId, errs)
+	validated.connectorId, errs = validateConnectorID(input.ConnectorID, errs)
 	validated.errorCode, errs = validateErrorCode(input.ErrorCode, errs)
 	validated.status, errs = validateStatus(input.Status, errs)
 
@@ -106,8 +106,8 @@ func validateOptionalFields(
 		validated.timestamp, errs = validateTimestamp(*input.Timestamp, errs)
 	}
 
-	if input.VendorId != nil {
-		validated.vendorId, errs = validateVendorId(*input.VendorId, errs)
+	if input.VendorID != nil {
+		validated.vendorId, errs = validateVendorID(*input.VendorID, errs)
 	}
 
 	if input.VendorErrorCode != nil {
@@ -120,8 +120,8 @@ func validateOptionalFields(
 	return validated, errs
 }
 
-// validateConnectorId validates the connectorId field.
-func validateConnectorId(
+// validateConnectorID validates the connectorId field.
+func validateConnectorID(
 	connectorId int,
 	errs []error,
 ) (types.Integer, []error) {
@@ -186,8 +186,8 @@ func validateTimestamp(
 	return val, errs
 }
 
-// validateVendorId validates the vendorId field.
-func validateVendorId(
+// validateVendorID validates the vendorId field.
+func validateVendorID(
 	vendorId string,
 	errs []error,
 ) (types.CiString255Type, []error) {
@@ -221,12 +221,12 @@ func validateVendorErrorCode(
 // buildReqMessage constructs the final ReqMessage with validated fields.
 func buildReqMessage(input ReqInput, validated reqValidation) ReqMessage {
 	msg := ReqMessage{
-		ConnectorId:     validated.connectorId,
+		ConnectorID:     validated.connectorId,
 		ErrorCode:       validated.errorCode,
 		Status:          validated.status,
 		Info:            nil,
 		Timestamp:       nil,
-		VendorId:        nil,
+		VendorID:        nil,
 		VendorErrorCode: nil,
 	}
 
@@ -238,8 +238,8 @@ func buildReqMessage(input ReqInput, validated reqValidation) ReqMessage {
 		msg.Timestamp = &validated.timestamp
 	}
 
-	if input.VendorId != nil {
-		msg.VendorId = &validated.vendorId
+	if input.VendorID != nil {
+		msg.VendorID = &validated.vendorId
 	}
 
 	if input.VendorErrorCode != nil {

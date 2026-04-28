@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/setchargingprofile"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/setchargingprofile"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const errStatus = "status"

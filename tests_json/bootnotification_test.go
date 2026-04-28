@@ -3,7 +3,7 @@ package testsjson_test
 import (
 	"testing"
 
-	bn "github.com/aasanchez/ocpp16messages/bootnotification"
+	bn "github.com/evcoreco/ocpp16messages/bootnotification"
 )
 
 func TestBootNotificationReq_JSONRoundTrip(t *testing.T) {

@@ -5,7 +5,7 @@ package benchmark
 import (
 	"testing"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func BenchmarkNewChargingSchedule(b *testing.B) {

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	types "github.com/aasanchez/ocpp16types"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
@@ -15,10 +15,10 @@ const (
 // message. The constructor Req validates all fields automatically.
 type ReqInput struct {
 	// Required: The transaction ID of the transaction to stop.
-	TransactionId int
+	TransactionID int
 	// Optional: The identifier that was used to stop the transaction.
 	// May be omitted when the Charge Point itself stops the transaction.
-	IdTag *string
+	IDTag *string
 	// Required: Energy meter reading at the end of the transaction in Wh.
 	MeterStop int
 	// Required: Timestamp of when the transaction was stopped.
@@ -32,8 +32,8 @@ type ReqInput struct {
 
 // ReqMessage represents an OCPP 1.6 StopTransaction.req message.
 type ReqMessage struct {
-	TransactionId   types.Integer
-	IdTag           *types.IdToken
+	TransactionID   types.Integer
+	IDTag           *types.IDToken
 	MeterStop       types.Integer
 	Timestamp       types.DateTime
 	Reason          *types.Reason
@@ -43,7 +43,7 @@ type ReqMessage struct {
 // reqValidation holds validated fields during Req construction.
 type reqValidation struct {
 	transactionId   types.Integer
-	idTag           *types.IdToken
+	idTag           *types.IDToken
 	meterStop       types.Integer
 	timestamp       types.DateTime
 	reason          *types.Reason
@@ -53,8 +53,8 @@ type reqValidation struct {
 // Req creates a StopTransaction.req message from the given input.
 // It validates all fields and accumulates all errors, returning them together.
 // Returns an error if:
-//   - TransactionId is negative or exceeds uint16 max value (65535)
-//   - IdTag (if provided) exceeds 20 characters or contains non-printable ASCII
+//   - TransactionID is negative or exceeds uint16 max value (65535)
+//   - IDTag (if provided) exceeds 20 characters or contains non-printable ASCII
 //   - MeterStop is negative or exceeds uint16 max value (65535)
 //   - Timestamp is not a valid RFC3339 formatted date
 //   - Reason (if provided) is not a valid Reason value
@@ -64,8 +64,8 @@ func Req(input ReqInput) (ReqMessage, error) {
 
 	if len(errs) > errCountZero {
 		return ReqMessage{
-			TransactionId:   types.Integer{},
-			IdTag:           nil,
+			TransactionID:   types.Integer{},
+			IDTag:           nil,
 			MeterStop:       types.Integer{},
 			Timestamp:       types.DateTime{},
 			Reason:          nil,
@@ -74,8 +74,8 @@ func Req(input ReqInput) (ReqMessage, error) {
 	}
 
 	return ReqMessage{
-		TransactionId:   validated.transactionId,
-		IdTag:           validated.idTag,
+		TransactionID:   validated.transactionId,
+		IDTag:           validated.idTag,
 		MeterStop:       validated.meterStop,
 		Timestamp:       validated.timestamp,
 		Reason:          validated.reason,
@@ -89,15 +89,15 @@ func validateReqInput(input ReqInput) (reqValidation, []error) {
 
 	var validated reqValidation
 
-	validated.transactionId, errs = validateTransactionId(
-		input.TransactionId,
+	validated.transactionId, errs = validateTransactionID(
+		input.TransactionID,
 		errs,
 	)
 	validated.meterStop, errs = validateMeterStop(input.MeterStop, errs)
 	validated.timestamp, errs = validateTimestamp(input.Timestamp, errs)
 
-	if input.IdTag != nil {
-		validated.idTag, errs = validateIdTag(*input.IdTag, errs)
+	if input.IDTag != nil {
+		validated.idTag, errs = validateIDTag(*input.IDTag, errs)
 	}
 
 	if input.Reason != nil {
@@ -114,8 +114,8 @@ func validateReqInput(input ReqInput) (reqValidation, []error) {
 	return validated, errs
 }
 
-// validateTransactionId validates the transactionId field.
-func validateTransactionId(
+// validateTransactionID validates the transactionId field.
+func validateTransactionID(
 	transactionId int,
 	errs []error,
 ) (types.Integer, []error) {
@@ -129,14 +129,14 @@ func validateTransactionId(
 	return val, errs
 }
 
-// validateIdTag validates the idTag field.
-func validateIdTag(idTag string, errs []error) (*types.IdToken, []error) {
+// validateIDTag validates the idTag field.
+func validateIDTag(idTag string, errs []error) (*types.IDToken, []error) {
 	ciStr, err := types.NewCiString20Type(idTag)
 	if err != nil {
 		return nil, append(errs, fmt.Errorf("idTag: %w", err))
 	}
 
-	token := types.NewIdToken(ciStr)
+	token := types.NewIDToken(ciStr)
 
 	return &token, errs
 }

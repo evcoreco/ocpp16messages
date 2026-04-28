@@ -5,8 +5,8 @@ package benchmark
 import (
 	"testing"
 
-	stp "github.com/aasanchez/ocpp16messages/stoptransaction"
-	types "github.com/aasanchez/ocpp16types"
+	stp "github.com/evcoreco/ocpp16messages/stoptransaction"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func BenchmarkNewSampledValue_AllOptionals(b *testing.B) {
@@ -60,8 +60,8 @@ func BenchmarkSetChargingProfileNewChargingProfile_AllOptionals(b *testing.B) {
 	}
 
 	input := types.ChargingProfileInput{
-		ChargingProfileId:      1,
-		TransactionId:          &transactionId,
+		ChargingProfileID:      1,
+		TransactionID:          &transactionId,
 		StackLevel:             0,
 		ChargingProfilePurpose: types.TxProfile.String(),
 		ChargingProfileKind:    types.ChargingProfileKindRecurring.String(),
@@ -98,8 +98,8 @@ func BenchmarkStopTransactionReq_LargeTransactionData(b *testing.B) {
 	}
 
 	input := stp.ReqInput{
-		TransactionId:   1,
-		IdTag:           nil,
+		TransactionID:   1,
+		IDTag:           nil,
 		MeterStop:       100,
 		Timestamp:       sampleTimestamp,
 		Reason:          nil,

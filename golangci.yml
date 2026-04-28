@@ -37,8 +37,8 @@ linters:
         main:
           allow:
             - $gostd
-            - github.com/aasanchez/ocpp16messages
-            - github.com/aasanchez/ocpp16types
+            - github.com/evcoreco/ocpp16messages
+            - github.com/evcoreco/ocpp16types
 
 output:
   formats:

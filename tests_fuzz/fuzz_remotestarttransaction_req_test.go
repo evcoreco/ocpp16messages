@@ -7,8 +7,8 @@ import (
 	"math"
 	"testing"
 
-	rst "github.com/aasanchez/ocpp16messages/remotestarttransaction"
-	types "github.com/aasanchez/ocpp16types"
+	rst "github.com/evcoreco/ocpp16messages/remotestarttransaction"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func FuzzRemoteStartTransactionReq(f *testing.F) {
@@ -17,19 +17,19 @@ func FuzzRemoteStartTransactionReq(f *testing.F) {
 	f.Add("RFID-ABC123", true, 1)
 	f.Add("RFID-ABC123", true, -1)
 
-	f.Fuzz(func(t *testing.T, idTag string, hasConnectorId bool, connectorId int) {
+	f.Fuzz(func(t *testing.T, idTag string, hasConnectorID bool, connectorId int) {
 		if len(idTag) > maxFuzzStringLen {
 			t.Skip()
 		}
 
 		var connectorIdPtr *int
-		if hasConnectorId {
+		if hasConnectorID {
 			connectorIdPtr = &connectorId
 		}
 
 		req, err := rst.Req(rst.ReqInput{
-			IdTag:       idTag,
-			ConnectorId: connectorIdPtr,
+			IDTag:       idTag,
+			ConnectorID: connectorIdPtr,
 		})
 		if err != nil {
 			if !errors.Is(err, types.ErrInvalidValue) && !errors.Is(err, types.ErrEmptyValue) {
@@ -43,25 +43,25 @@ func FuzzRemoteStartTransactionReq(f *testing.F) {
 		}
 
 		if idTag == "" {
-			t.Fatal("Req succeeded with empty IdTag")
+			t.Fatal("Req succeeded with empty IDTag")
 		}
 
-		if req.IdTag.String() != idTag {
-			t.Fatalf("IdTag = %q, want %q", req.IdTag.String(), idTag)
+		if req.IDTag.String() != idTag {
+			t.Fatalf("IDTag = %q, want %q", req.IDTag.String(), idTag)
 		}
 
-		if hasConnectorId {
-			if req.ConnectorId == nil {
-				t.Fatal("ConnectorId = nil, want non-nil")
+		if hasConnectorID {
+			if req.ConnectorID == nil {
+				t.Fatal("ConnectorID = nil, want non-nil")
 			}
 			if connectorId < 0 || connectorId > math.MaxUint16 {
 				t.Fatalf("Req succeeded with connectorId=%d", connectorId)
 			}
-			if got := req.ConnectorId.Value(); got != uint16(connectorId) {
-				t.Fatalf("ConnectorId = %d, want %d", got, connectorId)
+			if got := req.ConnectorID.Value(); got != uint16(connectorId) {
+				t.Fatalf("ConnectorID = %d, want %d", got, connectorId)
 			}
-		} else if req.ConnectorId != nil {
-			t.Fatal("ConnectorId != nil, want nil")
+		} else if req.ConnectorID != nil {
+			t.Fatal("ConnectorID != nil, want nil")
 		}
 	})
 }

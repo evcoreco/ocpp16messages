@@ -3,8 +3,8 @@ package clearcache_test
 import (
 	"testing"
 
-	cc "github.com/aasanchez/ocpp16messages/clearcache"
-	types "github.com/aasanchez/ocpp16types"
+	cc "github.com/evcoreco/ocpp16messages/clearcache"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 func TestReq_Valid_EmptyInput(t *testing.T) {

@@ -5,26 +5,26 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/stoptransaction"
-	types "github.com/aasanchez/ocpp16types"
+	"github.com/evcoreco/ocpp16messages/stoptransaction"
+	types "github.com/evcoreco/ocpp16types"
 )
 
 const (
-	testValidIdTag          = "RFID-TAG-12345"
+	testValidIDTag          = "RFID-TAG-12345"
 	testValidTimestamp      = "2025-01-15T10:30:00Z"
-	testTransactionId12345  = 12345
+	testTransactionID12345  = 12345
 	testMeterStop5000       = 5000
 	testValueZero           = 0
 	testValueNegativeOne    = -1
 	testTxDataLenZero       = 0
 	testExpectedTxDataLen   = 1
-	errFieldTransactionId   = "transactionId"
+	errFieldTransactionID   = "transactionId"
 	errFieldMeterStop       = "meterStop"
 	errFieldTimestamp       = "timestamp"
-	errFieldIdTag           = "idTag"
+	errFieldIDTag           = "idTag"
 	errFieldReason          = "reason"
 	errReqReasonNil         = "Req() Reason = nil, want non-nil"
-	errReqIdTagNil          = "Req() IdTag = nil, want non-nil"
+	errReqIDTagNil          = "Req() IDTag = nil, want non-nil"
 	errMsgExceedsMaxLen     = "exceeds maximum length"
 	errMsgWantExceedsMaxLen = "Req() error = %v, want 'exceeds maximum length'"
 	errMsgNonPrintable      = "non-printable ASCII"
@@ -36,8 +36,8 @@ func TestReq_Valid(t *testing.T) {
 	t.Parallel()
 
 	req, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId:   testTransactionId12345,
-		IdTag:           nil,
+		TransactionID:   testTransactionID12345,
+		IDTag:           nil,
 		MeterStop:       testMeterStop5000,
 		Timestamp:       testValidTimestamp,
 		Reason:          nil,
@@ -47,12 +47,12 @@ func TestReq_Valid(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	expectedTransactionId := uint16(testTransactionId12345)
-	if req.TransactionId.Value() != expectedTransactionId {
+	expectedTransactionID := uint16(testTransactionID12345)
+	if req.TransactionID.Value() != expectedTransactionID {
 		t.Errorf(
 			types.ErrorMismatch,
-			expectedTransactionId,
-			req.TransactionId.Value(),
+			expectedTransactionID,
+			req.TransactionID.Value(),
 		)
 	}
 
@@ -62,14 +62,14 @@ func TestReq_Valid(t *testing.T) {
 	}
 }
 
-func TestReq_ValidWithIdTag(t *testing.T) {
+func TestReq_ValidWithIDTag(t *testing.T) {
 	t.Parallel()
 
-	idTag := testValidIdTag
+	idTag := testValidIDTag
 
 	req, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId:   testTransactionId12345,
-		IdTag:           &idTag,
+		TransactionID:   testTransactionID12345,
+		IDTag:           &idTag,
 		MeterStop:       testMeterStop5000,
 		Timestamp:       testValidTimestamp,
 		Reason:          nil,
@@ -79,12 +79,12 @@ func TestReq_ValidWithIdTag(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.IdTag == nil {
-		t.Error(errReqIdTagNil)
+	if req.IDTag == nil {
+		t.Error(errReqIDTagNil)
 	}
 
-	if req.IdTag.String() != testValidIdTag {
-		t.Errorf(types.ErrorMismatch, testValidIdTag, req.IdTag.String())
+	if req.IDTag.String() != testValidIDTag {
+		t.Errorf(types.ErrorMismatch, testValidIDTag, req.IDTag.String())
 	}
 }
 
@@ -94,8 +94,8 @@ func TestReq_ValidWithReasonLocal(t *testing.T) {
 	reason := "Local"
 
 	req, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId:   testTransactionId12345,
-		IdTag:           nil,
+		TransactionID:   testTransactionID12345,
+		IDTag:           nil,
 		MeterStop:       testMeterStop5000,
 		Timestamp:       testValidTimestamp,
 		Reason:          &reason,
@@ -120,8 +120,8 @@ func TestReq_ValidWithReasonRemote(t *testing.T) {
 	reason := "Remote"
 
 	req, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId:   testTransactionId12345,
-		IdTag:           nil,
+		TransactionID:   testTransactionID12345,
+		IDTag:           nil,
 		MeterStop:       testMeterStop5000,
 		Timestamp:       testValidTimestamp,
 		Reason:          &reason,
@@ -146,8 +146,8 @@ func TestReq_ValidWithReasonEVDisconnected(t *testing.T) {
 	reason := "EVDisconnected"
 
 	req, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId:   testTransactionId12345,
-		IdTag:           nil,
+		TransactionID:   testTransactionID12345,
+		IDTag:           nil,
 		MeterStop:       testMeterStop5000,
 		Timestamp:       testValidTimestamp,
 		Reason:          &reason,
@@ -170,8 +170,8 @@ func TestReq_ValidWithTransactionData(t *testing.T) {
 	t.Parallel()
 
 	req, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId: testTransactionId12345,
-		IdTag:         nil,
+		TransactionID: testTransactionID12345,
+		IDTag:         nil,
 		MeterStop:     testMeterStop5000,
 		Timestamp:     testValidTimestamp,
 		Reason:        nil,
@@ -209,8 +209,8 @@ func TestReq_ValidWithEmptyTransactionData(t *testing.T) {
 	t.Parallel()
 
 	req, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId:   testTransactionId12345,
-		IdTag:           nil,
+		TransactionID:   testTransactionID12345,
+		IDTag:           nil,
 		MeterStop:       testMeterStop5000,
 		Timestamp:       testValidTimestamp,
 		Reason:          nil,
@@ -231,12 +231,12 @@ func TestReq_ValidWithEmptyTransactionData(t *testing.T) {
 	}
 }
 
-func TestReq_TransactionIdZero(t *testing.T) {
+func TestReq_TransactionIDZero(t *testing.T) {
 	t.Parallel()
 
 	req, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId:   testValueZero,
-		IdTag:           nil,
+		TransactionID:   testValueZero,
+		IDTag:           nil,
 		MeterStop:       testMeterStop5000,
 		Timestamp:       testValidTimestamp,
 		Reason:          nil,
@@ -246,17 +246,17 @@ func TestReq_TransactionIdZero(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.TransactionId.Value() != testValueZero {
-		t.Errorf(types.ErrorMismatch, testValueZero, req.TransactionId.Value())
+	if req.TransactionID.Value() != testValueZero {
+		t.Errorf(types.ErrorMismatch, testValueZero, req.TransactionID.Value())
 	}
 }
 
-func TestReq_TransactionIdNegative(t *testing.T) {
+func TestReq_TransactionIDNegative(t *testing.T) {
 	t.Parallel()
 
 	_, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId:   testValueNegativeOne,
-		IdTag:           nil,
+		TransactionID:   testValueNegativeOne,
+		IDTag:           nil,
 		MeterStop:       testMeterStop5000,
 		Timestamp:       testValidTimestamp,
 		Reason:          nil,
@@ -266,8 +266,8 @@ func TestReq_TransactionIdNegative(t *testing.T) {
 		t.Error("Req() error = nil, want error for negative transactionId")
 	}
 
-	if !strings.Contains(err.Error(), errFieldTransactionId) {
-		t.Errorf(types.ErrorWantContains, err, errFieldTransactionId)
+	if !strings.Contains(err.Error(), errFieldTransactionID) {
+		t.Errorf(types.ErrorWantContains, err, errFieldTransactionID)
 	}
 }
 
@@ -275,8 +275,8 @@ func TestReq_MeterStopZero(t *testing.T) {
 	t.Parallel()
 
 	req, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId:   testTransactionId12345,
-		IdTag:           nil,
+		TransactionID:   testTransactionID12345,
+		IDTag:           nil,
 		MeterStop:       testValueZero,
 		Timestamp:       testValidTimestamp,
 		Reason:          nil,
@@ -295,8 +295,8 @@ func TestReq_MeterStopNegative(t *testing.T) {
 	t.Parallel()
 
 	_, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId:   testTransactionId12345,
-		IdTag:           nil,
+		TransactionID:   testTransactionID12345,
+		IDTag:           nil,
 		MeterStop:       testValueNegativeOne,
 		Timestamp:       testValidTimestamp,
 		Reason:          nil,
@@ -315,8 +315,8 @@ func TestReq_InvalidTimestamp(t *testing.T) {
 	t.Parallel()
 
 	_, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId:   testTransactionId12345,
-		IdTag:           nil,
+		TransactionID:   testTransactionID12345,
+		IDTag:           nil,
 		MeterStop:       testMeterStop5000,
 		Timestamp:       "not-a-timestamp",
 		Reason:          nil,
@@ -335,8 +335,8 @@ func TestReq_EmptyTimestamp(t *testing.T) {
 	t.Parallel()
 
 	_, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId:   testTransactionId12345,
-		IdTag:           nil,
+		TransactionID:   testTransactionID12345,
+		IDTag:           nil,
 		MeterStop:       testMeterStop5000,
 		Timestamp:       "",
 		Reason:          nil,
@@ -351,14 +351,14 @@ func TestReq_EmptyTimestamp(t *testing.T) {
 	}
 }
 
-func TestReq_EmptyIdTag(t *testing.T) {
+func TestReq_EmptyIDTag(t *testing.T) {
 	t.Parallel()
 
 	emptyTag := ""
 
 	_, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId:   testTransactionId12345,
-		IdTag:           &emptyTag,
+		TransactionID:   testTransactionID12345,
+		IDTag:           &emptyTag,
 		MeterStop:       testMeterStop5000,
 		Timestamp:       testValidTimestamp,
 		Reason:          nil,
@@ -373,21 +373,21 @@ func TestReq_EmptyIdTag(t *testing.T) {
 	}
 }
 
-func TestReq_IdTagTooLong(t *testing.T) {
+func TestReq_IDTagTooLong(t *testing.T) {
 	t.Parallel()
 
 	longTag := "RFID-ABC123456789012345" // 23 chars, max is 20
 
 	_, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId:   testTransactionId12345,
-		IdTag:           &longTag,
+		TransactionID:   testTransactionID12345,
+		IDTag:           &longTag,
 		MeterStop:       testMeterStop5000,
 		Timestamp:       testValidTimestamp,
 		Reason:          nil,
 		TransactionData: nil,
 	})
 	if err == nil {
-		t.Error("Req() error = nil, want error for IdTag too long")
+		t.Error("Req() error = nil, want error for IDTag too long")
 	}
 
 	if !strings.Contains(err.Error(), errMsgExceedsMaxLen) {
@@ -395,14 +395,14 @@ func TestReq_IdTagTooLong(t *testing.T) {
 	}
 }
 
-func TestReq_IdTagInvalidCharacters(t *testing.T) {
+func TestReq_IDTagInvalidCharacters(t *testing.T) {
 	t.Parallel()
 
 	invalidTag := "RFID\x00ABC"
 
 	_, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId:   testTransactionId12345,
-		IdTag:           &invalidTag,
+		TransactionID:   testTransactionID12345,
+		IDTag:           &invalidTag,
 		MeterStop:       testMeterStop5000,
 		Timestamp:       testValidTimestamp,
 		Reason:          nil,
@@ -423,8 +423,8 @@ func TestReq_InvalidReason(t *testing.T) {
 	invalidReason := "InvalidReason"
 
 	_, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId:   testTransactionId12345,
-		IdTag:           nil,
+		TransactionID:   testTransactionID12345,
+		IDTag:           nil,
 		MeterStop:       testMeterStop5000,
 		Timestamp:       testValidTimestamp,
 		Reason:          &invalidReason,
@@ -447,8 +447,8 @@ func TestReq_InvalidTransactionData(t *testing.T) {
 	t.Parallel()
 
 	_, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId: testTransactionId12345,
-		IdTag:         nil,
+		TransactionID: testTransactionID12345,
+		IDTag:         nil,
 		MeterStop:     testMeterStop5000,
 		Timestamp:     testValidTimestamp,
 		Reason:        nil,
@@ -475,8 +475,8 @@ func TestReq_MultipleErrors(t *testing.T) {
 	invalidReason := "BadReason"
 
 	_, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId:   testValueNegativeOne,
-		IdTag:           &emptyTag,
+		TransactionID:   testValueNegativeOne,
+		IDTag:           &emptyTag,
 		MeterStop:       testValueNegativeOne,
 		Timestamp:       "invalid",
 		Reason:          &invalidReason,
@@ -488,12 +488,12 @@ func TestReq_MultipleErrors(t *testing.T) {
 
 	errStr := err.Error()
 
-	if !strings.Contains(errStr, errFieldTransactionId) {
-		t.Errorf(types.ErrorWantContains, err, errFieldTransactionId)
+	if !strings.Contains(errStr, errFieldTransactionID) {
+		t.Errorf(types.ErrorWantContains, err, errFieldTransactionID)
 	}
 
-	if !strings.Contains(errStr, errFieldIdTag) {
-		t.Errorf(types.ErrorWantContains, err, errFieldIdTag)
+	if !strings.Contains(errStr, errFieldIDTag) {
+		t.Errorf(types.ErrorWantContains, err, errFieldIDTag)
 	}
 
 	if !strings.Contains(errStr, errFieldMeterStop) {
@@ -512,12 +512,12 @@ func TestReq_MultipleErrors(t *testing.T) {
 func TestReq_Complete(t *testing.T) {
 	t.Parallel()
 
-	idTag := testValidIdTag
+	idTag := testValidIDTag
 	reason := "Local"
 
 	req, err := stoptransaction.Req(stoptransaction.ReqInput{
-		TransactionId:   testTransactionId12345,
-		IdTag:           &idTag,
+		TransactionID:   testTransactionID12345,
+		IDTag:           &idTag,
 		MeterStop:       testMeterStop5000,
 		Timestamp:       testValidTimestamp,
 		Reason:          &reason,
@@ -527,13 +527,13 @@ func TestReq_Complete(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	expectedTxId := uint16(testTransactionId12345)
-	if req.TransactionId.Value() != expectedTxId {
-		t.Errorf(types.ErrorMismatch, expectedTxId, req.TransactionId.Value())
+	expectedTxId := uint16(testTransactionID12345)
+	if req.TransactionID.Value() != expectedTxId {
+		t.Errorf(types.ErrorMismatch, expectedTxId, req.TransactionID.Value())
 	}
 
-	if req.IdTag == nil {
-		t.Error(errReqIdTagNil)
+	if req.IDTag == nil {
+		t.Error(errReqIDTagNil)
 	}
 
 	expectedMeterStop := uint16(testMeterStop5000)
