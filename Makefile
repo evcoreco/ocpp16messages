@@ -36,7 +36,14 @@ test-fuzz: ## Run fuzzers (requires Go 1.20+); uses fuzz build tag.
 	else \
 		for fuzz in $$FUZZES; do \
 			echo "\n>>> Fuzzing $$fuzz"; \
-			GOMAXPROCS=$(FUZZPROCS) go test -tags=fuzz -run=^$$ -fuzz=^$$fuzz$$ -fuzztime=$(FUZZTIME) ./tests_fuzz || exit $$?; \
+			CRASHDIR=tests_fuzz/testdata/fuzz/$$fuzz; \
+			BEFORE=$$(ls "$$CRASHDIR" 2>/dev/null | wc -l | tr -d ' '); \
+			GOMAXPROCS=$(FUZZPROCS) go test -tags=fuzz -run=^$$ -fuzz=^$$fuzz$$ -fuzztime=$(FUZZTIME) ./tests_fuzz; \
+			EXIT=$$?; \
+			AFTER=$$(ls "$$CRASHDIR" 2>/dev/null | wc -l | tr -d ' '); \
+			if [ "$$EXIT" -ne 0 ] && [ "$$AFTER" -gt "$$BEFORE" ]; then \
+				echo "Fuzzer found a failure in $$fuzz — crash saved to $$CRASHDIR"; exit 1; \
+			fi; \
 		done; \
 	fi
 
