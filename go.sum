@@ -1,2 +1,4 @@
 github.com/evcoreco/ocpp16types v1.0.2 h1:gvVS4/3BkAVaKZDkn4sEd+h6n9MfCPI/Oygp4IDYfGc=
 github.com/evcoreco/ocpp16types v1.0.2/go.mod h1:AS2LkcULAD/TLcP918lYbIZlGLL3USZEfY9bPEbFICo=
+github.com/evcoreco/ocpp16types v1.0.3-0.20260429132037-28263883ed45 h1:X2f7TslgGgXu4upfqmsF5/6Ga7Cytl6pUu/R+VYSvFk=
+github.com/evcoreco/ocpp16types v1.0.3-0.20260429132037-28263883ed45/go.mod h1:AS2LkcULAD/TLcP918lYbIZlGLL3USZEfY9bPEbFICo=
