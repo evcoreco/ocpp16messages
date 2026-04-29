@@ -1,35 +1,41 @@
-// Package starttransaction implements the Open Charge Point Protocol (OCPP) 1.6
-// StartTransaction message for EV charging.
+// Package starttransaction implements the OCPP 1.6 StartTransaction message pair.
 //
-// # Handling Rules
+// # What It Means
 //
-// The Charge Point SHALL send StartTransaction.req to the Central System to
-// notify that a transaction has started. If the transaction ends a reservation,
-// the StartTransaction.req MUST include the reservationId.
+// StartTransaction is the Charge Point's formal notification that a charging
+// session has opened. It carries the connector id, the idTag that triggered the
+// session, the opening meter reading, and the timestamp. The Central System
+// assigns a transactionId and returns the idTag's authorization status. If the
+// session ends a reservation the StartTransaction.req must include the
+// reservationId.
 //
-// Upon receipt, the Central System SHOULD respond with StartTransaction.conf,
-// which SHALL include:
-//   - transactionId: The assigned transaction identifier.
-//   - authorizationStatus: Status of the idTag authorization.
+// # When It Is Used
 //
-// # Central System Responsibilities
+// The Charge Point sends StartTransaction.req as soon as a session is
+// established — whether triggered by a physical token presentation, a
+// RemoteStartTransaction, or a reservation being consumed. The Central System
+// must always respond; withholding the response causes the Charge Point to
+// retry according to its transaction-related error handling rules. The Central
+// System should re-verify the idTag in StartTransaction.req because the Charge
+// Point may have authorized it locally with stale cached data.
 //
-//   - MUST verify the identifier in StartTransaction.req, as it may have been
-//     authorized locally by the Charge Point with outdated information.
-//   - For example, the idTag may have been blocked since being added to the
-//     Charge Point's Authorization Cache.
+// # What It Is Not
 //
-// # Charge Point Responsibilities
+// StartTransaction is not the authorization step; that is Authorize.req, which
+// may have occurred before this message or may be implied by the
+// RemoteStartTransaction flow. It does not carry periodic meter readings; those
+// are reported via MeterValues.req. StartTransaction is not a command from the
+// Central System; it is always initiated by the Charge Point.
 //
-//   - If Authorization Cache is implemented, the Charge Point SHALL update the
-//     cache entry with the IDTagInfo from StartTransaction.conf, if the idTag
-//     is not in the Local Authorization List.
+// # Adjacent Concepts
 //
-// # Notes
-//
-//   - The Central System may perform sanity checks on StartTransaction.req
-//     data, but SHALL NOT withhold StartTransaction.conf based on these
-//     checks.
-//   - Failing to respond with StartTransaction.conf will cause the Charge
-//     Point to retry according to transaction-related error handling rules.
+// - stoptransaction: the counterpart that closes the session opened here.
+// - authorize: may precede StartTransaction to validate the idTag, though it is
+//   not always required.
+// - metervalues: carries the meter samples between the opening reading in
+//   StartTransaction and the closing reading in StopTransaction.
+// - remotestarttransaction: a Central System-initiated trigger that results in
+//   the Charge Point sending StartTransaction.req.
+// - reservenow: a reservation that is consumed when this transaction opens must
+//   include the reservationId in StartTransaction.req.
 package starttransaction

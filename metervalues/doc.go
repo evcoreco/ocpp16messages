@@ -1,53 +1,45 @@
-// Package metervalues implements the Open Charge Point Protocol (OCPP) 1.6
-// MeterValues message for EV charging.
+// Package metervalues implements the OCPP 1.6 MeterValues message pair.
 //
-// # Handling Rules
+// # What It Means
 //
-// A Charge Point MAY sample its electrical meter or other sensor/transducer
-// hardware to provide meter values. The timing of these samples can be
-// configured using ChangeConfiguration.req to set acquisition intervals
-// and specify the data to report.
+// MeterValues carries electrical measurements — energy, power, current,
+// voltage, temperature, and more — from a Charge Point connector to the
+// Central System. Each request contains one or more MeterValue elements, each
+// timestamped and containing one or more SampledValue readings that describe
+// the measurement type, phase, unit, location, and optional context and format.
 //
-// The Charge Point SHALL send MeterValues.req to offload meter data. Each
-// request SHALL include the following for each sample:
+// # When It Is Used
 //
-//  1. connectorId: The ID of the connector from which samples were taken.
-//     0 indicates the entire Charge Point. If Measurand is energy-related,
-//     the sample SHOULD come from the main energy meter.
-//  2. transactionId: Optional. The transaction associated with these values.
-//     May be omitted if no transaction is in progress or if the main meter
-//     is used.
-//  3. meterValue: One or more MeterValue elements, each representing
-//     measurements taken at a specific timestamp.
+// A Charge Point sends MeterValues.req on a configurable periodic interval
+// (controlled by MeterValueSampleInterval and MeterValuesSampledData), at the
+// start and end of a transaction (Clock-Aligned samples), and when the Central
+// System requests it via TriggerMessage. connectorId 0 refers to the Charge
+// Point's main energy meter rather than any individual connector. transactionId
+// is optional and may be omitted when no transaction is in progress.
 //
-// Each MeterValue contains:
-//   - timestamp: The time the data was captured.
-//   - sampledValue: One or more individual measurement values.
+// The default interpretation of a SampledValue with no optional fields is a
+// register reading of active import energy in Wh. Two special measurands —
+// Current.Offered and Power.Offered — report the maximum current or power the
+// Charge Point is currently offering to the EV for smart charging purposes.
 //
-// SampledValue optional fields:
-//   - measurand: Type of measurement.
-//   - context: Reason or event triggering the reading.
-//   - location: Measurement location (e.g., Inlet, Outlet).
-//   - phase: Electrical phase(s) the measurement applies to. Values SHALL
-//     be reported from the meter/grid perspective. Not applicable to all
-//     Measurands.
-//   - unit: Measurement unit.
-//   - format (EXPERIMENTAL): "Raw" (default) or "SignedData", a digitally
-//     signed binary block (hex). May be deprecated in future versions.
+// # What It Is Not
 //
-// # Notes
+// MeterValues is not a transaction control message; it does not start, stop, or
+// authorize a session. It is not the only source of energy data: StartTransaction
+// and StopTransaction also carry meter readings at the transaction boundaries.
+// The format field ("SignedData") is marked experimental in OCPP 1.6 and may be
+// deprecated in future versions.
 //
-//   - Two special Measurands, Current.Offered and Power.Offered, indicate
-//     the maximum current/power offered to the EV for smart charging.
-//   - For connector phase rotation, the Central System MAY query the
-//     ConnectorPhaseRotation configuration key via GetConfiguration.
-//     Values per connector include: NotApplicable, Unknown, RST, RTS, SRT,
-//     STR, TRS, TSR.
-//   - Default interpretation of a sampledValue without optional fields is
-//     a register reading of active import energy in Wh (Watt-hour).
+// # Adjacent Concepts
 //
-// Upon receipt of MeterValues.req, the Central System SHALL respond with
-// MeterValues.conf. Sanity checks MAY be applied, but SHALL NOT prevent
-// sending the confirmation. Failure to respond would cause the Charge Point
-// to retry the message according to transaction-related error handling.
+// - starttransaction / stoptransaction: carry meter readings at session
+//   boundaries; MeterValues fills in the periodic samples between them.
+// - setchargingprofile: sets the power or current limits that Current.Offered
+//   and Power.Offered measurands reflect.
+// - changeconfiguration: adjusts MeterValueSampleInterval and
+//   MeterValuesSampledData to control when and what is reported.
+// - triggermessage: can request an immediate MeterValues report with the most
+//   recent sample set.
+// - types.MeterValue, types.SampledValue: the shared types that this package
+//   uses for the measurement payload.
 package metervalues

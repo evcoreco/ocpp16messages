@@ -1,35 +1,41 @@
-// Package remotestarttransaction implements the Open Charge Point Protocol
-// (OCPP) 1.6 RemoteStartTransaction message for EV charging.
+// Package remotestarttransaction implements the OCPP 1.6 RemoteStartTransaction message pair.
 //
-// # Handling Rules
+// # What It Means
 //
-// The Central System MAY request a Charge Point to start a transaction by
-// sending RemoteStartTransaction.req. The Charge Point SHALL respond with
-// RemoteStartTransaction.conf, indicating whether it accepts the request and
-// will attempt to start a transaction.
+// RemoteStartTransaction lets the Central System ask a Charge Point to begin a
+// charging session on behalf of a user who is not physically present at the
+// station. The Central System provides the idTag the session should be
+// associated with, optionally a specific connectorId, and optionally a
+// TxProfile charging profile to apply from the moment the session opens.
 //
-// Behavior depends on the AuthorizeRemoteTxRequests configuration key:
-//   - true: The Charge Point SHALL attempt to authorize the idTag using the
-//     Local Authorization List, Authorization Cache, or Authorize.req. The
-//     transaction will only start after authorization.
-//   - false: The Charge Point SHALL attempt to start the transaction
-//     immediately. Authorization will be checked when processing the
-//     StartTransaction.req sent to the Central System.
+// # When It Is Used
 //
-// # Typical Use Cases
+// The Central System sends RemoteStartTransaction.req when a user initiates
+// charging through a mobile app, a web portal, or an SMS gateway. The Charge
+// Point responds immediately to say whether it will attempt the start (Accepted
+// or Rejected), then proceeds independently: if AuthorizeRemoteTxRequests is
+// true it validates the idTag through the normal authorization path before
+// opening the session; if false it starts the session and lets StartTransaction
+// confirm authorization with the Central System. The Charge Point then sends
+// StartTransaction.req once the session actually begins.
 //
-//   - Allow a CPO operator to assist an EV driver in starting a transaction.
-//   - Enable mobile apps to control charging transactions via the Central
-//     System.
-//   - Enable SMS-based control of charging transactions.
+// # What It Is Not
 //
-// # Requirements for RemoteStartTransaction.req
+// An Accepted response does not guarantee the transaction will start; it means
+// the Charge Point will try. A connector fault, a failed authorization, or a
+// missing EV may still prevent the session from opening. RemoteStartTransaction
+// is not a substitute for the full StartTransaction flow; StartTransaction.req
+// is still sent and must be responded to. It is also not the only way to start
+// a session: a user presenting a physical token at the Charge Point follows the
+// same StartTransaction path without a RemoteStartTransaction.
 //
-//   - idTag: Mandatory. Used by the Charge Point to start the transaction
-//     and send StartTransaction.req to the Central System.
-//   - connectorId: Optional. If provided, the transaction starts on the
-//     specified connector. If omitted, the Charge Point chooses the
-//     connector. A Charge Point MAY reject requests without a connectorId.
-//   - ChargingProfile: Optional. If provided and supported, SHALL be applied
-//     with purpose set to TxProfile. Unsupported profiles SHOULD be ignored.
+// # Adjacent Concepts
+//
+// - starttransaction: the Charge Point-initiated message that formally opens
+//   the session; always follows a successful RemoteStartTransaction attempt.
+// - remotestoptransaction: the counterpart for ending a session remotely.
+// - setchargingprofile: the standalone way to attach a TxProfile to an already
+//   running transaction; RemoteStartTransaction can embed this in one step.
+// - authorize: the authorization round-trip the Charge Point performs when
+//   AuthorizeRemoteTxRequests is true.
 package remotestarttransaction

@@ -1,30 +1,37 @@
-// Package unlockconnector implements the Open Charge Point Protocol (OCPP) 1.6
-// UnlockConnector message for EV charging.
+// Package unlockconnector implements the OCPP 1.6 UnlockConnector message pair.
 //
-// # Handling Rules
+// # What It Means
 //
-// The Central System MAY request a Charge Point to unlock a connector using
-// UnlockConnector.req. This is intended to assist EV drivers who cannot unplug
-// the cable due to a connector or cable retention malfunction.
+// UnlockConnector instructs a Charge Point to release the cable retention lock
+// on a specific connector. It is a mechanical action: the connector latch is
+// disengaged so the EV driver can remove the cable. The Charge Point replies
+// with whether the unlock succeeded, failed, or is not supported on that
+// connector.
 //
-// # Purpose
+// # When It Is Used
 //
-//   - Allows a CPO operator to manually trigger the unlock in case of a
-//     connector malfunction, enabling the EV driver to remove the cable.
-//   - SHOULD NOT be used to remotely stop a running transaction; use
-//     RemoteStopTransaction for that purpose.
+// The Central System sends UnlockConnector.req when an EV driver reports that
+// the cable is stuck and cannot be removed — typically due to a connector
+// malfunction or a locking mechanism fault. If a transaction is in progress on
+// the target connector the Charge Point finishes and records the transaction
+// first before unlocking, following the same rules as StopTransaction. The
+// Charge Point then attempts to disengage the lock and reports the result.
 //
-// # Charge Point Behavior
+// # What It Is Not
 //
-//   - Upon receipt of UnlockConnector.req, the Charge Point SHALL respond
-//     with UnlockConnector.conf indicating whether it successfully unlocked
-//     the connector.
-//   - If a transaction is in progress on the connector, the Charge Point
-//     SHALL finish the transaction first, as per StopTransaction rules.
+// UnlockConnector is not a way to stop a running charging session. Use
+// RemoteStopTransaction to end a session; the connector will be unlocked as
+// part of that process. UnlockConnector only affects the cable retention lock
+// on the connector itself — it does not unlock a station enclosure door,
+// access panel, or any other physical lock on the station. It is also not a
+// safety emergency stop.
 //
-// # Notes
+// # Adjacent Concepts
 //
-//   - UnlockConnector.req only affects the cable retention lock on the
-//     connector. It does not unlock a connector access door or other
-//     enclosure.
+// - remotestoptransaction: the correct path for ending a session remotely;
+//   connector unlock happens automatically as part of the transaction stop.
+// - stoptransaction: the message the Charge Point sends to record the session
+//   end before unlocking, if a transaction was running.
+// - statusnotification: the Charge Point may send this after the connector
+//   state changes as a result of the unlock.
 package unlockconnector

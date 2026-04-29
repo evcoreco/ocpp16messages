@@ -1,22 +1,36 @@
-// Package sendlocallist implements the Open Charge Point Protocol (OCPP) 1.6
-// SendLocalList message for EV charging.
+// Package sendlocallist implements the OCPP 1.6 SendLocalList message pair.
 //
-// # Handling Rules
+// # What It Means
 //
-// The Central System MAY send a Local Authorization List to a Charge Point
-// using SendLocalList.req. The list can be:
-//   - Full: Replace the current list entirely.
-//   - Differential: Apply updates to the existing list.
+// SendLocalList pushes an authorization list to a Charge Point so it can
+// approve or reject idTags without contacting the Central System. A Full update
+// replaces the entire stored list. A Differential update adds, modifies, or
+// removes individual entries from the existing list. Both update types carry a
+// version number the Charge Point stores alongside the list.
 //
-// The request SHALL include:
-//   - updateType: Full or Differential.
-//   - versionNumber: The version to associate with the local authorization
-//     list after the update.
+// # When It Is Used
 //
-// Upon receipt, the Charge Point SHALL respond with SendLocalList.conf
-// indicating whether the update was accepted.
+// The Central System sends SendLocalList.req when connectivity to the Central
+// System cannot be guaranteed, when reducing authorization latency for frequent
+// users, or during initial deployment of a Charge Point. After a VersionMismatch
+// or Failed response to a Differential update, the Central System should retry
+// with a Full update to restore a known-good state.
 //
-// If the response status is Failed or VersionMismatch and the updateType
-// was Differential, the Central System SHOULD retry by sending the full
-// list with updateType set to Full.
+// # What It Is Not
+//
+// SendLocalList manages the Local Authorization List, not the Authorization
+// Cache. The cache is populated automatically from Authorize, StartTransaction,
+// and StopTransaction responses and is cleared with ClearCache. The local list
+// is an explicit, versioned dataset. SendLocalList does not fetch the list back
+// from the Charge Point; the Central System is the authoritative source and
+// OCPP 1.6 has no mechanism to read the list contents out of a Charge Point.
+//
+// # Adjacent Concepts
+//
+// - getlocallistversion: reads the Charge Point's current list version before
+//   deciding whether a SendLocalList is needed and which update type to use.
+// - clearcache: clears the Authorization Cache, which is separate from the
+//   local list managed by SendLocalList.
+// - authorize: the network round-trip that becomes unnecessary for idTags
+//   covered by an up-to-date local list.
 package sendlocallist

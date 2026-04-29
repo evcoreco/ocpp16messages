@@ -1,19 +1,35 @@
-// Package authorize implements the Open Charge Point Protocol (OCPP) 1.6
-// Authorize message for EV charging.
+// Package authorize implements the OCPP 1.6 Authorize message pair.
 //
-// Authorization is required before a Charge Point may start or stop a charging
-// transaction. Energy shall only be supplied after successful authorization.
+// # What It Means
 //
-// The Authorize.req message is used to validate an identifier (idTag) for
-// charging. When stopping a transaction, Authorize.req shall only be sent if
-// the identifier differs from the one used to start the transaction.
+// Authorize is the network round-trip a Charge Point performs to ask the
+// Central System whether a given idTag is allowed to charge. The Central
+// System replies with an authorization status and, optionally, a parent idTag
+// and expiry timestamp bundled in an IdTagInfo.
 //
-// A Charge Point may authorize an idTag locally using the Local Authorization
-// List or Authorization Cache. If the idTag is not available locally, the
-// Charge Point shall send an Authorize.req to the Central System. If the idTag
-// is found locally, sending Authorize.req is optional.
+// # When It Is Used
 //
-// The Central System shall respond to Authorize.req with an Authorize.conf
-// indicating whether the idTag is accepted or rejected. An accepted response
-// must include an authorization status and may include a parentIDTag.
+// A Charge Point sends Authorize.req when it cannot confirm authorization
+// locally — that is, when the idTag is absent from the Local Authorization
+// List and not found in the Authorization Cache with a valid, non-expired
+// entry. It is also sent when stopping a transaction if the idTag presented
+// to stop the session differs from the one that started it. If the idTag is
+// resolved locally, sending Authorize.req is optional.
+//
+// # What It Is Not
+//
+// Authorize is not the only path to authorization. A Charge Point that has a
+// Local Authorization List or a populated Authorization Cache may approve or
+// reject an idTag without contacting the Central System at all. Authorize is
+// also not a transaction control message: it does not start or stop a session;
+// that is the role of StartTransaction and StopTransaction.
+//
+// # Adjacent Concepts
+//
+// - starttransaction: sent after a successful authorization to open a session.
+// - stoptransaction: sent when a session ends; may trigger an Authorize if
+//   the stopping idTag differs from the starting one.
+// - sendlocallist / getlocallistversion: manage the Local Authorization List
+//   that can make Authorize.req unnecessary.
+// - types.IdTagInfo, types.IdToken: the shared types carried in responses.
 package authorize

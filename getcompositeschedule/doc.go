@@ -1,25 +1,36 @@
-// Package getcompositeschedule implements the Open Charge Point Protocol
-// (OCPP) 1.6 GetCompositeSchedule message for EV charging.
+// Package getcompositeschedule implements the OCPP 1.6 GetCompositeSchedule message pair.
 //
-// # Handling Rules
+// # What It Means
 //
-// The Central System MAY request a Composite Charging Schedule by sending
-// GetCompositeSchedule.req.
+// GetCompositeSchedule asks a Charge Point to compute and return the combined
+// charging schedule that results from merging all active charging profiles for
+// a given connector over a requested duration. The Charge Point merges profiles
+// across stack levels and purposes and responds with a single flattened schedule
+// showing the power or current limit at every point in the requested window.
 //
-// The Charge Point SHALL calculate and return the Composite Charging
-// Schedule in GetCompositeSchedule.conf, based on all active charging
-// schedules and applicable local limits.
+// # When It Is Used
 //
-// The reported schedule SHALL cover the interval from the time the request
-// is received (X) up to X + Duration.
+// The Central System sends GetCompositeSchedule.req to preview what limits a
+// Charge Point will enforce: before setting a new profile, to verify that
+// profiles were applied correctly, or during demand-response monitoring. The
+// schedule covers the interval from the moment the request is received up to
+// that moment plus the requested duration. A connectorId of 0 returns the
+// aggregate expected consumption of the entire Charge Point rather than a
+// single connector.
 //
-// If ConnectorID is set to 0, the Charge Point SHALL report the total
-// expected power or current consumption of the entire Charge Point for
-// the requested period.
+// # What It Is Not
 //
-// The returned schedule is indicative at the time of reporting and MAY
-// change due to external factors such as local load balancing.
+// GetCompositeSchedule is a read-only query; it does not modify any profile.
+// The returned schedule is a snapshot computed at request time and may change
+// as new profiles are installed or removed. It is not a transaction command and
+// does not start or stop charging.
 //
-// If the Charge Point cannot report the requested schedule (e.g. unknown
-// ConnectorID), it SHALL respond with status Rejected.
+// # Adjacent Concepts
+//
+// - setchargingprofile: installs the profiles whose combined effect
+//   GetCompositeSchedule computes and returns.
+// - clearchargingprofile: removes profiles from the stack, altering the
+//   composite result.
+// - metervalues: the real-time energy measurements that reflect how the
+//   composite schedule is being enforced in practice.
 package getcompositeschedule

@@ -1,27 +1,37 @@
-// Package datatransfer implements the Open Charge Point Protocol (OCPP) 1.6
-// DataTransfer message for EV charging.
+// Package datatransfer implements the OCPP 1.6 DataTransfer message pair.
 //
-// # Handling Rules
+// # What It Means
 //
-// When a Charge Point needs to exchange information with the Central System
-// for functionality not covered by OCPP, it SHALL use DataTransfer.req.
+// DataTransfer is the OCPP 1.6 extension point for vendor-specific messages
+// that do not fit any of the 27 other defined operations. Either side — Charge
+// Point or Central System — may initiate a DataTransfer.req. The message
+// carries a vendorId that identifies the vendor-specific implementation, an
+// optional messageId for sub-command dispatch, and an optional opaque data
+// payload whose format is agreed between sender and receiver.
 //
-// The vendorId SHOULD uniquely identify the vendor-specific implementation
-// and SHOULD be known to the Central System. It is RECOMMENDED to use a value
-// from the reversed DNS namespace corresponding to the vendor’s registered
-// primary domain.
+// # When It Is Used
 //
-// The optional messageId MAY be used to identify a specific message or
-// implementation.
+// DataTransfer is used when a Charge Point and a Central System need to
+// exchange proprietary information: custom display text, vendor diagnostics,
+// tariff data, or any feature outside the OCPP 1.6 specification. The vendorId
+// should be a reversed DNS name matching the vendor's primary domain to avoid
+// collisions. If the recipient does not recognize the vendorId it replies with
+// status UnknownVendor; if it recognizes the vendor but not the messageId it
+// replies UnknownMessageId.
 //
-// The length of the data field in both request and response is undefined and
-// MUST be agreed upon by the involved parties.
+// # What It Is Not
 //
-// If the recipient does not support the given vendorId, it SHALL return
-// status UnknownVendor and SHALL NOT include the data field.
-// If a messageId is provided and does not match, the recipient SHALL return
-// status UnknownMessageID.
+// DataTransfer is not a general-purpose RPC layer for re-implementing standard
+// OCPP operations. It is not a substitute for ChangeConfiguration or
+// GetConfiguration; those cover all standard configuration exchanges. It is
+// also not a diagnostic upload mechanism; use GetDiagnostics for file-based
+// diagnostics retrieval.
 //
-// In all other cases, the meaning of status Accepted or Rejected and the usage
-// of the data field are defined by vendor-specific agreement.
+// # Adjacent Concepts
+//
+// - changeconfiguration / getconfiguration: the standard path for reading and
+//   writing named configuration keys, preferred over DataTransfer when the
+//   data fits a simple key-value model.
+// - getdiagnostics / diagnosticsstatusnotification: structured diagnostics
+//   upload for known OCPP diagnostic use cases.
 package datatransfer

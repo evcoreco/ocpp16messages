@@ -1,35 +1,38 @@
-// Package reset implements the Open Charge Point Protocol (OCPP) 1.6
-// Reset message for EV charging.
+// Package reset implements the OCPP 1.6 Reset message pair.
 //
-// # Handling Rules
+// # What It Means
 //
-// The Central System MAY request a Charge Point to reset by sending Reset.req.
-// The request can specify a soft or hard reset. The Charge Point SHALL respond
-// with Reset.conf indicating whether it will attempt the reset.
+// Reset instructs a Charge Point to reboot. A Soft reset gracefully stops any
+// ongoing transactions, sends StopTransaction.req for each, and then restarts
+// the application software. A Hard reset restarts all hardware immediately;
+// graceful transaction termination is not required, but the Charge Point should
+// send StopTransaction.req for previously active transactions after the reboot
+// completes and BootNotification.conf is accepted. Certain states — such as a
+// connector set to Unavailable — persist across both types of reset.
 //
-// # Transaction Handling
+// # When It Is Used
 //
-//   - Before performing any reset, the Charge Point SHALL send
-//     StopTransaction.req for ongoing transactions. If StopTransaction.conf
-//     is not received, the StopTransaction.req SHALL be queued.
+// The Central System sends Reset.req for planned maintenance, after a
+// ChangeConfiguration.req that returned RebootRequired, or as a recovery action
+// when a Charge Point is unresponsive. The Charge Point replies with whether it
+// will attempt the reset before carrying it out. Hard reset is a last resort;
+// queued messages may be lost.
 //
-// # Soft Reset
+// # What It Is Not
 //
-//   - Gracefully stop ongoing transactions and send StopTransaction.req
-//     for each.
-//   - Restart application software if possible, otherwise restart the
-//     processor/controller.
+// Reset is not a way to stop a single transaction; use RemoteStopTransaction for
+// that. It is not a configuration change; it does not alter any setting on its
+// own. A Soft reset is not guaranteed to complete instantly; it waits for
+// active transactions to close, which may take time.
 //
-// # Hard Reset
+// # Adjacent Concepts
 //
-//   - Restart all hardware. Graceful stopping of ongoing transactions is
-//     not required.
-//   - If possible, send StopTransaction.req for previously ongoing
-//     transactions after reboot and BootNotification.conf has been accepted.
-//   - Use only as a last resort; queued information may be lost.
-//
-// # Persistent States
-//
-//   - Certain states, e.g., a connector set to Unavailable, SHALL persist
-//     across resets.
+// - bootnotification: sent by the Charge Point after it comes back online
+//   following a reset.
+// - stoptransaction: the Charge Point sends this for each active transaction
+//   before (Soft) or after (Hard) the reboot.
+// - changeconfiguration: the operation that most commonly triggers a Reset when
+//   the response status is RebootRequired.
+// - updatefirmware: another operation that may require a reboot as part of the
+//   firmware installation process.
 package reset

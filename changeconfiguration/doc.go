@@ -1,28 +1,36 @@
-// Package changeconfiguration implements the Open Charge Point Protocol
-// (OCPP) 1.6 ChangeConfiguration message for EV charging.
+// Package changeconfiguration implements the OCPP 1.6 ChangeConfiguration message pair.
 //
-// # Handling Rules
+// # What It Means
 //
-// The Central System MAY request a Charge Point to change configuration
-// parameters by sending a ChangeConfiguration.req containing a key-value
-// pair, where "key" identifies the configuration setting and "value"
-// specifies the new setting.
+// ChangeConfiguration lets the Central System write a single key-value
+// configuration parameter on the Charge Point. The Charge Point replies with
+// whether the change was accepted immediately, requires a reboot to take effect,
+// is not supported by that hardware, or was rejected for another reason such as
+// an out-of-range value.
 //
-// Upon receipt, the Charge Point SHALL respond with ChangeConfiguration.conf
-// indicating whether the configuration change could be applied.
+// # When It Is Used
 //
-// The response status SHALL be set as follows:
-//   - Accepted:        Change applied successfully and effective immediately.
-//   - RebootRequired:  Change applied successfully but requires a reboot
-//     to become effective.
-//   - NotSupported:    The specified key is not supported by the Charge Point.
-//   - Rejected:        Change was not applied and none of the above statuses
-//     apply (e.g. invalid format or out-of-range value).
+// The Central System sends ChangeConfiguration.req to tune Charge Point
+// behaviour: adjusting heartbeat intervals, enabling or disabling local
+// authorization, setting the connector phase rotation, or updating any other
+// OCPP-defined or vendor-specific configuration key. Because only one key-value
+// pair is carried per message, multiple calls are needed to change several
+// settings at once.
 //
-// The content and format of "key" and "value" are not prescribed by OCPP.
+// # What It Is Not
 //
-// If a key represents a CSL (Comma-Separated List), it MAY be accompanied
-// by a [KeyName]MaxLength configuration key indicating the maximum number
-// of items allowed. If not present, a safe default of one (1) item SHOULD
-// be assumed.
+// ChangeConfiguration is not a firmware update; it changes runtime parameters,
+// not the software image. It is also not GetConfiguration: it writes a value
+// rather than reading one. The content and format of keys and values beyond the
+// OCPP-defined standard keys are vendor-defined and not validated by this
+// library beyond the CiString length and character constraints.
+//
+// # Adjacent Concepts
+//
+// - getconfiguration: reads one or more configuration keys from the Charge
+//   Point, complementing this write operation.
+// - updatefirmware: the path to replacing the Charge Point software image
+//   rather than adjusting its runtime configuration.
+// - reset: some configuration changes require a reboot; the RebootRequired
+//   response status signals this and Reset.req is the follow-up action.
 package changeconfiguration

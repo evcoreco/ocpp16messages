@@ -1,19 +1,35 @@
-// Package heartbeat implements the Open Charge Point Protocol (OCPP) 1.6
-// Heartbeat message for EV charging.
+// Package heartbeat implements the OCPP 1.6 Heartbeat message pair.
 //
-// # Handling Rules
+// # What It Means
 //
-// A Charge Point SHALL send Heartbeat.req messages at a configurable interval
-// to inform the Central System that it is still connected.
+// Heartbeat is the periodic signal a Charge Point sends to tell the Central
+// System it is still online. The Central System replies with its current UTC
+// timestamp, which the Charge Point should use to keep its internal clock
+// synchronized.
 //
-// Upon receipt, the Central System SHALL respond with Heartbeat.conf containing
-// its current time. The Charge Point is RECOMMENDED to use this time to
-// synchronize its internal clock.
+// # When It Is Used
 //
-// A Charge Point MAY skip sending Heartbeat.req if another PDU has been sent
-// within the configured heartbeat interval. The Central System SHOULD assume
-// the Charge Point is available whenever any PDU is received.
+// A Charge Point sends Heartbeat.req at the interval specified by the
+// HeartbeatInterval configuration key, set by the Central System in
+// BootNotification.conf or via ChangeConfiguration. Any other OCPP message sent
+// within the heartbeat window counts as proof of connectivity, so a Heartbeat
+// is skipped if another PDU was already sent. When using JSON over WebSocket,
+// heartbeats are not mandatory for connection keep-alive, but at least one per
+// 24 hours is recommended to maintain clock synchronization.
 //
-// When using JSON over WebSocket, heartbeats are not mandatory, but at least
-// one heartbeat per 24 hours is advised for time synchronization.
+// # What It Is Not
+//
+// Heartbeat is not the initial registration message; that is BootNotification.
+// It does not carry any transaction or authorization information. It is not a
+// replacement for WebSocket ping/pong frames, which operate at the transport
+// layer independently of OCPP.
+//
+// # Adjacent Concepts
+//
+// - bootnotification: establishes the connection and provides the initial
+//   heartbeat interval; Heartbeat runs on that cadence afterwards.
+// - changeconfiguration: the mechanism for adjusting the HeartbeatInterval
+//   configuration key.
+// - triggermessage: the Central System may use this to request an immediate
+//   Heartbeat outside the normal interval.
 package heartbeat

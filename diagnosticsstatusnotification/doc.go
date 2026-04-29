@@ -1,21 +1,36 @@
-// Package diagnosticsstatusnotification implements the Open Charge Point
-// Protocol (OCPP) 1.6 DiagnosticsStatusNotification message for EV charging.
+// Package diagnosticsstatusnotification implements the OCPP 1.6
+// DiagnosticsStatusNotification message pair.
 //
-// # Handling Rules
+// # What It Means
 //
-// The Central System MAY request diagnostic information from a Charge Point
-// by sending a GetDiagnostics.req, including a location where the diagnostics
-// data MUST be uploaded and optional begin and end timestamps.
+// DiagnosticsStatusNotification is the progress report a Charge Point sends
+// to the Central System during a diagnostics file upload initiated by
+// GetDiagnostics.req. Each notification carries a status value — Idle,
+// Uploading, Uploaded, UploadFailed — so the Central System can track whether
+// the file transfer completed successfully or needs to be retried.
 //
-// Upon receipt, if diagnostic information is available, the Charge Point
-// SHALL respond with GetDiagnostics.conf containing the name of the file
-// that will be uploaded. A single diagnostics file SHALL be uploaded and
-// its format is not prescribed.
+// # When It Is Used
 //
-// If no diagnostics information is available, the response SHALL NOT
-// include a file name.
+// The Charge Point sends DiagnosticsStatusNotification.req after receiving
+// GetDiagnostics.req and at each meaningful state transition during the upload.
+// If the Central System triggers a DiagnosticsStatusNotification via
+// TriggerMessage and the Charge Point is not actively uploading, it sends
+// status Idle. The Central System must acknowledge each notification with
+// DiagnosticsStatusNotification.conf.
 //
-// During the upload process, the Charge Point MUST send
-// DiagnosticsStatusNotification.req messages to keep the Central System
-// informed of the upload status.
+// # What It Is Not
+//
+// DiagnosticsStatusNotification is not the request that starts the diagnostics
+// process; that is GetDiagnostics.req. It does not carry the diagnostics data
+// itself — only a status. The actual file is uploaded out-of-band to the URL
+// supplied in GetDiagnostics.req.
+//
+// # Adjacent Concepts
+//
+// - getdiagnostics: the request that initiates the diagnostics upload and
+//   provides the upload URL; DiagnosticsStatusNotification reports its progress.
+// - firmwarestatusnotification: the analogous progress-report message for
+//   firmware update operations.
+// - triggermessage: can request an on-demand DiagnosticsStatusNotification to
+//   query the current upload state.
 package diagnosticsstatusnotification

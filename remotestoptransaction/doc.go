@@ -1,19 +1,37 @@
-// Package remotestoptransaction implements the Open Charge Point Protocol
-// (OCPP) 1.6 RemoteStopTransaction message for EV charging.
+// Package remotestoptransaction implements the OCPP 1.6 RemoteStopTransaction message pair.
 //
-// # Handling Rules
+// # What It Means
 //
-// The Central System MAY request a Charge Point to stop an ongoing transaction
-// by sending RemoteStopTransaction.req. This is equivalent to a local action
-// at the Charge Point to stop the transaction.
+// RemoteStopTransaction lets the Central System ask a Charge Point to end an
+// ongoing charging session identified by its transactionId. The Charge Point
+// treats the request as equivalent to a local stop action, sends
+// StopTransaction.req to record the session end, and unlocks the connector if
+// applicable.
 //
-// Upon stopping the transaction, the Charge Point SHALL:
-//   - Send StopTransaction.req to the Central System.
-//   - Unlock the connector, if applicable.
+// # When It Is Used
 //
-// # Typical Use Cases
+// The Central System sends RemoteStopTransaction.req when a user ends a session
+// through a mobile app or web portal, when a billing system determines the
+// session budget is exhausted, or when an operator needs to free a connector
+// remotely. The Charge Point replies Accepted if the transactionId is active on
+// one of its connectors, or Rejected if it is not.
 //
-//   - Allow a CPO operator to assist an EV driver who has difficulty
-//     stopping a transaction.
-//   - Enable mobile apps to control the transaction via the Central System.
+// # What It Is Not
+//
+// RemoteStopTransaction is not the same as UnlockConnector. RemoteStopTransaction
+// ends the charging session and then unlocks the cable as a side effect.
+// UnlockConnector only releases the cable retention mechanism without stopping
+// the session, and is intended for stuck-cable recovery. RemoteStopTransaction
+// is also not a forced disconnect at the hardware level; if the Charge Point
+// cannot stop gracefully it will still send StopTransaction.req.
+//
+// # Adjacent Concepts
+//
+// - stoptransaction: the Charge Point-initiated message that formally records
+//   the session end; always follows a successful RemoteStopTransaction.
+// - unlockconnector: releases the cable retention lock without stopping the
+//   session — for mechanical failures, not remote session management.
+// - remotestarttransaction: the counterpart for starting a session remotely.
+// - starttransaction: paired with stoptransaction to bracket the session the
+//   remote stop ends.
 package remotestoptransaction

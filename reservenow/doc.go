@@ -1,62 +1,41 @@
-// Package reservenow implements the Open Charge Point Protocol (OCPP) 1.6
-// ReserveNow message for EV charging.
+// Package reservenow implements the OCPP 1.6 ReserveNow message pair.
 //
-// # Handling Rules
+// # What It Means
 //
-// The Central System MAY request a Charge Point to reserve a connector for a
-// specific idTag by sending ReserveNow.req. The Charge Point SHALL respond
-// with ReserveNow.conf.
+// ReserveNow lets the Central System hold a connector for a specific idTag
+// until an expiry time. While the reservation is active the Charge Point
+// refuses other idTags on that connector. The reserved idTag (and its parent
+// idTag, if any) is the only token that can start a session on the reserved
+// connector before the expiry. When a matching session starts, the reservation
+// is consumed and the reservationId is included in StartTransaction.req.
 //
-// # Behavior and Responses
+// # When It Is Used
 //
-//   - If reservationId matches an existing reservation, the Charge Point
-//     SHALL replace it.
-//   - If reservationId is new, the Charge Point SHALL respond with:
-//   - Accepted: Reservation succeeded.
-//   - Occupied: Connector or Charge Point is in use or already reserved.
-//   - Faulted: Connector or Charge Point is in Faulted state.
-//   - Unavailable: Connector or Charge Point is Unavailable.
-//   - Rejected: Charge Point is configured not to accept reservations.
+// The Central System sends ReserveNow.req when a user books a charging spot in
+// advance via a mobile app or operator portal. A connectorId of 0, combined
+// with the ReserveConnectorZeroSupported configuration key set to true, reserves
+// any one connector at the station rather than a specific one. If the given
+// reservationId matches an existing reservation that reservation is replaced.
+// If the connector is occupied, faulted, unavailable, or the Charge Point is
+// configured to reject reservations, the appropriate status is returned.
 //
-// # Reserved Connector Behavior
+// # What It Is Not
 //
-//   - Charge Point SHALL refuse charging for all incoming idTags on the
-//     reserved connector, except when the idTag or parent idTag matches
-//     the reservation.
-//   - If ReserveConnectorZeroSupported = true and connectorId = 0, the
-//     Charge Point SHALL ensure one connector is always available for the
-//     reserved idTag. Otherwise, return Rejected.
+// ReserveNow does not start a charging session; it only holds a connector.
+// The session still begins through the normal StartTransaction flow when the
+// user arrives. A reservation is not a payment guarantee and does not interact
+// with billing. ReserveNow is not a way to block a connector indefinitely; the
+// expiry date enforces a time limit after which the connector is released
+// automatically.
 //
-// # Parent idTag Handling
+// # Adjacent Concepts
 //
-//   - If parent idTag is provided, the Charge Point MAY look it up in the
-//     Local Authorization List or Authorization Cache. If not found, the
-//     Charge Point SHALL send Authorize.req to the Central System.
-//
-// # Reservation Termination
-//
-// A reservation SHALL end when any of the following occur:
-//  1. A transaction starts for the reserved idTag or parent idTag on the
-//     reserved connector (or any connector if connectorId = 0). The
-//     reservationId SHALL be included in StartTransaction.req.
-//  2. The expiryDate is reached.
-//  3. The connector or Charge Point enters Faulted or Unavailable state.
-//
-// # Expired Reservations
-//
-//   - The Charge Point SHALL terminate the reservation and make the
-//     connector available.
-//   - StatusNotification SHALL be sent to the Central System indicating
-//     availability.
-//
-// # Authorization Cache
-//
-//   - If implemented, the Charge Point SHALL update the cache with
-//     IDTagInfo from ReserveNow.conf if the idTag is not in the Local
-//     Authorization List.
-//
-// # Recommendation
-//
-//   - Validate the idTag with an Authorize.req after receiving
-//     ReserveNow.req and before starting a transaction.
+// - cancelreservation: releases a reservation before it expires or before the
+//   user arrives.
+// - starttransaction: consumes the reservation when the session opens; must
+//   include the reservationId.
+// - authorize: the Charge Point may send this to validate the reserved idTag or
+//   parent idTag while the reservation is being set up.
+// - statusnotification: sent after an expired reservation to report the
+//   connector returning to Available.
 package reservenow

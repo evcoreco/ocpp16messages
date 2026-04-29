@@ -1,19 +1,36 @@
-// Package getconfiguration implements the Open Charge Point Protocol (OCPP) 1.6
-// GetConfiguration message for EV charging.
+// Package getconfiguration implements the OCPP 1.6 GetConfiguration message pair.
 //
-// # Handling Rules
+// # What It Means
 //
-// The Central System SHALL request configuration settings from a Charge Point
-// by sending GetConfiguration.req.
+// GetConfiguration lets the Central System read one or more configuration
+// parameters from a Charge Point. The request carries an optional list of key
+// names; the Charge Point returns the current value and read-only status for
+// each recognized key, and lists any unrecognized keys separately. Sending the
+// request with no keys causes the Charge Point to return all of its
+// configuration settings.
 //
-// If the request contains no keys or the keys list is missing, the Charge
-// Point SHALL return all configuration settings in GetConfiguration.conf.
+// # When It Is Used
 //
-// If specific keys are requested, the Charge Point SHALL return the
-// recognized keys with their values and read-only status. Unrecognized keys
-// SHALL be listed in the optional unknown key list element of the response.
+// The Central System sends GetConfiguration.req to audit Charge Point settings
+// after deployment, to verify that a previous ChangeConfiguration.req was
+// applied correctly, or to discover what configuration keys a particular
+// hardware model supports. The maximum number of keys that can be requested in
+// a single call may be capped by the Charge Point's GetConfigurationMaxKeys
+// setting.
 //
-// The number of keys that can be requested in a single PDU MAY be limited by
-// the Charge Point. The maximum number of keys can be retrieved via the
-// GetConfigurationMaxKeys configuration key.
+// # What It Is Not
+//
+// GetConfiguration is a read-only operation; it does not write any values.
+// Writing values is done via ChangeConfiguration. It does not return
+// diagnostics data or meter readings; use GetDiagnostics and MeterValues for
+// those respectively.
+//
+// # Adjacent Concepts
+//
+// - changeconfiguration: the write counterpart that sets a configuration key
+//   to a new value.
+// - getconfiguration/types.KeyValue: the type that carries each key name, its
+//   current value, and its read-only flag in the response.
+// - datatransfer: an alternative path for vendor-specific data exchange when
+//   the information does not map to a named key-value pair.
 package getconfiguration

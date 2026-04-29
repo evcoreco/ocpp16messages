@@ -1,25 +1,35 @@
-// Package changeavailability implements the Open Charge Point Protocol
-// (OCPP) 1.6 ChangeAvailability message for EV charging.
+// Package changeavailability implements the OCPP 1.6 ChangeAvailability message pair.
 //
-// # Handling Rules
+// # What It Means
 //
-// The Central System MAY request a Charge Point to change its availability
-// by sending a ChangeAvailability.req.
+// ChangeAvailability lets the Central System set a connector — or the entire
+// Charge Point — to either Operative (available for charging) or Inoperative
+// (not available for charging). The Charge Point replies with whether the
+// change was applied immediately, scheduled for after the current transaction,
+// or rejected.
 //
-// A Charge Point is considered Available when it is charging or ready to
-// charge, and Unavailable when it does not allow any charging.
+// # When It Is Used
 //
-// Upon receiving ChangeAvailability.req, the Charge Point SHALL respond
-// with ChangeAvailability.conf indicating whether the requested change
-// can be applied.
+// The Central System sends ChangeAvailability.req for planned maintenance
+// windows, load-management policies, or operator-driven out-of-service
+// actions. If a transaction is running on the target connector the Charge Point
+// responds Scheduled, meaning it will apply the change once the transaction
+// finishes. The Charge Point notifies the Central System of the resulting
+// status transition via StatusNotification.req after the change takes effect.
 //
-// If a transaction is in progress, the Charge Point SHALL respond with
-// status Scheduled, indicating the change will occur after the
-// transaction has finished.
+// # What It Is Not
 //
-// If the requested availability matches the current state, the Charge
-// Point SHALL respond with status Accepted.
+// ChangeAvailability is not a transaction control command. It does not stop a
+// running session; use RemoteStopTransaction for that. Setting a connector to
+// Inoperative also does not clear its charging profiles or its Authorization
+// Cache; use ClearChargingProfile and ClearCache for those.
 //
-// Once the availability change has taken effect, the Charge Point SHALL
-// notify the Central System by sending StatusNotification.req.
+// # Adjacent Concepts
+//
+// - statusnotification: the Charge Point sends this after the availability
+//   change takes effect to report the new connector state.
+// - remotestoptransaction: stops a transaction before a planned availability
+//   change when immediate deactivation is needed.
+// - reset: another path to taking a Charge Point offline that survives across
+//   reboots for persistent Unavailable states.
 package changeavailability
