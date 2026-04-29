@@ -1,10 +1,12 @@
-// Package setchargingprofile implements the OCPP 1.6 SetChargingProfile message pair.
+// Package setchargingprofile implements the OCPP 1.6 SetChargingProfile
+// message pair.
 //
 // # What It Means
 //
 // SetChargingProfile installs a power or current schedule on a connector or on
 // the Charge Point as a whole. A profile consists of a purpose (TxProfile,
-// TxDefaultProfile, ChargePointMaxProfile), a stack level for priority ordering,
+// TxDefaultProfile, ChargePointMaxProfile), a stack level for priority
+// ordering,
 // and a ChargingSchedule that defines one or more time-slotted periods each
 // with a maximum charge rate. The Charge Point merges all active profiles by
 // stack level and purpose to compute the effective limit at any instant.
@@ -31,13 +33,13 @@
 //
 // # Adjacent Concepts
 //
-// - clearchargingprofile: removes profiles installed by this message.
-// - getcompositeschedule: queries the merged schedule that results from all
-//   installed profiles on a connector.
-// - remotestarttransaction: can embed a TxProfile so the limit is active from
-//   the first moment of the new session.
-// - starttransaction: the event after which a TxProfile can be applied with
-//   a separate SetChargingProfile.req.
-// - types.ChargingSchedule, setchargingprofile/types.ChargingProfile: the
-//   shared types that carry the schedule data.
+//   - clearchargingprofile: removes profiles installed by this message.
+//   - getcompositeschedule: queries the merged schedule that results from all
+//     installed profiles on a connector.
+//   - remotestarttransaction: can embed a TxProfile so the limit is active from
+//     the first moment of the new session.
+//   - starttransaction: the event after which a TxProfile can be applied with
+//     a separate SetChargingProfile.req.
+//   - types.ChargingSchedule, setchargingprofile/types.ChargingProfile: the
+//     shared types that carry the schedule data.
 package setchargingprofile

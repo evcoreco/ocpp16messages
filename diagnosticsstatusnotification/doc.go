@@ -27,10 +27,11 @@
 //
 // # Adjacent Concepts
 //
-// - getdiagnostics: the request that initiates the diagnostics upload and
-//   provides the upload URL; DiagnosticsStatusNotification reports its progress.
-// - firmwarestatusnotification: the analogous progress-report message for
-//   firmware update operations.
-// - triggermessage: can request an on-demand DiagnosticsStatusNotification to
-//   query the current upload state.
+//   - getdiagnostics: the request that initiates the diagnostics upload and
+//     provides the upload URL; DiagnosticsStatusNotification reports
+//     its progress.
+//   - firmwarestatusnotification: the analogous progress-report message for
+//     firmware update operations.
+//   - triggermessage: can request an on-demand DiagnosticsStatusNotification to
+//     query the current upload state.
 package diagnosticsstatusnotification

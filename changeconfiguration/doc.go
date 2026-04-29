@@ -1,10 +1,12 @@
-// Package changeconfiguration implements the OCPP 1.6 ChangeConfiguration message pair.
+// Package changeconfiguration implements the OCPP 1.6 ChangeConfiguration
+// message pair.
 //
 // # What It Means
 //
 // ChangeConfiguration lets the Central System write a single key-value
 // configuration parameter on the Charge Point. The Charge Point replies with
-// whether the change was accepted immediately, requires a reboot to take effect,
+// whether the change was accepted immediately, requires a reboot to
+// take effect,
 // is not supported by that hardware, or was rejected for another reason such as
 // an out-of-range value.
 //
@@ -27,10 +29,10 @@
 //
 // # Adjacent Concepts
 //
-// - getconfiguration: reads one or more configuration keys from the Charge
-//   Point, complementing this write operation.
-// - updatefirmware: the path to replacing the Charge Point software image
-//   rather than adjusting its runtime configuration.
-// - reset: some configuration changes require a reboot; the RebootRequired
-//   response status signals this and Reset.req is the follow-up action.
+//   - getconfiguration: reads one or more configuration keys from the Charge
+//     Point, complementing this write operation.
+//   - updatefirmware: the path to replacing the Charge Point software image
+//     rather than adjusting its runtime configuration.
+//   - reset: some configuration changes require a reboot; the RebootRequired
+//     response status signals this and Reset.req is the follow-up action.
 package changeconfiguration

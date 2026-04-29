@@ -29,9 +29,9 @@
 //
 // # Adjacent Concepts
 //
-// - changeconfiguration / getconfiguration: the standard path for reading and
-//   writing named configuration keys, preferred over DataTransfer when the
-//   data fits a simple key-value model.
-// - getdiagnostics / diagnosticsstatusnotification: structured diagnostics
-//   upload for known OCPP diagnostic use cases.
+//   - changeconfiguration / getconfiguration: the standard path for reading and
+//     writing named configuration keys, preferred over DataTransfer when the
+//     data fits a simple key-value model.
+//   - getdiagnostics / diagnosticsstatusnotification: structured diagnostics
+//     upload for known OCPP diagnostic use cases.
 package datatransfer

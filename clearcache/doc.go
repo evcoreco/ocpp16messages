@@ -26,9 +26,10 @@
 //
 // # Adjacent Concepts
 //
-// - sendlocallist: manages the Local Authorization List, the sibling
-//   authorization mechanism that is not affected by ClearCache.
-// - getlocallistversion: checks the version of the Local Authorization List.
-// - authorize: the network round-trip that populates the Authorization Cache;
-//   after a ClearCache, the next unknown idTag will trigger Authorize.req again.
+//   - sendlocallist: manages the Local Authorization List, the sibling
+//     authorization mechanism that is not affected by ClearCache.
+//   - getlocallistversion: checks the version of the Local Authorization List.
+//   - authorize: the network round-trip that populates the Authorization Cache;
+//     after a ClearCache, the next unknown idTag will trigger
+//     Authorize.req again.
 package clearcache

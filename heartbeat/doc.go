@@ -26,10 +26,10 @@
 //
 // # Adjacent Concepts
 //
-// - bootnotification: establishes the connection and provides the initial
-//   heartbeat interval; Heartbeat runs on that cadence afterwards.
-// - changeconfiguration: the mechanism for adjusting the HeartbeatInterval
-//   configuration key.
-// - triggermessage: the Central System may use this to request an immediate
-//   Heartbeat outside the normal interval.
+//   - bootnotification: establishes the connection and provides the initial
+//     heartbeat interval; Heartbeat runs on that cadence afterwards.
+//   - changeconfiguration: the mechanism for adjusting the HeartbeatInterval
+//     configuration key.
+//   - triggermessage: the Central System may use this to request an immediate
+//     Heartbeat outside the normal interval.
 package heartbeat

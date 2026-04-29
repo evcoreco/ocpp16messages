@@ -30,12 +30,12 @@
 //
 // # Adjacent Concepts
 //
-// - firmwarestatusnotification: the progress reports the Charge Point sends
-//   throughout the download and installation triggered by this message.
-// - reset: commonly sent after a firmware installation when the Charge Point
-//   needs to reboot to activate the new image.
-// - changeconfiguration: the lighter-weight path for changing runtime behaviour
-//   without replacing the firmware.
-// - getdiagnostics: the parallel operation for pulling data out of a Charge
-//   Point rather than pushing software into it.
+//   - firmwarestatusnotification: the progress reports the Charge Point sends
+//     throughout the download and installation triggered by this message.
+//   - reset: commonly sent after a firmware installation when the Charge Point
+//     needs to reboot to activate the new image.
+//   - changeconfiguration: the lighter-weight path for changing runtime
+//     behaviour without replacing the firmware.
+//   - getdiagnostics: the parallel operation for pulling data out of a Charge
+//     Point rather than pushing software into it.
 package updatefirmware

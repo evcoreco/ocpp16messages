@@ -1,4 +1,5 @@
-// Package starttransaction implements the OCPP 1.6 StartTransaction message pair.
+// Package starttransaction implements the OCPP 1.6 StartTransaction
+// message pair.
 //
 // # What It Means
 //
@@ -29,13 +30,13 @@
 //
 // # Adjacent Concepts
 //
-// - stoptransaction: the counterpart that closes the session opened here.
-// - authorize: may precede StartTransaction to validate the idTag, though it is
-//   not always required.
-// - metervalues: carries the meter samples between the opening reading in
-//   StartTransaction and the closing reading in StopTransaction.
-// - remotestarttransaction: a Central System-initiated trigger that results in
-//   the Charge Point sending StartTransaction.req.
-// - reservenow: a reservation that is consumed when this transaction opens must
-//   include the reservationId in StartTransaction.req.
+//   - stoptransaction: the counterpart that closes the session opened here.
+//   - authorize: may precede StartTransaction to validate the idTag,
+//     though it is not always required.
+//   - metervalues: carries the meter samples between the opening reading in
+//     StartTransaction and the closing reading in StopTransaction.
+//   - remotestarttransaction: a Central System-initiated trigger that
+//     results in the Charge Point sending StartTransaction.req.
+//   - reservenow: a reservation that is consumed when this transaction
+//     opens must include the reservationId in StartTransaction.req.
 package starttransaction

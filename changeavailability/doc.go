@@ -1,4 +1,5 @@
-// Package changeavailability implements the OCPP 1.6 ChangeAvailability message pair.
+// Package changeavailability implements the OCPP 1.6 ChangeAvailability
+// message pair.
 //
 // # What It Means
 //
@@ -26,10 +27,10 @@
 //
 // # Adjacent Concepts
 //
-// - statusnotification: the Charge Point sends this after the availability
-//   change takes effect to report the new connector state.
-// - remotestoptransaction: stops a transaction before a planned availability
-//   change when immediate deactivation is needed.
-// - reset: another path to taking a Charge Point offline that survives across
-//   reboots for persistent Unavailable states.
+//   - statusnotification: the Charge Point sends this after the availability
+//     change takes effect to report the new connector state.
+//   - remotestoptransaction: stops a transaction before a planned availability
+//     change when immediate deactivation is needed.
+//   - reset: another path to taking a Charge Point offline that survives across
+//     reboots for persistent Unavailable states.
 package changeavailability

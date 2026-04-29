@@ -1,4 +1,5 @@
-// Package remotestarttransaction implements the OCPP 1.6 RemoteStartTransaction message pair.
+// Package remotestarttransaction implements the OCPP 1.6
+// RemoteStartTransaction message pair.
 //
 // # What It Means
 //
@@ -31,11 +32,12 @@
 //
 // # Adjacent Concepts
 //
-// - starttransaction: the Charge Point-initiated message that formally opens
-//   the session; always follows a successful RemoteStartTransaction attempt.
-// - remotestoptransaction: the counterpart for ending a session remotely.
-// - setchargingprofile: the standalone way to attach a TxProfile to an already
-//   running transaction; RemoteStartTransaction can embed this in one step.
-// - authorize: the authorization round-trip the Charge Point performs when
-//   AuthorizeRemoteTxRequests is true.
+//   - starttransaction: the Charge Point-initiated message that formally opens
+//     the session; always follows a successful RemoteStartTransaction attempt.
+//   - remotestoptransaction: the counterpart for ending a session remotely.
+//   - setchargingprofile: the standalone way to attach a TxProfile to
+//     an already running transaction; RemoteStartTransaction can embed
+//     this in one step.
+//   - authorize: the authorization round-trip the Charge Point performs when
+//     AuthorizeRemoteTxRequests is true.
 package remotestarttransaction

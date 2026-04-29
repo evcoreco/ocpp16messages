@@ -1,11 +1,13 @@
-// Package getcompositeschedule implements the OCPP 1.6 GetCompositeSchedule message pair.
+// Package getcompositeschedule implements the OCPP 1.6 GetCompositeSchedule
+// message pair.
 //
 // # What It Means
 //
 // GetCompositeSchedule asks a Charge Point to compute and return the combined
 // charging schedule that results from merging all active charging profiles for
 // a given connector over a requested duration. The Charge Point merges profiles
-// across stack levels and purposes and responds with a single flattened schedule
+// across stack levels and purposes and responds with a single flattened
+// schedule
 // showing the power or current limit at every point in the requested window.
 //
 // # When It Is Used
@@ -27,10 +29,10 @@
 //
 // # Adjacent Concepts
 //
-// - setchargingprofile: installs the profiles whose combined effect
-//   GetCompositeSchedule computes and returns.
-// - clearchargingprofile: removes profiles from the stack, altering the
-//   composite result.
-// - metervalues: the real-time energy measurements that reflect how the
-//   composite schedule is being enforced in practice.
+//   - setchargingprofile: installs the profiles whose combined effect
+//     GetCompositeSchedule computes and returns.
+//   - clearchargingprofile: removes profiles from the stack, altering the
+//     composite result.
+//   - metervalues: the real-time energy measurements that reflect how the
+//     composite schedule is being enforced in practice.
 package getcompositeschedule

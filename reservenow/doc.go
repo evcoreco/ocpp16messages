@@ -12,9 +12,10 @@
 // # When It Is Used
 //
 // The Central System sends ReserveNow.req when a user books a charging spot in
-// advance via a mobile app or operator portal. A connectorId of 0, combined
-// with the ReserveConnectorZeroSupported configuration key set to true, reserves
-// any one connector at the station rather than a specific one. If the given
+// advance via a mobile app or operator portal. A connectorId of 0,
+// combined with the ReserveConnectorZeroSupported configuration key set
+// to true, reserves any one connector at the station rather than a
+// specific one. If the given
 // reservationId matches an existing reservation that reservation is replaced.
 // If the connector is occupied, faulted, unavailable, or the Charge Point is
 // configured to reject reservations, the appropriate status is returned.
@@ -30,12 +31,13 @@
 //
 // # Adjacent Concepts
 //
-// - cancelreservation: releases a reservation before it expires or before the
-//   user arrives.
-// - starttransaction: consumes the reservation when the session opens; must
-//   include the reservationId.
-// - authorize: the Charge Point may send this to validate the reserved idTag or
-//   parent idTag while the reservation is being set up.
-// - statusnotification: sent after an expired reservation to report the
-//   connector returning to Available.
+//   - cancelreservation: releases a reservation before it expires or before the
+//     user arrives.
+//   - starttransaction: consumes the reservation when the session opens; must
+//     include the reservationId.
+//   - authorize: the Charge Point may send this to validate the
+//     reserved idTag or parent idTag while the reservation is being
+//     set up.
+//   - statusnotification: sent after an expired reservation to report the
+//     connector returning to Available.
 package reservenow

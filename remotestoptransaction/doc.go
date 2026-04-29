@@ -1,4 +1,5 @@
-// Package remotestoptransaction implements the OCPP 1.6 RemoteStopTransaction message pair.
+// Package remotestoptransaction implements the OCPP 1.6
+// RemoteStopTransaction message pair.
 //
 // # What It Means
 //
@@ -18,7 +19,8 @@
 //
 // # What It Is Not
 //
-// RemoteStopTransaction is not the same as UnlockConnector. RemoteStopTransaction
+// RemoteStopTransaction is not the same as UnlockConnector.
+// RemoteStopTransaction
 // ends the charging session and then unlocks the cable as a side effect.
 // UnlockConnector only releases the cable retention mechanism without stopping
 // the session, and is intended for stuck-cable recovery. RemoteStopTransaction
@@ -27,11 +29,11 @@
 //
 // # Adjacent Concepts
 //
-// - stoptransaction: the Charge Point-initiated message that formally records
-//   the session end; always follows a successful RemoteStopTransaction.
-// - unlockconnector: releases the cable retention lock without stopping the
-//   session — for mechanical failures, not remote session management.
-// - remotestarttransaction: the counterpart for starting a session remotely.
-// - starttransaction: paired with stoptransaction to bracket the session the
-//   remote stop ends.
+//   - stoptransaction: the Charge Point-initiated message that formally records
+//     the session end; always follows a successful RemoteStopTransaction.
+//   - unlockconnector: releases the cable retention lock without stopping the
+//     session — for mechanical failures, not remote session management.
+//   - remotestarttransaction: the counterpart for starting a session remotely.
+//   - starttransaction: paired with stoptransaction to bracket the session the
+//     remote stop ends.
 package remotestoptransaction

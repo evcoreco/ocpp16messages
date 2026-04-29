@@ -1,4 +1,5 @@
-// Package bootnotification implements the OCPP 1.6 BootNotification message pair.
+// Package bootnotification implements the OCPP 1.6 BootNotification
+// message pair.
 //
 // # What It Means
 //
@@ -25,16 +26,17 @@
 //
 // BootNotification is not a heartbeat. It does not prove the Charge Point is
 // still connected during a session; that is the role of Heartbeat.req.
-// BootNotification is also not an authorization step: it identifies the hardware
-// but does not authorize any idTag for charging.
+// BootNotification is also not an authorization step: it identifies the
+// hardware but does not authorize any idTag for charging.
 //
 // # Adjacent Concepts
 //
-// - heartbeat: the periodic keep-alive sent once the Charge Point is accepted.
-// - triggermessage: used by the Central System to request a new
-//   BootNotification while the Charge Point is in Pending state.
-// - reset: a soft or hard reboot that causes the Charge Point to send a new
-//   BootNotification after coming back online.
-// - changeconfiguration / getconfiguration: configuration exchanges the Central
-//   System may initiate while the Charge Point is in Pending state.
+//   - heartbeat: the periodic keep-alive sent once the Charge Point is
+//     accepted.
+//   - triggermessage: used by the Central System to request a new
+//     BootNotification while the Charge Point is in Pending state.
+//   - reset: a soft or hard reboot that causes the Charge Point to send a new
+//     BootNotification after coming back online.
+//   - changeconfiguration / getconfiguration: configuration exchanges
+//     the Central System may initiate while in Pending state.
 package bootnotification

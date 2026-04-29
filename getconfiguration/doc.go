@@ -1,4 +1,5 @@
-// Package getconfiguration implements the OCPP 1.6 GetConfiguration message pair.
+// Package getconfiguration implements the OCPP 1.6 GetConfiguration
+// message pair.
 //
 // # What It Means
 //
@@ -27,10 +28,10 @@
 //
 // # Adjacent Concepts
 //
-// - changeconfiguration: the write counterpart that sets a configuration key
-//   to a new value.
-// - getconfiguration/types.KeyValue: the type that carries each key name, its
-//   current value, and its read-only flag in the response.
-// - datatransfer: an alternative path for vendor-specific data exchange when
-//   the information does not map to a named key-value pair.
+//   - changeconfiguration: the write counterpart that sets a configuration key
+//     to a new value.
+//   - getconfiguration/types.KeyValue: the type that carries each key name, its
+//     current value, and its read-only flag in the response.
+//   - datatransfer: an alternative path for vendor-specific data exchange when
+//     the information does not map to a named key-value pair.
 package getconfiguration

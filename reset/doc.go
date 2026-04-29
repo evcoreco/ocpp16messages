@@ -20,19 +20,20 @@
 //
 // # What It Is Not
 //
-// Reset is not a way to stop a single transaction; use RemoteStopTransaction for
-// that. It is not a configuration change; it does not alter any setting on its
-// own. A Soft reset is not guaranteed to complete instantly; it waits for
-// active transactions to close, which may take time.
+// Reset is not a way to stop a single transaction; use
+// RemoteStopTransaction for that. It is not a configuration change; it
+// does not alter any setting on its own. A Soft reset is not guaranteed
+// to complete instantly; it waits for active transactions to close,
+// which may take time.
 //
 // # Adjacent Concepts
 //
-// - bootnotification: sent by the Charge Point after it comes back online
-//   following a reset.
-// - stoptransaction: the Charge Point sends this for each active transaction
-//   before (Soft) or after (Hard) the reboot.
-// - changeconfiguration: the operation that most commonly triggers a Reset when
-//   the response status is RebootRequired.
-// - updatefirmware: another operation that may require a reboot as part of the
-//   firmware installation process.
+//   - bootnotification: sent by the Charge Point after it comes back online
+//     following a reset.
+//   - stoptransaction: the Charge Point sends this for each active transaction
+//     before (Soft) or after (Hard) the reboot.
+//   - changeconfiguration: the operation that most commonly triggers a
+//     Reset when the response status is RebootRequired.
+//   - updatefirmware: another operation that may require a reboot as
+//     part of the firmware installation process.
 package reset

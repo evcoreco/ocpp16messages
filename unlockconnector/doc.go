@@ -28,10 +28,10 @@
 //
 // # Adjacent Concepts
 //
-// - remotestoptransaction: the correct path for ending a session remotely;
-//   connector unlock happens automatically as part of the transaction stop.
-// - stoptransaction: the message the Charge Point sends to record the session
-//   end before unlocking, if a transaction was running.
-// - statusnotification: the Charge Point may send this after the connector
-//   state changes as a result of the unlock.
+//   - remotestoptransaction: the correct path for ending a session remotely;
+//     connector unlock happens automatically as part of the transaction stop.
+//   - stoptransaction: the message the Charge Point sends to record the session
+//     end before unlocking, if a transaction was running.
+//   - statusnotification: the Charge Point may send this after the connector
+//     state changes as a result of the unlock.
 package unlockconnector

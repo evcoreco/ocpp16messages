@@ -32,14 +32,15 @@
 //
 // # Adjacent Concepts
 //
-// - heartbeat: one of the messages commonly requested via TriggerMessage for
-//   on-demand clock synchronization checks.
-// - statusnotification: frequently requested via TriggerMessage to poll the
-//   current connector or Charge Point state.
-// - metervalues: can be triggered to retrieve the most recent sampled readings
-//   outside the normal periodic schedule.
-// - bootnotification: can be requested during the Pending state to re-register
-//   a Charge Point without a physical reboot.
-// - firmwarestatusnotification / diagnosticsstatusnotification: can be triggered
-//   to query the current firmware update or diagnostics upload state.
+//   - heartbeat: one of the messages commonly requested via TriggerMessage for
+//     on-demand clock synchronization checks.
+//   - statusnotification: frequently requested via TriggerMessage to poll the
+//     current connector or Charge Point state.
+//   - metervalues: can be triggered to retrieve the most recent sampled
+//     readings outside the normal periodic schedule.
+//   - bootnotification: can be requested during the Pending state to
+//     re-register a Charge Point without a physical reboot.
+//   - firmwarestatusnotification / diagnosticsstatusnotification: can be
+//     triggered to query the current firmware update or diagnostics
+//     upload state.
 package triggermessage

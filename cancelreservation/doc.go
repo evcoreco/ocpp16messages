@@ -1,4 +1,5 @@
-// Package cancelreservation implements the OCPP 1.6 CancelReservation message pair.
+// Package cancelreservation implements the OCPP 1.6 CancelReservation
+// message pair.
 //
 // # What It Means
 //
@@ -24,9 +25,9 @@
 //
 // # Adjacent Concepts
 //
-// - reservenow: the counterpart that creates the reservation being cancelled.
-// - remotestoptransaction: stops a charging transaction that started after the
-//   reservation was consumed.
-// - statusnotification: the Charge Point sends this after the connector
-//   transitions back to Available following a cancellation.
+//   - reservenow: the counterpart that creates the reservation being cancelled.
+//   - remotestoptransaction: stops a charging transaction that started
+//     after the reservation was consumed.
+//   - statusnotification: the Charge Point sends this after the connector
+//     transitions back to Available following a cancellation.
 package cancelreservation

@@ -12,7 +12,8 @@
 //
 // The Central System sends SendLocalList.req when connectivity to the Central
 // System cannot be guaranteed, when reducing authorization latency for frequent
-// users, or during initial deployment of a Charge Point. After a VersionMismatch
+// users, or during initial deployment of a Charge Point. After a
+// VersionMismatch
 // or Failed response to a Differential update, the Central System should retry
 // with a Full update to restore a known-good state.
 //
@@ -27,10 +28,10 @@
 //
 // # Adjacent Concepts
 //
-// - getlocallistversion: reads the Charge Point's current list version before
-//   deciding whether a SendLocalList is needed and which update type to use.
-// - clearcache: clears the Authorization Cache, which is separate from the
-//   local list managed by SendLocalList.
-// - authorize: the network round-trip that becomes unnecessary for idTags
-//   covered by an up-to-date local list.
+//   - getlocallistversion: reads the Charge Point's current list version before
+//     deciding whether a SendLocalList is needed and which update type to use.
+//   - clearcache: clears the Authorization Cache, which is separate from the
+//     local list managed by SendLocalList.
+//   - authorize: the network round-trip that becomes unnecessary for idTags
+//     covered by an up-to-date local list.
 package sendlocallist

@@ -1,4 +1,5 @@
-// Package clearchargingprofile implements the OCPP 1.6 ClearChargingProfile message pair.
+// Package clearchargingprofile implements the OCPP 1.6 ClearChargingProfile
+// message pair.
 //
 // # What It Means
 //
@@ -27,9 +28,10 @@
 //
 // # Adjacent Concepts
 //
-// - setchargingprofile: installs the profiles that this message removes.
-// - getcompositeschedule: queries what the combined active schedule looks like
-//   at any point in time, useful for verifying the effect of a clear.
-// - remotestarttransaction: may embed a TxProfile whose lifecycle is bounded
-//   by the transaction; ClearChargingProfile removes it explicitly.
+//   - setchargingprofile: installs the profiles that this message removes.
+//   - getcompositeschedule: queries what the combined active schedule
+//     looks like at any point in time, useful for verifying the effect
+//     of a clear.
+//   - remotestarttransaction: may embed a TxProfile whose lifecycle is bounded
+//     by the transaction; ClearChargingProfile removes it explicitly.
 package clearchargingprofile

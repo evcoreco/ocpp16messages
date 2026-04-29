@@ -26,10 +26,10 @@
 //
 // # Adjacent Concepts
 //
-// - diagnosticsstatusnotification: the progress reports the Charge Point sends
-//   during the upload triggered by GetDiagnostics.req.
-// - getconfiguration: reads structured, named configuration values in real time
-//   without requiring a file upload.
-// - updatefirmware: the parallel mechanism for pushing a file to a Charge Point
-//   rather than pulling one from it.
+//   - diagnosticsstatusnotification: the progress reports the Charge
+//     Point sends during the upload triggered by GetDiagnostics.req.
+//   - getconfiguration: reads structured, named configuration values in
+//     real time without requiring a file upload.
+//   - updatefirmware: the parallel mechanism for pushing a file to a
+//     Charge Point rather than pulling one from it.
 package getdiagnostics

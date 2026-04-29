@@ -1,4 +1,5 @@
-// Package statusnotification implements the OCPP 1.6 StatusNotification message pair.
+// Package statusnotification implements the OCPP 1.6 StatusNotification
+// message pair.
 //
 // # What It Means
 //
@@ -31,13 +32,13 @@
 //
 // # Adjacent Concepts
 //
-// - triggermessage: the Central System sends this to request an immediate
-//   StatusNotification for a specific connector or all connectors.
-// - changeavailability: a Central System command that causes the Charge Point
-//   to send StatusNotification after the availability change takes effect.
-// - starttransaction / stoptransaction: transaction lifecycle events that drive
-//   status transitions from Available → Preparing → Charging → Finishing →
-//   Available.
-// - reservenow: a reservation expiry or consumption triggers a StatusNotification
-//   to report the resulting connector state.
+//   - triggermessage: the Central System sends this to request an immediate
+//     StatusNotification for a specific connector or all connectors.
+//   - changeavailability: a Central System command that causes the Charge Point
+//     to send StatusNotification after the availability change takes effect.
+//   - starttransaction / stoptransaction: transaction lifecycle events
+//     that drive status transitions from Available → Preparing →
+//     Charging → Finishing → Available.
+//   - reservenow: a reservation expiry or consumption triggers a
+//     StatusNotification to report the resulting connector state.
 package statusnotification

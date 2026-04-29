@@ -12,7 +12,7 @@ func FuzzNewIDToken(f *testing.F) {
 	f.Add("RFID-ABC123")
 	f.Add("")
 	f.Add("a")
-	f.Add("12345678901234567890") // exactly 20
+	f.Add("12345678901234567890")  // exactly 20
 	f.Add("123456789012345678901") // 21 = too long
 	f.Add("bad\x01char")
 

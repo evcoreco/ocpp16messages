@@ -12,12 +12,14 @@
 // # When It Is Used
 //
 // The Charge Point sends StopTransaction.req whenever a session ends: when the
-// EV driver presents a token to stop, when a RemoteStopTransaction is processed,
-// after a Reset, or when configured stop conditions occur such as
+// EV driver presents a token to stop, when a RemoteStopTransaction is
+// processed, after a Reset, or when configured stop conditions occur
+// such as
 // StopTransactionOnEVSideDisconnect. The idTag may be omitted when the Charge
 // Point itself stops the transaction (for example, during a reset). If the stop
-// reason is a normal local action the reason field may be omitted and is assumed
-// to be Local; for all other reasons it should be set explicitly. The Central
+// reason is a normal local action the reason field may be omitted and
+// is assumed to be Local; for all other reasons it should be set
+// explicitly. The Central
 // System cannot prevent a transaction from stopping; it must always respond.
 //
 // # What It Is Not
@@ -31,13 +33,13 @@
 //
 // # Adjacent Concepts
 //
-// - starttransaction: the counterpart that opened the session this message
-//   closes, carrying the transactionId used here.
-// - remotestoptransaction: the Central System command that causes the Charge
-//   Point to send StopTransaction.req.
-// - metervalues: the periodic readings during the session; TransactionData in
-//   StopTransaction reuses the same MeterValue structure.
-// - unlockconnector: releases the cable retention lock; related but separate
-//   from the session stop.
-// - types.MeterValue: the shared type used in TransactionData.
+//   - starttransaction: the counterpart that opened the session this message
+//     closes, carrying the transactionId used here.
+//   - remotestoptransaction: the Central System command that causes the Charge
+//     Point to send StopTransaction.req.
+//   - metervalues: the periodic readings during the session; TransactionData in
+//     StopTransaction reuses the same MeterValue structure.
+//   - unlockconnector: releases the cable retention lock; related but separate
+//     from the session stop.
+//   - types.MeterValue: the shared type used in TransactionData.
 package stoptransaction

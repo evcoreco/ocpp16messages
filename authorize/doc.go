@@ -26,10 +26,11 @@
 //
 // # Adjacent Concepts
 //
-// - starttransaction: sent after a successful authorization to open a session.
-// - stoptransaction: sent when a session ends; may trigger an Authorize if
-//   the stopping idTag differs from the starting one.
-// - sendlocallist / getlocallistversion: manage the Local Authorization List
-//   that can make Authorize.req unnecessary.
-// - types.IdTagInfo, types.IdToken: the shared types carried in responses.
+//   - starttransaction: sent after a successful authorization to open a
+//     session.
+//   - stoptransaction: sent when a session ends; may trigger an Authorize if
+//     the stopping idTag differs from the starting one.
+//   - sendlocallist / getlocallistversion: manage the Local Authorization List
+//     that can make Authorize.req unnecessary.
+//   - types.IdTagInfo, types.IdToken: the shared types carried in responses.
 package authorize

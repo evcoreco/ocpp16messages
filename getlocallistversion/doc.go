@@ -1,4 +1,5 @@
-// Package getlocallistversion implements the OCPP 1.6 GetLocalListVersion message pair.
+// Package getlocallistversion implements the OCPP 1.6 GetLocalListVersion
+// message pair.
 //
 // # What It Means
 //
@@ -27,10 +28,11 @@
 //
 // # Adjacent Concepts
 //
-// - sendlocallist: pushes a new or updated Local Authorization List to the
-//   Charge Point; GetLocalListVersion determines whether this is needed.
-// - clearcache: clears the Authorization Cache, a separate authorization
-//   mechanism not affected by the local list version.
-// - authorize: the network round-trip that bypasses the local list; a populated
-//   and up-to-date local list reduces the need for Authorize.req.
+//   - sendlocallist: pushes a new or updated Local Authorization List to the
+//     Charge Point; GetLocalListVersion determines whether this is needed.
+//   - clearcache: clears the Authorization Cache, a separate authorization
+//     mechanism not affected by the local list version.
+//   - authorize: the network round-trip that bypasses the local list; a
+//     populated and up-to-date local list reduces the need for
+//     Authorize.req.
 package getlocallistversion

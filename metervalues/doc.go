@@ -25,21 +25,22 @@
 // # What It Is Not
 //
 // MeterValues is not a transaction control message; it does not start, stop, or
-// authorize a session. It is not the only source of energy data: StartTransaction
-// and StopTransaction also carry meter readings at the transaction boundaries.
+// authorize a session. It is not the only source of energy data:
+// StartTransaction and StopTransaction also carry meter readings at the
+// transaction boundaries.
 // The format field ("SignedData") is marked experimental in OCPP 1.6 and may be
 // deprecated in future versions.
 //
 // # Adjacent Concepts
 //
-// - starttransaction / stoptransaction: carry meter readings at session
-//   boundaries; MeterValues fills in the periodic samples between them.
-// - setchargingprofile: sets the power or current limits that Current.Offered
-//   and Power.Offered measurands reflect.
-// - changeconfiguration: adjusts MeterValueSampleInterval and
-//   MeterValuesSampledData to control when and what is reported.
-// - triggermessage: can request an immediate MeterValues report with the most
-//   recent sample set.
-// - types.MeterValue, types.SampledValue: the shared types that this package
-//   uses for the measurement payload.
+//   - starttransaction / stoptransaction: carry meter readings at session
+//     boundaries; MeterValues fills in the periodic samples between them.
+//   - setchargingprofile: sets the power or current limits that Current.Offered
+//     and Power.Offered measurands reflect.
+//   - changeconfiguration: adjusts MeterValueSampleInterval and
+//     MeterValuesSampledData to control when and what is reported.
+//   - triggermessage: can request an immediate MeterValues report with the most
+//     recent sample set.
+//   - types.MeterValue, types.SampledValue: the shared types that this package
+//     uses for the measurement payload.
 package metervalues

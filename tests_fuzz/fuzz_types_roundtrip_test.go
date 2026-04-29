@@ -14,8 +14,8 @@ func FuzzCiStringRoundTrip(f *testing.F) {
 	f.Add("hello")
 	f.Add("")
 	f.Add("a")
-	f.Add("12345678901234567890") // 20
-	f.Add("1234567890123456789012345") // 25
+	f.Add("12345678901234567890")                               // 20
+	f.Add("1234567890123456789012345")                          // 25
 	f.Add("12345678901234567890123456789012345678901234567890") // 50
 
 	f.Fuzz(func(t *testing.T, input string) {

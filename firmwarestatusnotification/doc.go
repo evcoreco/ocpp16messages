@@ -28,12 +28,13 @@
 //
 // # Adjacent Concepts
 //
-// - updatefirmware: the request that instructs the Charge Point to download and
-//   install firmware; FirmwareStatusNotification reports its progress.
-// - diagnosticsstatusnotification: the analogous progress-report message for
-//   diagnostics upload operations.
-// - triggermessage: can request an on-demand FirmwareStatusNotification to
-//   query the current update state.
-// - reset: commonly follows a successful firmware installation to bring up the
-//   new image.
+//   - updatefirmware: the request that instructs the Charge Point to
+//     download and install firmware; FirmwareStatusNotification reports
+//     its progress.
+//   - diagnosticsstatusnotification: the analogous progress-report message for
+//     diagnostics upload operations.
+//   - triggermessage: can request an on-demand FirmwareStatusNotification to
+//     query the current update state.
+//   - reset: commonly follows a successful firmware installation to
+//     bring up the new image.
 package firmwarestatusnotification
